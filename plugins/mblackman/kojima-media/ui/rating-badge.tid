@@ -1,0 +1,15 @@
+title: $:/plugins/mblackman/kojima-media/ui/rating-badge
+type: text/vnd.tiddlywiki
+
+<$let
+  level={{{ [{!!kojima-score}!is[blank]compare:number:gteq[0]compare:number:lteq[5]] ~[[0]] }}}
+  emptyCount={{{ [[5]subtract<level>] }}}
+  filled={{{ [[★★★★★]split[]first<level>join[]] }}}
+  empty={{{ [[☆☆☆☆☆]split[]first<emptyCount>join[]] }}}
+  badgeClass={{{ [<level>match[5]then[kj-score-badge kj-score-badge--s-tier]] :else[<level>match[4]then[kj-score-badge kj-score-badge--a-tier]] :else[<level>match[1]then[kj-score-badge kj-score-badge--d-tier]else[kj-score-badge]] }}}
+>
+<span class=<<badgeClass>> title={{!!kojima-score-breakdown}}>
+<span role="img" aria-label={{{ [<level>addsuffix[ of 5 stars]] }}}><<filled>><<empty>></span>
+<$text text={{!!kojima-tier}}/>
+</span>
+</$let>

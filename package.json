@@ -1,7 +1,7 @@
 {
   "name": "tiddlywiki-kojima-media",
   "version": "0.1.0",
-  "description": "Hideo Kojima Movie Recommendations, Multi-Factor Enthusiasm Ranking, and Sync Service for TiddlyWiki",
+  "description": "Hideo Kojima Movie Recommendations, 5-Level Enthusiasm Rating, and Sync Service for TiddlyWiki",
   "main": "npm run build-all",
   "scripts": {
     "dev": "node scripts/dev.js",

@@ -482,19 +482,6 @@ a.kj-btn--primary:hover,
   text-decoration: underline;
 }
 
-.kj-tier-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.15rem 0.55rem;
-  border-radius: var(--suite-radius-pill, 9999px);
-  font-size: var(--suite-text-xs, 0.75rem);
-  font-weight: 600;
-  background: var(--suite-surface-subtle);
-  color: var(--suite-fg-secondary);
-  border: 1px solid var(--suite-border-subtle);
-  white-space: nowrap;
-}
-
 .kj-movie-submeta {
   display: flex;
   flex-wrap: wrap;

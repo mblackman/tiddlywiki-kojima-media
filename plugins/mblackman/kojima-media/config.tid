@@ -12,7 +12,7 @@ type: text/vnd.tiddlywiki
     <div class="kj-settings-header">
       <h3 class="kj-settings-heading">🎬 Kojima Movie Tracker</h3>
       <p class="kj-settings-desc">
-        Downloads Hideo Kojima's movie recommendations and 0–100 enthusiasm scores from a JSON feed while preserving your watch status (<code>Completed</code>, <code>Backlog</code>, <code>Active</code>, <code>Dropped</code>).
+        Downloads Hideo Kojima's movie recommendations and 5-level enthusiasm ratings from a JSON feed while preserving your watch status (<code>Completed</code>, <code>Backlog</code>, <code>Active</code>, <code>Dropped</code>).
       </p>
     </div>
 

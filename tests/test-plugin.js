@@ -112,18 +112,26 @@ function runTests() {
   assert(dashboardHtml.includes("Taxi Driver (1976)"), "Dashboard should render Taxi Driver (1976)");
   assert(dashboardHtml.includes("2001: A Space Odyssey (1968)"), "Dashboard should render 2001: A Space Odyssey (1968)");
   assert(dashboardHtml.includes("Madame Web (2024)"), "Dashboard should render Madame Web (2024) when dismissals are shown");
-  assert(dashboardHtml.includes("S-Tier: Essential Kojima DNA"), "Dashboard should render S-Tier badge");
+  assert(
+    /aria-label="5 of 5 stars"[^>]*>★★★★★<\/span>\s*Canon/.test(dashboardHtml),
+    "Dashboard should render 5-star Canon badge"
+  );
+  assert(
+    /class="kj-score-badge kj-score-badge--d-tier"[\s\S]*?aria-label="1 of 5 stars"[^>]*>★☆☆☆☆<\/span>\s*Dismissed/.test(dashboardHtml),
+    "Dashboard should render 1-star Dismissed badge"
+  );
+  assert(!dashboardHtml.includes("/100"), "Dashboard should no longer render 0-100 scores");
 
-  // 4. Verify dashboard does not render a Hide 1-Sentence Dismissals checkbox and filters by tier instead
+  // 4. Verify dashboard does not render a Hide 1-Sentence Dismissals checkbox and filters by level instead
   assert(
     !dashboardHtml.includes("Hide 1-Sentence Dismissals"),
     "Dashboard should not render the Hide 1-Sentence Dismissals checkbox"
   );
-  $tw.wiki.setText("$:/state/kojima-dashboard/tier", "text", null, "S-Tier");
+  $tw.wiki.setText("$:/state/kojima-dashboard/level", "text", null, "Canon");
   const filteredHtml = $tw.wiki.renderTiddler("text/html", "Kojima Movie Recommendations");
-  assert(!filteredHtml.includes("Madame Web (2024)"), "Madame Web (2024) should be hidden when tier filter is S-Tier");
-  assert(filteredHtml.includes("2001: A Space Odyssey (1968)"), "S-Tier movies should remain visible");
-  $tw.wiki.setText("$:/state/kojima-dashboard/tier", "text", null, "All");
+  assert(!filteredHtml.includes("Madame Web (2024)"), "Madame Web (2024) should be hidden when level filter is Canon");
+  assert(filteredHtml.includes("2001: A Space Odyssey (1968)"), "Canon movies should remain visible");
+  $tw.wiki.setText("$:/state/kojima-dashboard/level", "text", null, "All");
 
   // 5. Verify `tm-sync-kojima` preserves existing watch status (`Completed`) and `favorite`
   $tw.wiki.addTiddler(
@@ -141,8 +149,8 @@ function runTests() {
           title: "Conclave",
           year: 2024,
           tmdb_id: 974576,
-          kojima_score: 81,
-          kojima_tier: "A-Tier: Highly Recommended",
+          kojima_score: 4,
+          kojima_tier: "Loved",
         },
       ],
     },
@@ -166,6 +174,7 @@ function runTests() {
     { variables: { currentTiddler: "2001: A Space Odyssey (1968)" } }
   );
   assert(viewTplHtml.includes("Hideo Kojima Recommendation"), "ViewTemplate should render Kojima panel");
+  assert(viewTplHtml.includes('aria-label="5 of 5 stars"'), "ViewTemplate should render an accessible 5-star rating");
   assert(viewTplHtml.includes("GQ All-Time Top 4"), "ViewTemplate should render source chip from kojima-sources-json");
   assert(viewTplHtml.includes("2025-05-14"), "ViewTemplate should render recommendation date 2025-05-14");
 

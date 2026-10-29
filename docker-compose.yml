@@ -13,7 +13,7 @@ services:
       # Optional: Comma-separated X/Nitter or Letterboxd RSS feed URLs for background polling
       - KOJIMA_RSS_URLS=${KOJIMA_RSS_URLS:-}
       - SCRAPE_INTERVAL_SECONDS=${SCRAPE_INTERVAL_SECONDS:-3600}
-      # Optional Sentiment Provider: "gemini", "openai", "ollama", or "heuristic" (default)
+      # Optional review classifier for X posts: "gemini", "openai", "ollama", or "heuristic" keywords (default)
       - LLM_PROVIDER=${LLM_PROVIDER:-heuristic}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}

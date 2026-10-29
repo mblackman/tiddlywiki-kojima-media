@@ -7,13 +7,8 @@ type: text/vnd.tiddlywiki
 <div class="kj-movie-card kj-view-panel">
   <div class="kj-movie-body">
     <div class="kj-movie-title-row">
-      <span class="kj-score-badge kj-score-badge--s-tier" title={{!!kojima-score-breakdown}}>
-        ⚡ <$text text={{{ [{!!kojima-score}!is[blank]else[0]] }}}/>/100
-      </span>
+      <$transclude $tiddler="$:/plugins/mblackman/kojima-media/ui/rating-badge" $mode="inline"/>
       <strong>Hideo Kojima Recommendation</strong>
-      <$list filter="[all[current]has[kojima-tier]!field:kojima-tier[]]" variable="ignoreTier">
-        <span class="kj-tier-pill"><$text text={{!!kojima-tier}}/></span>
-      </$list>
       <$link to="Kojima Movie Recommendations" class="kj-btn kj-btn--sm kj-ml-auto">
         🎬 Kojima Tracker →
       </$link>

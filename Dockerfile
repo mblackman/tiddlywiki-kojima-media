@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 
 LABEL org.opencontainers.image.title="Kojima Movie Sync Service" \
-      org.opencontainers.image.description="Hideo Kojima Movie Recommendation Sync, Multi-Factor Enthusiasm Scoring & RSS Scraper Service for TiddlyWiki" \
+      org.opencontainers.image.description="Hideo Kojima Movie Recommendation Sync, 5-Level Enthusiasm Rating & RSS Scraper Service for TiddlyWiki" \
       org.opencontainers.image.source="https://github.com/mblackman/tiddlywiki-kojima-media" \
       org.opencontainers.image.licenses="MIT"
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Unit tests for `kojima_sync_service.py`:
-- Multi-Factor Enthusiasm Score formula (Words, Sentiment, Prestige, Recurrence)
+- 5-level Enthusiasm Rating (Canon / Loved / Liked / Noted / Dismissed)
 - 1-sentence dismissal detection (`"Saw Madame Web at the theater."`)
 - SQLite persistence & caching (`upsert_recommendation`, `build_recommendations_feed`)
 - RSS 2.0 / Atom XML feed parser & movie post extractor (`extract_movie_from_post`, `ingest_raw_post`)
@@ -14,6 +14,7 @@ import tempfile
 import threading
 import unittest
 import urllib.request
+from unittest import mock
 from http.server import HTTPServer
 
 import kojima_sync_service as kss
@@ -21,6 +22,10 @@ import kojima_sync_service as kss
 
 class TestKojimaSyncService(unittest.TestCase):
     def setUp(self):
+        # Keep tests hermetic: never call a real LLM even when CI exports LLM_PROVIDER.
+        llm_patch = mock.patch.object(kss, "LLM_PROVIDER", "heuristic")
+        llm_patch.start()
+        self.addCleanup(llm_patch.stop)
         self.temp_dir = tempfile.TemporaryDirectory()
         self.db_path = os.path.join(self.temp_dir.name, "test_kojima.db")
         kss.init_db(self.db_path)
@@ -40,63 +45,93 @@ class TestKojimaSyncService(unittest.TestCase):
             kss.is_one_sentence_dismissal("Saw 2001: A Space Odyssey.", ["gq_top_4"])
         )
 
-    def test_enthusiasm_scoring_tiers(self):
-        # S-Tier: All-time canon with multiple sources
-        s_tier = kss.compute_enthusiasm_score(
-            "Taxi Driver",
-            (
-                "This film was an eye-opener for me. I had no idea Americans, who seemed so cheerful, "
-                "could feel lonely in the middle of a city. It resonated with me, given the loneliness "
-                "that troubled me in my younger days, which is why it has a very special place in my heart. "
-                "After I saw it I bought a jacket and a pair of boots to copy Robert De Niro. "
-                "Needless to say, I did not get a mohawk."
-            ),
-            [
-                {"label": "GQ All-Time Top 4", "type": "gq_top_4", "url": "https://example.com/gq"},
-                {"label": "Junker HQ Top 30", "type": "junkerhq_top_30", "url": "https://example.com/jhq"},
-            ],
-        )
-        self.assertGreaterEqual(s_tier.total_score, 90)
-        self.assertEqual(s_tier.tier, "S-Tier: Essential Kojima DNA")
-        self.assertFalse(s_tier.is_dismissal)
+    def _rate(self, title, text, types):
+        sources = [{"label": t, "type": t, "url": f"https://example.com/{t}/{i}"} for i, t in enumerate(types)]
+        with mock.patch.object(kss, "LLM_PROVIDER", "heuristic"):
+            return kss.compute_enthusiasm_level(title, text, sources)
 
-        # D-Tier: One-sentence dismissal capped <= 20
-        d_tier = kss.compute_enthusiasm_score(
-            "Madame Web",
-            "Saw Madame Web at the theater.",
-            [{"label": "X Review", "type": "x_review", "url": "https://example.com/x"}],
-        )
-        self.assertLessEqual(d_tier.total_score, 20)
-        self.assertEqual(d_tier.word_count_pts, 0.0)
-        self.assertTrue(d_tier.is_dismissal)
-        self.assertEqual(d_tier.tier, "D-Tier: One-Sentence Dismissal")
+    def test_curated_sources_set_level(self):
+        canon = self._rate("Taxi Driver", "This film was an eye-opener for me.", ["gq_top_4", "junkerhq_top_30"])
+        self.assertEqual((canon.level, canon.label), (5, "Canon"))
+        self.assertFalse(canon.is_dismissal)
 
-        # A-Tier: Year-End Top List entry even when only an editorial list-inclusion blurb is present
-        self.assertTrue(
-            kss.is_editorial_list_blurb(
-                "Named to Hideo Kojima's Top Foreign Theatrical Releases of the Year list.",
-                ["annual_top_list"],
-            )
-        )
-        editorial_top_list = kss.compute_enthusiasm_score(
-            "Conclave",
-            "Named to Hideo Kojima's Top Foreign Theatrical Releases of the Year list.",
-            [
-                {"label": "Top Films of 2025", "type": "annual_top_list", "url": "https://example.com/ig"},
-                {"label": "2025 Report", "type": "annual_top_list", "url": "https://example.com/gt"},
-            ],
-        )
-        self.assertGreaterEqual(editorial_top_list.total_score, 75)
-        self.assertEqual(editorial_top_list.tier, "A-Tier: All-Time Favorite / Rave")
+        for list_type in ("annual_top_list", "junkerhq_runner_up"):
+            pick = self._rate("Some Film", "Named to Hideo Kojima's Top Films of 2019 list.", [list_type])
+            self.assertEqual((pick.level, pick.label), (4, "Loved"), list_type)
 
-        # B-Tier: Standalone modern X rave without era-specific MGS/childhood keywords
-        standalone_rave = kss.compute_enthusiasm_score(
-            "Avatar: Fire and Ash",
-            "This film shows absolutely no compromise, right down to the finest details, in the construction of the Avatar 'universe.' It was magnificent.",
-            [{"label": "X Review", "type": "x_review", "url": "https://example.com/x-avatar"}],
+        # The word "Favorite" in a list name must not change the outcome vs. a neutral list name
+        favorite_named = self._rate("Deadpool", "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.", ["annual_top_list"])
+        self.assertEqual(favorite_named.level, 4)
+
+        # Short curated text is never a dismissal
+        self.assertEqual(self._rate("2001", "Saw 2001: A Space Odyssey.", ["gq_top_4"]).level, 5)
+
+    def test_dismissal_is_level_one(self):
+        rating = self._rate("Madame Web", "Saw Madame Web at the theater.", ["x_review"])
+        self.assertEqual((rating.level, rating.label), (1, "Dismissed"))
+        self.assertTrue(rating.is_dismissal)
+
+    def test_x_review_text_classification(self):
+        hamnet = (
+            "I watched 'Hamnet' at a screening. In just 126 minutes, it encapsulates all the sorrow, pain, loss, "
+            "fear, love and joy, healing and hope found in life across all times and cultures. That beautiful final "
+            "scene has the power to rewrite the history of cinema. It lays bare the miracle of movies. To be able to "
+            "create something like this, Chloe Zhao must be a witch, or perhaps an angel."
         )
-        self.assertGreaterEqual(standalone_rave.total_score, 60)
-        self.assertEqual(standalone_rave.tier, "B-Tier: Strong Recommendation")
+        crime_101 = (
+            "Watched 'Crime 101,' the film adaptation of a novella by our Don Winslow. It was excellent! Completely "
+            "satisfying! The balance between thrills, action, drama, character work, and foreshadowing is spot-on. "
+            "It reminded me of the kind of high-quality noir films I loved as a kid."
+        )
+        avatar = (
+            "This film shows absolutely no compromise, right down to the finest details, in the construction of "
+            "the Avatar 'universe.' It was magnificent."
+        )
+        self.assertEqual(self._rate("Hamnet", hamnet, ["x_review"]).label, "Loved")
+        self.assertEqual(self._rate("Crime 101", crime_101, ["x_review"]).label, "Loved")
+        self.assertEqual(self._rate("Avatar: Fire and Ash", avatar, ["x_review"]).label, "Loved")
+
+        rewatch = self._rate("Interstellar", "Tonight, I'm rewatching 'INTERSTELLAR' (2014) for the first time in 12 years since seeing it in theaters.", ["x_review"])
+        self.assertEqual(rewatch.label, "Liked")
+        owns_4k = self._rate("Akira", "The uncut version of 'AKIRA' is on TV tonight, so I decided to watch that, even though I have the 4K UHD.", ["x_review"])
+        self.assertEqual(owns_4k.label, "Liked")
+
+        last_breath = self._rate("Last Breath", "I watched Last Breath on the plane and bawled. It was so great that I went to see it again in theaters.", ["x_review"])
+        self.assertEqual(last_breath.label, "Loved")
+        second_viewing = self._rate("Ballerina", "Took my son to see Ballerina. Second time seeing it.", ["x_review"])
+        self.assertEqual(second_viewing.label, "Liked")
+        first_viewing = self._rate("Immortals", "Will watch Tarsem Singh's Immortals for the first time on Blu-ray tonight.", ["x_review"])
+        self.assertEqual(first_viewing.label, "Noted")
+        bought = self._rate("Split Second", "Bought the Blu-ray of Split Second. Changed the cover, and tonight, I'm watching this.", ["x_review"])
+        self.assertEqual(bought.label, "Liked")
+
+        neutral = self._rate("Supergirl", "I saw 'Supergirl' in IMAX. It was a coming-of-age story about saving oneself, Kara, as she struggles with her own trauma.", ["x_review"])
+        self.assertEqual(neutral.label, "Noted")
+
+    def test_keyword_matching_is_whole_word_and_negation_aware(self):
+        # "crystal" must not match "cry"; "programs" must not match "mgs"
+        self.assertEqual(self._rate("X", "A crystal clear print with new programs and extras on the disc menu.", ["x_review"]).label, "Noted")
+        negated = self._rate("X", "Honestly it was not a masterpiece, and not great either.", ["x_review"])
+        self.assertNotEqual(negated.label, "Loved")
+
+    def test_llm_classification_and_fallback(self):
+        sources = [{"label": "X", "type": "x_review", "url": "https://example.com/x"}]
+        text = "I went to see it on opening night with my team. A long conversation followed about it."
+        with mock.patch.object(kss, "analyze_sentiment_with_llm", return_value={"level": "loved", "reason": "Raves."}):
+            rating = kss.compute_enthusiasm_level("X", text, sources)
+        self.assertEqual((rating.level, rating.method), (4, "llm"))
+        self.assertEqual(rating.reason, "Raves.")
+
+        with mock.patch.object(kss, "analyze_sentiment_with_llm", return_value={"level": "ecstatic"}):
+            rating = kss.compute_enthusiasm_level("X", text, sources)
+        self.assertEqual(rating.method, "keywords")
+
+        # Curated picks never call the LLM; it cannot raise Canon or lower list picks
+        llm = mock.MagicMock(return_value={"level": "noted"})
+        with mock.patch.object(kss, "analyze_sentiment_with_llm", llm):
+            rating = kss.compute_enthusiasm_level("X", "Named to a list.", [{"type": "annual_top_list", "url": "u"}])
+        self.assertEqual(rating.level, 4)
+        llm.assert_not_called()
 
     def test_post_extractor_and_sqlite_ingest(self):
         extracted = kss.extract_movie_from_post("Watched 'Furiosa: A Mad Max Saga' (2024) at IMAX! George Miller is my god of cinema!")
@@ -114,7 +149,8 @@ class TestKojimaSyncService(unittest.TestCase):
         self.assertIsNotNone(record)
         self.assertEqual(record["title"], "Furiosa: A Mad Max Saga")
         self.assertEqual(record["tmdb_id"], "786892")
-        self.assertGreaterEqual(record["kojima_score"], 45)
+        self.assertEqual(record["kojima_score"], 4)
+        self.assertEqual(record["kojima_tier"], "Loved")
 
     def test_rss_xml_parser(self):
         sample_rss = """<?xml version="1.0" encoding="UTF-8"?>

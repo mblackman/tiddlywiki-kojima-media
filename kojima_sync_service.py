@@ -10,11 +10,11 @@ Features:
   3. Criterion Collection Closet Picks
   4. Annual "Top Movies of the Year" lists (X / Instagram)
   5. X (@HIDEO_KOJIMA_EN) movie reviews (via RSS/Nitter/Letterboxd feeds + curated seed)
-- Persists recommendations, resolved TMDB IDs, and LLM sentiment scores in SQLite
+- Persists recommendations, resolved TMDB IDs, and 5-level enthusiasm ratings in SQLite
   (`/data/kojima_reviews.db` or `KOJIMA_DB_PATH`) so repeat syncs are fast and deterministic.
 - Background RSS/Atom scraper daemon (`KOJIMA_RSS_URLS`, `SCRAPE_INTERVAL_SECONDS`)
   that extracts movie titles from new `@HIDEO_KOJIMA_EN` posts, resolves `tmdb_id`,
-  and scores enthusiasm automatically.
+  and rates enthusiasm automatically.
 - Exposes a CORS-enabled HTTP JSON endpoint (`GET /api/kojima-recommendations`,
   `POST /api/scrape`, `POST /api/ingest-post`, `GET /health`) for one-click syncing
   directly from TiddlyWiki in the browser.
@@ -25,7 +25,6 @@ from __future__ import annotations
 import hashlib
 import html
 import json
-import math
 import os
 import re
 import sqlite3
@@ -67,19 +66,8 @@ KOJIMA_DISCOVER_X_REVIEWS = os.getenv("KOJIMA_DISCOVER_X_REVIEWS", "1") not in (
 SCRAPE_INTERVAL_SECONDS = int(os.getenv("SCRAPE_INTERVAL_SECONDS", "0"))
 
 # ---------------------------------------------------------------------------
-# Source Prestige Weights (0 - 25 pts max) & Default Recommendation Dates
+# Default Recommendation Dates
 # ---------------------------------------------------------------------------
-SOURCE_PRESTIGE_WEIGHTS: Dict[str, int] = {
-    "gq_top_4": 25,             # GQ All-Time Top 4
-    "rt_top_5": 25,             # Rotten Tomatoes Five Favorite Films
-    "mgs_dna_core": 23,         # Junker HQ Core 7 films that shaped Metal Gear Solid
-    "junkerhq_top_30": 21,      # Junker HQ All-Time Top 30 Personal Favorites
-    "criterion_closet": 20,     # Criterion Collection Closet Picks (9 hand-picked classics)
-    "annual_top_list": 19,      # Year-End Top Movies List (top ~4% of 250+ watched per year)
-    "junkerhq_runner_up": 15,   # Junker HQ Runners-Up / MGS Influences
-    "x_review": 10,             # Standard X (@HIDEO_KOJIMA_EN) review post (boosted to 13 on raves)
-}
-
 SOURCE_DEFAULT_DATES: Dict[str, str] = {
     "gq_top_4": "2025-05-14",
     "rt_top_5": "2019-11-08",
@@ -726,65 +714,111 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
 ]
 
 # ---------------------------------------------------------------------------
-# Evidence-Aware Multi-Factor Enthusiasm Scoring Engine
+# 5-Level Enthusiasm Rating Engine
 # ---------------------------------------------------------------------------
 ONE_SENTENCE_DISMISSAL_RE = re.compile(
     r"^(?:i\s+)?(?:went\s+to\s+see|saw|watched|finally\s+got\s+to\s+see)\b[^.!?]*[.!?]?$",
     re.IGNORECASE,
 )
 
-EDITORIAL_LIST_BLURB_RE = re.compile(
-    r"^(?:named\s+(?:to|by)|selected\s+(?:as|in|by)|highlighted\s+(?:on|in)|picked\s+by|singled\s+out\s+by|featured\s+in|one\s+of\s+the\s+seven)\b",
-    re.IGNORECASE,
-)
-
-FIRST_PERSON_VOICE_RE = re.compile(
-    r"""(?:\b(?:i|my|me|mine)\b|["“”])""",
-    re.IGNORECASE,
-)
-
-HIGH_PRAISE_TERMS = [
-    "masterpiece", "magnificent", "incredible", "amazing", "fantastic", "greatest",
-    "favorite", "must-see", "must-watch", "cry", "crying", "tearjerker", "speechless",
-    "eye-opener", "more than a film", "experience", "no compromise", "burned into my brain",
-    "god of cinema", "first god", "too good to be true", "so, so good", "completely hooked",
-    "hooked", "best films", "best movie", "top two", "top four", "top ten", "number-one",
-    "number one", "awesome", "too cool", "towering", "brilliant",
-]
-
-CRAFT_AND_AUTEUR_TERMS = [
-    "sense of filmmaking", "production design", "direction", "visuals", "visually rich",
-    "finest details", "world", "universe", "suspense", "cinematography", "framing", "music",
-    "ending", "final scene", "spin-off", "promising director", "del toro", "kurosawa",
-    "kubrick", "scorsese", "miller", "carpenter", "argento", "kobayashi", "teshigahara",
-    "kobo abe", "cameron", "coogler", "rose glass", "berger", "storytelling",
-]
-
-PERSONAL_AND_DNA_TERMS = [
-    "my heart", "when i was a kid", "my generation", "my father", "my mother",
-    "loneliness", "every morning", "mentor", "bought a jacket", "by myself",
-    "mgs", "metal gear", "snatcher", "death stranding", "boktai", "ocelot",
-    "solid snake", "stealth", "shaped", "influence", "influenced", "inspired",
-    "nutrients", "flesh of", "creative gene", "70%",
-]
-
-CURATED_CANON_TYPES = {
-    "gq_top_4", "rt_top_5", "mgs_dna_core", "junkerhq_top_30", "criterion_closet"
+LEVEL_LABELS: Dict[int, str] = {
+    5: "Canon",
+    4: "Loved",
+    3: "Liked",
+    2: "Noted",
+    1: "Dismissed",
 }
 
-ALL_CURATED_TYPES = CURATED_CANON_TYPES | {"annual_top_list", "junkerhq_runner_up"}
+# Curated source type -> minimum level implied by being selected for that list.
+SOURCE_TYPE_LEVELS: Dict[str, int] = {
+    "gq_top_4": 5,             # GQ All-Time Top 4
+    "rt_top_5": 5,             # Rotten Tomatoes Five Favorite Films
+    "mgs_dna_core": 5,         # Junker HQ Core 7 films that shaped Metal Gear Solid
+    "junkerhq_top_30": 5,      # Junker HQ All-Time Top 30 Personal Favorites
+    "criterion_closet": 5,     # Criterion Collection Closet Picks
+    "annual_top_list": 4,      # Year-End / Mid-Year Top Movies List
+    "junkerhq_runner_up": 4,   # Junker HQ Runners-Up / MGS Influences
+}
+
+SOURCE_TYPE_CONTEXT: Dict[str, str] = {
+    "gq_top_4": "All-time Top 4 (GQ)",
+    "rt_top_5": "Five Favorite Films (Rotten Tomatoes)",
+    "mgs_dna_core": "Core Metal Gear Solid influence",
+    "junkerhq_top_30": "All-time Top 30 personal favorite",
+    "criterion_closet": "Criterion Closet pick",
+    "annual_top_list": "Year-end top list selection",
+    "junkerhq_runner_up": "Metal Gear Solid influence (runner-up)",
+}
+
+ALL_CURATED_TYPES = set(SOURCE_TYPE_LEVELS)
+
+RAVE_PHRASES = [
+    "masterpiece", "history of cinema", "miracle", "god of cinema", "first god", "burned into my brain",
+    "more than a film", "too good to be true", "so, so good", "speechless", "tearjerker", "must-see",
+    "must-watch", "best film", "best films", "best movie", "best movies", "top two", "top three",
+    "number one", "number-one", "of the year", "blown away", "should see",
+]
+
+STRONG_PRAISE_TERMS = [
+    "magnificent", "incredible", "amazing", "fantastic", "greatest", "brilliant", "towering", "stunning",
+    "superb", "perfect", "awesome", "eye-opener", "no compromise", "completely hooked", "hooked",
+    "favorite", "favourite", "cry", "cried", "crying", "bawled", "so great", "too cool",
+]
+
+MILD_PRAISE_TERMS = [
+    "excellent", "great", "loved", "love it", "enjoyed", "beautiful", "satisfying", "spot-on",
+    "impressive", "moving", "fun", "gripping", "terrific", "wonderful", "recommend", "recommended",
+    "well made", "well-made", "high-quality", "entertaining",
+]
+
+REWATCH_OR_OWNERSHIP_RE = re.compile(
+    r"\b(?:re-?watch(?:ed|ing)?|(?:watch|see|saw|seeing)\w* (?:it )?again|(?:second|third|fourth|fifth) time"
+    r"|for the (?!first\b)\w+ time|(?:bought|purchased|picked (?:it )?up|i have|i own)\b[^.!?]{0,60}"
+    r"\b(?:4k|uhd|blu-?ray|bd|dvd|box set|edition)|4k uhd|box set|special edition)\b",
+    re.IGNORECASE,
+)
+
+NEGATION_RE = re.compile(r"\b(?:not|never|no|hardly|isn't|wasn't|didn't|don't|doesn't|wouldn't)\W+(?:\w+\W+){0,2}$", re.IGNORECASE)
+
+_TERM_PATTERNS: Dict[str, "re.Pattern[str]"] = {}
+
+
+def _term_pattern(term: str) -> "re.Pattern[str]":
+    pattern = _TERM_PATTERNS.get(term)
+    if pattern is None:
+        pattern = re.compile(r"(?<![\w-])" + re.escape(term) + r"(?![\w-])", re.IGNORECASE)
+        _TERM_PATTERNS[term] = pattern
+    return pattern
+
+
+def _count_term_hits(text: str, terms: List[str]) -> List[str]:
+    """
+    Returns the terms that appear as whole words/phrases and are not negated
+    (e.g. 'not a masterpiece'). Shorter terms contained in an already-matched
+    longer term (e.g. 'hooked' inside 'completely hooked') are not double counted.
+    """
+    hits: List[str] = []
+    claimed: List[Tuple[int, int]] = []
+    for term in sorted(terms, key=len, reverse=True):
+        for match in _term_pattern(term).finditer(text):
+            span = match.span()
+            if any(s <= span[0] and span[1] <= e for s, e in claimed):
+                continue
+            if NEGATION_RE.search(text[max(0, span[0] - 40):span[0]]):
+                continue
+            claimed.append(span)
+            hits.append(term)
+            break
+    return hits
 
 
 @dataclass
-class ScoreBreakdown:
-    total_score: int
-    tier: str
-    word_count_pts: float
-    sentiment_pts: float
-    prestige_pts: float
-    recurrence_pts: float
+class EnthusiasmRating:
+    level: int
+    label: str
     is_dismissal: bool
-    sentiment_summary: str
+    reason: str
+    method: str  # "source", "llm", "keywords", or "dismissal"
 
 
 def is_one_sentence_dismissal(review_text: str, source_types: List[str]) -> bool:
@@ -801,20 +835,23 @@ def is_one_sentence_dismissal(review_text: str, source_types: List[str]) -> bool
     return False
 
 
-def is_editorial_list_blurb(review_text: str, source_types: List[str]) -> bool:
+def classify_review_text_keywords(review_text: str) -> Tuple[int, str]:
     """
-    Detects when the stored review string is a third-person editorial list attribution
-    (e.g., 'Named to Hideo Kojima's Top Foreign Theatrical Releases of the Year list.')
-    rather than a verbatim first-person Kojima quote.
+    Keyword fallback classifier for free-text reviews. Returns (level, reason) with
+    level 4 (Loved), 3 (Liked), or 2 (Noted).
     """
-    if not any(t in ALL_CURATED_TYPES for t in source_types):
-        return False
-    stripped = review_text.strip()
-    if not stripped:
-        return True
-    if EDITORIAL_LIST_BLURB_RE.match(stripped) and not FIRST_PERSON_VOICE_RE.search(stripped):
-        return True
-    return False
+    raves = _count_term_hits(review_text, RAVE_PHRASES)
+    strong = _count_term_hits(review_text, STRONG_PRAISE_TERMS)
+    mild = _count_term_hits(review_text, MILD_PRAISE_TERMS)
+    all_praise = raves + strong + mild
+
+    if raves or strong or len(all_praise) >= 3:
+        return 4, f"Rave language: {', '.join(all_praise)}."
+    if all_praise:
+        return 3, f"Positive language: {', '.join(all_praise)}."
+    if REWATCH_OR_OWNERSHIP_RE.search(review_text):
+        return 3, "Chose to rewatch it or owns a premium edition."
+    return 2, "Mentions or discusses the film without clear praise."
 
 
 def analyze_sentiment_with_llm(
@@ -823,25 +860,20 @@ def analyze_sentiment_with_llm(
     sources: Optional[List[Dict[str, str]]] = None,
 ) -> Optional[Dict[str, Any]]:
     """
-    Calls OpenAI, Gemini, or local Ollama to score sentiment & depth (0-35 pts).
+    Calls OpenAI, Gemini, or local Ollama to classify a review as loved / liked / noted.
     Returns None if LLM_PROVIDER is 'heuristic' or if the network call fails.
     """
     if LLM_PROVIDER == "heuristic":
         return None
 
-    source_labels = ", ".join(s.get("label", s.get("type", "")) for s in (sources or []))
     prompt = (
-        f"Analyze Hideo Kojima's enthusiasm for the movie '{title}'.\n"
-        f"Curated Sources: {source_labels or 'Standalone X Review'}\n"
-        f"Review / List Commentary:\n\"\"\"{review_text}\"\"\"\n\n"
-        "Note: Kojima watches 250+ films a year; inclusion on his Year-End Top List, Criterion Closet, "
-        "or All-Time Favorite lists is itself a major signal of high enthusiasm even if the text is a "
-        "third-person list summary.\n"
-        "Score on three dimensions and return strict JSON:\n"
-        "- praise_intensity (0 to 15): Emotional resonance, superlative praise, or list selectivity.\n"
-        "- craft_and_personal (0 to 10): Filmmaking craft admiration or personal reflection.\n"
-        "- creative_resonance (0 to 10): Connection to his creative DNA, favorite auteurs, or canon.\n"
-        "- summary (string): 1-sentence summary of his enthusiasm signals."
+        f"Classify Hideo Kojima's enthusiasm for the movie '{title}' from his post below.\n"
+        f"Post:\n\"\"\"{review_text}\"\"\"\n\n"
+        "Choose exactly one level:\n"
+        "- \"loved\": a rave - superlatives, strong emotion, calls it among the best, or says it moved him deeply.\n"
+        "- \"liked\": clearly positive or recommends it, or he chose to rewatch it / owns a premium edition.\n"
+        "- \"noted\": neutral, purely descriptive or analytical, mixed, or only announces that he is watching it.\n"
+        "Return strict JSON: {\"level\": \"loved\" | \"liked\" | \"noted\", \"reason\": \"<one short sentence>\"}"
     )
 
     try:
@@ -900,173 +932,62 @@ def analyze_sentiment_with_llm(
     return None
 
 
-def _curated_sentiment_baseline(source_types: List[str], editorial_blurb: bool) -> float:
-    """
-    Returns the baseline sentiment score (out of 35) implied by the highest-selectivity
-    curated list the movie belongs to. When the stored text is only a third-person
-    editorial list attribution (e.g., 'Named to Hideo Kojima's Top Foreign Theatrical Releases...'),
-    a slightly higher floor is applied so missing quote text does not penalize list picks.
-    """
-    if any(t in {"gq_top_4", "rt_top_5"} for t in source_types):
-        return 30.0 if editorial_blurb else 27.5
-    if "mgs_dna_core" in source_types:
-        return 28.5 if editorial_blurb else 25.5
-    if any(t in {"junkerhq_top_30", "criterion_closet"} for t in source_types):
-        return 27.5 if editorial_blurb else 23.5
-    if "annual_top_list" in source_types:
-        return 27.5 if editorial_blurb else 23.0
-    if "junkerhq_runner_up" in source_types:
-        return 22.0 if editorial_blurb else 19.0
-    return 16.0
-
-
-def compute_enthusiasm_score(
+def compute_enthusiasm_level(
     title: str,
     review_text: str,
     sources: List[Dict[str, str]],
-) -> ScoreBreakdown:
+) -> EnthusiasmRating:
     """
-    Computes the 0-100 Evidence-Aware Multi-Factor Kojima Enthusiasm Score:
-      1. Elaboration & List Selectivity Curve (W: 0 - 30 pts)
-         — Penalizes 1-sentence 'I watched X' dismissals (0 pts).
-         — Rewards long-form commentary while applying selectivity floors for curated canon/annual lists.
-      2. Multi-Signal Sentiment, Craft & Creative Resonance (S: 0 - 35 pts)
-         — Evaluates Superlative Praise, Filmmaking Craft/Auteur admiration, and Personal/Creative DNA,
-           combined with the implicit enthusiasm baseline of any curated list selection.
-      3. Curated Prestige & Canon Bonus (P: 0 - 25 pts)
-      4. Cross-Source & Canon Recurrence Bonus (R: 0 - 10 pts)
+    Rates Kojima's enthusiasm on a 5-level scale:
+      5 Canon     - on an all-time list (GQ, Rotten Tomatoes, MGS DNA, Junker HQ Top 30, Criterion Closet)
+      4 Loved     - on a year-end top list / MGS runner-up list, or the review text is a rave
+      3 Liked     - positive review, or a rewatch / premium-edition ownership signal
+      2 Noted     - neutral, analytical, or a viewing announcement
+      1 Dismissed - the one-sentence 'I watched X at the theater.' non-review
+    The final level is the max of the curated-source level and the text level. Text is only
+    classified (LLM when configured, keyword fallback otherwise) when it could raise the level.
     """
     source_types = [s.get("type", "x_review") for s in sources] if sources else ["x_review"]
-    dismissal = is_one_sentence_dismissal(review_text, source_types)
-    editorial_blurb = is_editorial_list_blurb(review_text, source_types)
-    is_all_time_canon = any(t in CURATED_CANON_TYPES for t in source_types)
-    is_top_five = any(t in {"gq_top_4", "rt_top_5"} for t in source_types)
 
-    words = review_text.strip().split()
-    word_count = len(words)
-
-    lower_text = review_text.lower()
-    praise_hits = sum(1 for term in HIGH_PRAISE_TERMS if term in lower_text)
-    craft_hits = sum(1 for term in CRAFT_AND_AUTEUR_TERMS if term in lower_text)
-    dna_hits = sum(1 for term in PERSONAL_AND_DNA_TERMS if term in lower_text)
-    exclamations = review_text.count("!")
-
-    # 1. Word-Count / Elaboration & Selectivity Curve (0 - 30 pts)
-    if dismissal:
-        word_pts = 0.0
-    else:
-        base_word_pts = min(30.0, round(7.2 * math.log(word_count + 1), 1))
-        if is_top_five:
-            word_pts = max(26.5, base_word_pts)
-        elif "mgs_dna_core" in source_types:
-            word_pts = max(25.0 if editorial_blurb else 24.5, base_word_pts)
-        elif is_all_time_canon or "annual_top_list" in source_types:
-            word_pts = max(24.5 if editorial_blurb else 23.5, base_word_pts)
-        else:
-            word_pts = base_word_pts
-
-    # 2. Sentiment, Craft & Creative Resonance (0 - 35 pts)
-    baseline_sentiment = _curated_sentiment_baseline(source_types, editorial_blurb)
-    llm_result = None if dismissal else analyze_sentiment_with_llm(title, review_text, sources)
-    if llm_result:
-        praise = min(15.0, float(llm_result.get("praise_intensity", 0)))
-        craft_personal = min(
-            10.0,
-            float(llm_result.get("craft_and_personal", llm_result.get("personal_connection", 0))),
+    if is_one_sentence_dismissal(review_text, source_types):
+        return EnthusiasmRating(
+            level=1,
+            label=LEVEL_LABELS[1],
+            is_dismissal=True,
+            reason="One-sentence 'I watched it' non-review (no praise commentary).",
+            method="dismissal",
         )
-        influence = min(
-            10.0,
-            float(llm_result.get("creative_resonance", llm_result.get("creative_influence", 0))),
+
+    source_level = max((SOURCE_TYPE_LEVELS.get(t, 0) for t in source_types), default=0)
+    if source_level >= 4:
+        best_type = max(source_types, key=lambda t: SOURCE_TYPE_LEVELS.get(t, 0))
+        return EnthusiasmRating(
+            level=source_level,
+            label=LEVEL_LABELS[source_level],
+            is_dismissal=False,
+            reason=f"{SOURCE_TYPE_CONTEXT.get(best_type, best_type)}.",
+            method="source",
         )
-        sentiment_pts = min(35.0, max(baseline_sentiment, round(praise + craft_personal + influence, 1)))
-        sentiment_summary = str(llm_result.get("summary", "AI-scored review sentiment."))
-    elif dismissal:
-        sentiment_pts = 2.0
-        sentiment_summary = "Infamous 1-sentence 'I watched it' non-review (no praise commentary)."
-    else:
-        is_standalone_x = not any(t in ALL_CURATED_TYPES for t in source_types)
-        praise_weight = 4.0 if is_standalone_x else 3.0
-        craft_weight = 2.5 if is_standalone_x else 2.0
-        signal_boost = (
-            praise_hits * praise_weight
-            + craft_hits * craft_weight
-            + dna_hits * 3.0
-            + min(4.5, exclamations * 1.5)
-        )
-        sentiment_pts = min(35.0, round(baseline_sentiment + signal_boost, 1))
 
-        if is_top_five:
-            list_context = "All-Time Top 4/5 canon selection"
-        elif "mgs_dna_core" in source_types:
-            list_context = "Core Metal Gear Solid DNA influence"
-        elif "criterion_closet" in source_types:
-            list_context = "Criterion Closet hand-picked classic"
-        elif "junkerhq_top_30" in source_types:
-            list_context = "All-Time Top 30 personal favorite"
-        elif "annual_top_list" in source_types:
-            list_context = "Year-End Top Movies of the Year selection"
+    text_level, reason, method = 0, "", "keywords"
+    llm_result = analyze_sentiment_with_llm(title, review_text, sources)
+    if isinstance(llm_result, dict):
+        llm_level = {"loved": 4, "liked": 3, "noted": 2}.get(str(llm_result.get("level", "")).strip().lower())
+        if llm_level:
+            text_level, method = llm_level, "llm"
+            reason = str(llm_result.get("reason") or "AI-classified review.").strip()
         else:
-            list_context = "Standalone review"
+            print(f"[warn] LLM returned an unrecognised level for {title}: {llm_result!r}; using keyword fallback")
+    if not text_level:
+        text_level, reason = classify_review_text_keywords(review_text)
 
-        if editorial_blurb and (praise_hits + craft_hits + dna_hits) == 0:
-            sentiment_summary = (
-                f"{list_context} (editorial list attribution; scored via curated list selectivity)."
-            )
-        else:
-            sentiment_summary = (
-                f"{list_context} — {praise_hits} superlative praise, "
-                f"{craft_hits} craft/auteur, and {dna_hits} personal/DNA markers."
-            )
-
-    # 3. Curated Prestige & Canon Bonus (0 - 25 pts)
-    if dismissal:
-        prestige_pts = 5.0
-    else:
-        base_prestige = max((SOURCE_PRESTIGE_WEIGHTS.get(t, 10) for t in source_types), default=10)
-        # Standalone X raves with strong praise/craft commentary get a prestige boost (10 -> 14)
-        if base_prestige == 10 and (praise_hits >= 2 or (praise_hits >= 1 and craft_hits >= 1)):
-            prestige_pts = 14.0
-        else:
-            prestige_pts = float(base_prestige)
-
-    # 4. Cross-Source & Canon Recurrence Bonus (0 - 10 pts)
-    if dismissal:
-        recurrence_pts = 0.0
-    else:
-        unique_urls = {s.get("url", "") for s in sources if s.get("url")}
-        url_bonus = float(min(10, max(0, (len(unique_urls) - 1) * 5)))
-        # Lifelong canon entries (MGS DNA, Junker HQ Top 30, Criterion Closet) represent
-        # recurring multi-year citations even when indexed under a single archive URL.
-        if url_bonus == 0.0 and is_all_time_canon:
-            recurrence_pts = 4.0
-        elif url_bonus == 0.0 and "annual_top_list" in source_types:
-            recurrence_pts = 3.0
-        else:
-            recurrence_pts = url_bonus
-
-    raw_total = round(word_pts + sentiment_pts + prestige_pts + recurrence_pts)
-    total = min(20, raw_total) if dismissal else min(100, raw_total)
-
-    if total >= 90:
-        tier = "S-Tier: Essential Kojima DNA"
-    elif total >= 75:
-        tier = "A-Tier: All-Time Favorite / Rave"
-    elif total >= 55:
-        tier = "B-Tier: Strong Recommendation"
-    elif total >= 25:
-        tier = "C-Tier: Notable Mention"
-    else:
-        tier = "D-Tier: One-Sentence Dismissal"
-
-    return ScoreBreakdown(
-        total_score=total,
-        tier=tier,
-        word_count_pts=word_pts,
-        sentiment_pts=sentiment_pts,
-        prestige_pts=prestige_pts,
-        recurrence_pts=recurrence_pts,
-        is_dismissal=dismissal,
-        sentiment_summary=sentiment_summary,
+    level = max(source_level, text_level)
+    return EnthusiasmRating(
+        level=level,
+        label=LEVEL_LABELS[level],
+        is_dismissal=False,
+        reason=reason,
+        method=method,
     )
 
 
@@ -1279,7 +1200,7 @@ def _infer_recommended_at(title: str, item: Dict[str, Any], sources: List[Dict[s
     return time.strftime("%Y-%m-%d", time.gmtime())
 
 
-SCORING_ENGINE_VERSION = "v2.1"
+SCORING_ENGINE_VERSION = "v3.0"
 
 
 def upsert_recommendation(
@@ -1361,15 +1282,9 @@ def upsert_recommendation(
                     if genres_json == "[]" and meta.get("genres"):
                         genres_json = json.dumps(meta["genres"])
 
-            breakdown = compute_enthusiasm_score(title, review_text, sources)
+            rating = compute_enthusiasm_level(title, review_text, sources)
             primary_source = sources[0] if sources else {"label": "Kojima Review", "url": ""}
-            score_breakdown_str = (
-                f"Total: {breakdown.total_score}/100 "
-                f"(Words: {breakdown.word_count_pts}/30, "
-                f"Sentiment: {breakdown.sentiment_pts}/35, "
-                f"Prestige: {breakdown.prestige_pts}/25, "
-                f"Multi-Source: {breakdown.recurrence_pts}/10)"
-            )
+            score_breakdown_str = f"{rating.label} ({rating.level}/5) - {rating.reason}"
             now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
             conn.execute(
@@ -1421,14 +1336,14 @@ def upsert_recommendation(
                     review_text,
                     json.dumps(sources),
                     content_hash,
-                    breakdown.total_score,
-                    breakdown.tier,
-                    breakdown.word_count_pts,
-                    breakdown.sentiment_pts,
-                    breakdown.prestige_pts,
-                    breakdown.recurrence_pts,
-                    "yes" if breakdown.is_dismissal else "no",
-                    breakdown.sentiment_summary,
+                    rating.level,
+                    rating.label,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    "yes" if rating.is_dismissal else "no",
+                    rating.reason,
                     score_breakdown_str,
                     primary_source.get("url", ""),
                     primary_source.get("label", ""),

@@ -20,7 +20,7 @@ services:
       - KOJIMA_RSS_URLS=${KOJIMA_RSS_URLS:-}
       # Background RSS poll interval in seconds (0 = disable background polling)
       - SCRAPE_INTERVAL_SECONDS=${SCRAPE_INTERVAL_SECONDS:-3600}
-      # Enthusiasm Sentiment Engine: "heuristic" (default, zero-config), "gemini", "openai", or "ollama"
+      # Review classifier for X posts (Loved / Liked / Noted): "heuristic" keywords (default, zero-config), "gemini", "openai", or "ollama"
       - LLM_PROVIDER=${LLM_PROVIDER:-heuristic}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}

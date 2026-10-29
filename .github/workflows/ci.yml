@@ -11,6 +11,18 @@ on:
     # Runs daily at 06:00 UTC to refresh the Kojima movie recommendations feed & demo site
     - cron: "0 6 * * *"
   workflow_dispatch:
+    inputs:
+      force_rescore:
+        description: "Re-rate every movie (run once after changing LLM_PROVIDER)"
+        type: boolean
+        default: false
+
+# Workflow-level so every generate-feed run (including the one inside build-all)
+# uses the same provider; it is part of each entry's content hash.
+env:
+  LLM_PROVIDER: ${{ vars.LLM_PROVIDER || 'heuristic' }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -95,7 +107,7 @@ jobs:
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
           KOJIMA_RSS_URLS: ${{ vars.KOJIMA_RSS_URLS || secrets.KOJIMA_RSS_URLS }}
-        run: npm run generate-feed
+        run: npm run generate-feed -- ${{ inputs.force_rescore && '--force-rescore' || '' }}
 
       - name: Commit updated seed dataset if new recommendations were scraped
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

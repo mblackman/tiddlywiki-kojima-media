@@ -3,8 +3,8 @@ tags: [[Media Dashboard]]
 caption: 🎬 Kojima Movie Tracker
 type: text/vnd.tiddlywiki
 
-\define sort-score-desc() [sort[englishTitle]] +[!nsort[kojima-score]]
-\define sort-score-asc() [sort[englishTitle]] +[nsort[kojima-score]]
+\define sort-score-desc() [sort[englishTitle]] +[!sort[kojima-recommended-at]] +[!nsort[kojima-score]]
+\define sort-score-asc() [sort[englishTitle]] +[!sort[kojima-recommended-at]] +[nsort[kojima-score]]
 \define sort-rec-desc() [!nsort[kojima-score]] +[!sort[kojima-recommended-at]]
 \define sort-rec-asc() [!nsort[kojima-score]] +[sort[kojima-recommended-at]]
 \define sort-year-desc() [!nsort[kojima-score]] +[!nsort[year]]
@@ -56,7 +56,7 @@ type: text/vnd.tiddlywiki
     totalCount={{{ [tag[Movie]tag[Kojima]count[]] }}}
     seenCount={{{ [tag[Movie]tag[Kojima]field:status[Completed]count[]] }}}
     backlogCount={{{ [tag[Movie]tag[Kojima]field:status[Backlog]count[]] }}}
-    essentialCount={{{ [tag[Movie]tag[Kojima]] :filter[{!!kojima-score}compare:number:gteq[75]] +[count[]] }}}
+    essentialCount={{{ [tag[Movie]tag[Kojima]] :filter[{!!kojima-score}compare:number:gteq[4]] +[count[]] }}}
   >
     <div class="kj-stats-grid">
       <div class="kj-stat-card kj-stat-card--accent">
@@ -72,7 +72,7 @@ type: text/vnd.tiddlywiki
         <span class="kj-stat-card__value kj-stat-card__value--warning"><<backlogCount>></span>
       </div>
       <div class="kj-stat-card kj-stat-card--info">
-        <span class="kj-stat-card__label">S/A-Tier Essentials (75+)</span>
+        <span class="kj-stat-card__label">Essentials (Canon + Loved)</span>
         <span class="kj-stat-card__value kj-stat-card__value--info"><<essentialCount>></span>
       </div>
     </div>
@@ -81,7 +81,7 @@ type: text/vnd.tiddlywiki
   <!-- FILTER & SEARCH CONTROLS -->
   <$let
     statusFilter={{{ [[$:/state/kojima-dashboard/status]get[text]else[All]] }}}
-    tierFilter={{{ [[$:/state/kojima-dashboard/tier]get[text]else[All]] }}}
+    tierFilter={{{ [[$:/state/kojima-dashboard/level]get[text]else[All]] }}}
     tierPrefix={{{ [<tierFilter>match[All]then[]else<tierFilter>] }}}
     searchToken={{{ [[$:/temp/kojima-dashboard/search]get[text]trim[]!is[blank]else[ ]] }}}
     sortMode={{{ [[$:/state/kojima-dashboard/sort]get[text]else[score-desc]] }}}
@@ -112,8 +112,8 @@ type: text/vnd.tiddlywiki
         </div>
 
         <$select tiddler="$:/state/kojima-dashboard/sort" default="score-desc" class="kj-select" aria-label="Sort Kojima recommendations">
-          <option value="score-desc">Sort: ⚡ Enthusiasm Score (High → Low)</option>
-          <option value="score-asc">Sort: ⚡ Enthusiasm Score (Low → High)</option>
+          <option value="score-desc">Sort: ★ Enthusiasm (High → Low)</option>
+          <option value="score-asc">Sort: ★ Enthusiasm (Low → High)</option>
           <option value="recommended-desc">Sort: 📅 Date Recommended (Newest)</option>
           <option value="recommended-asc">Sort: 📅 Date Recommended (Oldest)</option>
           <option value="year-desc">Sort: 🎬 Release Year (Newest Films)</option>
@@ -125,13 +125,13 @@ type: text/vnd.tiddlywiki
           <option value="director-asc">Sort: 🎥 Director (A → Z)</option>
         </$select>
 
-        <$select tiddler="$:/state/kojima-dashboard/tier" default="All" class="kj-select" aria-label="Filter by Kojima Tier">
-          <option value="All">All Tiers</option>
-          <option value="S-Tier">S-Tier (90–100)</option>
-          <option value="A-Tier">A-Tier (75–89)</option>
-          <option value="B-Tier">B-Tier (55–74)</option>
-          <option value="C-Tier">C-Tier (25–54)</option>
-          <option value="D-Tier">D-Tier (Dismissals)</option>
+        <$select tiddler="$:/state/kojima-dashboard/level" default="All" class="kj-select" aria-label="Filter by enthusiasm level">
+          <option value="All">All Levels</option>
+          <option value="Canon">★★★★★ Canon</option>
+          <option value="Loved">★★★★☆ Loved</option>
+          <option value="Liked">★★★☆☆ Liked</option>
+          <option value="Noted">★★☆☆☆ Noted</option>
+          <option value="Dismissed">★☆☆☆☆ Dismissed</option>
         </$select>
       </div>
     </div>
@@ -145,8 +145,6 @@ type: text/vnd.tiddlywiki
         <$let
           isDismissal={{{ [{!!kojima-is-dismissal}match[yes]then[yes]else[no]] }}}
           isCompleted={{{ [{!!status}match[Completed]then[yes]else[no]] }}}
-          scoreVal={{{ [{!!kojima-score}!is[blank]else[0]] }}}
-          scoreClass={{{ [<scoreVal>compare:number:gteq[90]then[kj-score-badge kj-score-badge--s-tier]] :else[<scoreVal>compare:number:gteq[75]then[kj-score-badge kj-score-badge--a-tier]] :else[<isDismissal>match[yes]then[kj-score-badge kj-score-badge--d-tier]else[kj-score-badge]] }}}
           cardClass={{{ [<isDismissal>match[yes]then[kj-movie-card kj-movie-card--dismissal]] :else[<isCompleted>match[yes]then[kj-movie-card kj-movie-card--completed]else[kj-movie-card]] }}}
           statusLower={{{ [{!!status}lowercase[]else[backlog]] }}}
         >
@@ -165,15 +163,10 @@ type: text/vnd.tiddlywiki
             <!-- DETAILS & KOJIMA REVIEW -->
             <div class="kj-movie-body">
               <div class="kj-movie-title-row">
-                <span class=<<scoreClass>> title={{!!kojima-score-breakdown}}>
-                  ⚡ <$text text=<<scoreVal>>/>/100
-                </span>
+                <$transclude $tiddler="$:/plugins/mblackman/kojima-media/ui/rating-badge" $mode="inline"/>
                 <$link to={{!!title}} class="kj-movie-title-link">
                   <$view field="title"/>
                 </$link>
-                <$list filter="[all[current]has[kojima-tier]!field:kojima-tier[]]" variable="ignoreTier">
-                  <span class="kj-tier-pill"><$text text={{!!kojima-tier}}/></span>
-                </$list>
               </div>
 
               <div class="kj-movie-submeta">

@@ -5,6 +5,25 @@ type: text/vnd.tiddlywiki
 
 Companion plugin for [[Media Importer|$:/plugins/mblackman/media-importer]] that imports, scores, and tracks movies recommended or reviewed by ''Hideo Kojima''.
 
-* ''Dashboard'': Open [[Kojima Movie Recommendations]] to browse movies ranked by the 0–100 ''Multi-Factor Kojima Enthusiasm Score'', filter by watch status or tier, and toggle movies between `Backlog` and `Completed` (Seen).
+* ''Dashboard'': Open [[Kojima Movie Recommendations]] to browse movies ranked by the 5-level ''Kojima Enthusiasm Rating'' (★★★★★ Canon, ★★★★☆ Loved, ★★★☆☆ Liked, ★★☆☆☆ Noted, ★☆☆☆☆ Dismissed), filter by watch status or level, and toggle movies between `Backlog` and `Completed` (Seen).
 * ''Media Importer Compatible'': Creates canonical `Movie` tiddlers tagged with `Movie` and `Kojima` while preserving existing watch status (`Completed`, `Active`, `Dropped`, `Backlog`), `favorite`, and `rating` across re-syncs.
 * ''Serverless GitHub Pages Feed (Default)'': Connects out of the box to `https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json` (updated on a schedule via GitHub Actions) with zero server setup required, or can be pointed to any custom JSON feed URL or self-hosted Docker sync service (`http://localhost:8765/api/kojima-recommendations`).
+
+
+!! ★ How Enthusiasm Ratings Work
+
+Each movie gets one of five levels based on ''where Kojima recommended it'' and ''what he said about it''.
+
+|!Level |!Means |!Given when |
+|★★★★★ ''Canon'' |All-time favorite |On an all-time list: GQ Top 4, Rotten Tomatoes Five Favorites, core MGS influences, Junker HQ Top 30, Criterion Closet |
+|★★★★☆ ''Loved'' |Championed |On a year-end top list or the Junker HQ runners-up, ''or'' his post is a rave (//masterpiece//, //made me cry//) |
+|★★★☆☆ ''Liked'' |Clear thumbs-up |His post is positive, or he rewatched it or bought a premium edition (4K, Blu-ray) |
+|★★☆☆☆ ''Noted'' |No verdict |He described or analyzed it, or just said he was watching it |
+|★☆☆☆☆ ''Dismissed'' |Non-review |A one-line //"Saw X at the theater."// post |
+
+* ''Lists outrank words.'' Picking a film for a list is a deliberate choice, so list picks set the level directly, and the highest list wins.
+* ''Evidence only adds.'' A short blurb never lowers a list pick, and post length doesn't matter.
+* ''Post text'' is classified by an AI model when the sync service has `LLM_PROVIDER` set, or by keywords otherwise. Negated praise like //"not a masterpiece"// is ignored.
+* ''Hover over a star badge'' to see why a movie got its rating.
+
+See the project README for the full rules and examples.

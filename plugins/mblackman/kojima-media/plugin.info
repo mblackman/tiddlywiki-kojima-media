@@ -1,7 +1,7 @@
 {
   "title": "$:/plugins/mblackman/kojima-media",
   "name": "Kojima Movie Tracker",
-  "description": "Hideo Kojima Movie Recommendations, Multi-Factor Enthusiasm Ranking, and Docker Sync for Media Importer",
+  "description": "Hideo Kojima Movie Recommendations, 5-Level Enthusiasm Rating, and Docker Sync for Media Importer",
   "author": "mblackman",
   "version": "0.1.0",
   "core-version": ">=5.3.0",
