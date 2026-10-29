@@ -54,7 +54,16 @@ PORT = int(os.getenv("PORT", "8765"))
 
 DEFAULT_DB_DIR = "/data" if os.path.isdir("/data") and os.access("/data", os.W_OK) else os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 KOJIMA_DB_PATH = os.getenv("KOJIMA_DB_PATH", os.path.join(DEFAULT_DB_DIR, "kojima_reviews.db"))
-KOJIMA_RSS_URLS = [u.strip() for u in os.getenv("KOJIMA_RSS_URLS", "").split(",") if u.strip()]
+DEFAULT_KOJIMA_RSS_URLS = [
+    "https://letterboxd.com/kojima_hideo/rss/",
+]
+DEFAULT_KOJIMA_NEWS_RSS_URLS = [
+    "https://news.google.com/rss/search?q=%22Hideo+Kojima%22+(movie+OR+film+OR+review+OR+watched)+when:1y&hl=en-US&gl=US&ceid=US:en",
+    "https://www.bing.com/news/search?q=%22Hideo+Kojima%22+review+movie&format=rss",
+]
+_env_rss_urls = [u.strip() for u in os.getenv("KOJIMA_RSS_URLS", "").split(",") if u.strip()]
+KOJIMA_RSS_URLS = _env_rss_urls if _env_rss_urls else list(DEFAULT_KOJIMA_RSS_URLS)
+KOJIMA_DISCOVER_X_REVIEWS = os.getenv("KOJIMA_DISCOVER_X_REVIEWS", "1") not in ("0", "false", "no")
 SCRAPE_INTERVAL_SECONDS = int(os.getenv("SCRAPE_INTERVAL_SECONDS", "0"))
 
 # ---------------------------------------------------------------------------
@@ -77,18 +86,18 @@ SOURCE_DEFAULT_DATES: Dict[str, str] = {
     "mgs_dna_core": "2008-06-12",
     "junkerhq_top_30": "2008-06-12",
     "criterion_closet": "2024-11-12",
-    "annual_top_list": "2025-12-28",
+    "annual_top_list": "2026-01-06",
     "junkerhq_runner_up": "2008-06-12",
     "x_review": "2025-12-29",
 }
 
 MOVIE_RECOMMENDED_DATES: Dict[str, str] = {
     "Avatar: Fire and Ash": "2025-12-29",
-    "Conclave": "2025-12-28",
-    "Love Lies Bleeding": "2025-12-28",
-    "Sinners": "2025-12-28",
-    "Frankenstein": "2025-12-28",
-    "KPop Demon Hunters": "2025-12-28",
+    "Conclave": "2026-01-06",
+    "Love Lies Bleeding": "2026-01-06",
+    "Sinners": "2026-01-06",
+    "Frankenstein": "2026-01-06",
+    "KPop Demon Hunters": "2026-01-06",
     "Taxi Driver": "2025-05-14",
     "2001: A Space Odyssey": "2025-05-14",
     "High and Low": "2025-05-14",
@@ -1124,7 +1133,13 @@ def fetch_tmdb_metadata(tmdb_id: str) -> Dict[str, Any]:
 POST_PATTERNS = [
     # e.g. "Watched 'Furiosa: A Mad Max Saga' (2024) at the theater."
     re.compile(
-        r"""(?:i\s+)?(?:went\s+to\s+see|saw|watched|finally\s+got\s+to\s+see|screened)\s+['"“”『「](?P<title>[^'"“”』」]{2,80})['"“”』」](?:\s*\((?P<year>\d{4})\))?""",
+        r"""(?:i\s+)?(?:went\s+to\s+(?:see|the\s+[\w\s\-]+premiere\s+of)|saw|watched|rewatch(?:ed|ing)?|finally\s+got\s+to\s+(?:see|watch)|screened)\s+['"“”『「](?P<title>[^'"“”』」]{2,80})['"“”』」](?:\s*\((?P<year>\d{4})\))?""",
+        re.IGNORECASE,
+    ),
+    # e.g. "I went to see Darren Aronofsky’s “Caught Stealing.”" or "I watched Christopher Nolan’s “The Odyssey”"
+    # or "Director Iñárritu’s “DIGGER” is a film..." or "curious about Patrick Hughes’ “War Machine.”"
+    re.compile(
+        r"""(?:went\s+to\s+(?:see|the\s+[\w\s\-]+premiere\s+of)|saw|watched|rewatch(?:ed|ing)?|finally\s+got\s+to\s+(?:see|watch)|screened|curious\s+about|director\s+[A-Z][\w\s.\-’'ñáéíóú]{1,35}[’']s)\b[^.!?'"“”『「\n]{0,65}?['"“”『「](?P<title>[^'"“”』」]{2,80})['"“”』」](?:\s*\((?P<year>\d{4})\))?""",
         re.IGNORECASE,
     ),
     # e.g. "Saw Madame Web at the theater." or "Saw Captain Marvel."
@@ -1137,6 +1152,13 @@ POST_PATTERNS = [
         r"""^(?P<title>[^,\n]{2,70}),\s*(?P<year>(?:19|20)\d{2})\b""",
     ),
 ]
+
+
+def _clean_extracted_title(raw_title: str) -> str:
+    title = raw_title.strip(" .,'\"“”!?")
+    # Strip inline format notes like "Odyssey (entirely shot on IMAX® film cameras)"
+    title = re.sub(r"\s*\((?:entirely\s+shot|shot\s+entirely|4k|imax|3d)[^)]*\)$", "", title, flags=re.IGNORECASE).strip(" .,'\"“”!?")
+    return title
 
 
 def extract_movie_from_post(raw_text: str) -> Optional[Tuple[str, str, str]]:
@@ -1152,7 +1174,7 @@ def extract_movie_from_post(raw_text: str) -> Optional[Tuple[str, str, str]]:
     for pattern in POST_PATTERNS:
         m = pattern.search(cleaned)
         if m:
-            title = m.group("title").strip(" .,'\"“”")
+            title = _clean_extracted_title(m.group("title"))
             year = (m.groupdict().get("year") or "0000").strip()
             if title and len(title) >= 2:
                 return (title, year, cleaned)
@@ -1471,9 +1493,44 @@ def _normalize_date_str(raw_date: str) -> str:
         return ""
 
 
+LETTERBOXD_NS = "{https://letterboxd.com}"
+TMDB_NS = "{https://themoviedb.org}"
+X_STATUS_URL_RE = re.compile(
+    r"https?://(?:x|twitter)\.com/HIDEO_KOJIMA_EN/status/(?P<id>\d{15,22})",
+    re.IGNORECASE,
+)
+POSTER_IMG_SRC_RE = re.compile(
+    r"""<img[^>]+src=['"](?P<src>https?://[^'"]+)['"]""",
+    re.IGNORECASE,
+)
+
+
+def _clean_rss_description(raw_desc: str) -> str:
+    """
+    Strips HTML tags, embedded Letterboxd poster <img>, and trailing X/Twitter status URLs
+    or QRT footers so only the verbatim review text remains.
+    """
+    cleaned = re.sub(r"<img[^>]*>", " ", raw_desc, flags=re.IGNORECASE)
+    cleaned = re.sub(r"<br\s*/?>", "\n", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"<[^>]+>", " ", cleaned)
+    cleaned = html.unescape(cleaned)
+    # Remove QRT footer blocks and bare x.com/twitter.com status links
+    cleaned = re.sub(r"-{4,}\s*QRT\s+on:.*$", "", cleaned, flags=re.IGNORECASE | re.DOTALL)
+    cleaned = re.sub(
+        r"(?:https?://)?(?:www\.)?(?:x|twitter)\.com/HIDEO_KOJIMA_EN/status/\d+\S*",
+        "",
+        cleaned,
+        flags=re.IGNORECASE,
+    )
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    return cleaned
+
+
 def parse_rss_or_atom_xml(xml_text: str) -> List[Dict[str, str]]:
     """
-    Parses RSS 2.0 (<item>) or Atom (<entry>) XML into a list of {guid, title, text, url, date}.
+    Parses RSS 2.0 (<item>) or Atom (<entry>) XML into a list of
+    {guid, title, text, url, date, explicit_title, explicit_year, explicit_tmdb_id, poster}.
+    Supports Letterboxd (<letterboxd:filmTitle>, <letterboxd:filmYear>, <letterboxd:watchedDate>, <tmdb:movieId>).
     """
     entries: List[Dict[str, str]] = []
     try:
@@ -1487,10 +1544,43 @@ def parse_rss_or_atom_xml(xml_text: str) -> List[Dict[str, str]]:
         desc = (item.findtext("description") or "").strip()
         link = (item.findtext("link") or "").strip()
         pub_date = _normalize_date_str(item.findtext("pubDate") or "")
-        guid = (item.findtext("guid") or link or title).strip()
-        combined = desc if len(desc) > len(title) else title
+        watched_date = _normalize_date_str(item.findtext(f"{LETTERBOXD_NS}watchedDate") or "")
+        lb_title = (item.findtext(f"{LETTERBOXD_NS}filmTitle") or "").strip()
+        lb_year = (item.findtext(f"{LETTERBOXD_NS}filmYear") or "").strip()
+        lb_tmdb_id = (item.findtext(f"{TMDB_NS}movieId") or "").strip()
+
+        # Skip non-movie Letterboxd list items (e.g. /list/best-movies-2025...)
+        if "letterboxd.com/" in link and "/list/" in link and not lb_title:
+            continue
+
+        poster_match = POSTER_IMG_SRC_RE.search(desc)
+        poster = poster_match.group("src").split("?")[0] if poster_match else ""
+
+        x_match = X_STATUS_URL_RE.search(desc) or X_STATUS_URL_RE.search(link)
+        canonical_url = (
+            f"https://x.com/HIDEO_KOJIMA_EN/status/{x_match.group('id')}"
+            if x_match
+            else link
+        )
+
+        cleaned_desc = _clean_rss_description(desc)
+        if cleaned_desc in ("{No caption}", ""):
+            cleaned_desc = ""
+
+        guid = (item.findtext("guid") or canonical_url or link or title).strip()
+        combined = cleaned_desc if (cleaned_desc and (lb_title or len(cleaned_desc) >= len(title))) else title
         if combined:
-            entries.append({"guid": guid, "title": title, "text": combined, "url": link, "date": pub_date})
+            entries.append({
+                "guid": guid,
+                "title": title,
+                "text": combined,
+                "url": canonical_url,
+                "date": watched_date or pub_date,
+                "explicit_title": lb_title,
+                "explicit_year": lb_year,
+                "explicit_tmdb_id": lb_tmdb_id,
+                "poster": poster,
+            })
 
     # Atom <entry>
     atom_ns = "{http://www.w3.org/2005/Atom}"
@@ -1517,9 +1607,56 @@ def parse_rss_or_atom_xml(xml_text: str) -> List[Dict[str, str]]:
         guid = (entry.findtext(f"{atom_ns}id") or entry.findtext("id") or link or title).strip()
         combined = f"{title}. {summary}".strip(". ") if summary and title not in summary else (summary or title)
         if combined:
-            entries.append({"guid": guid, "title": title, "text": combined, "url": link, "date": pub_date})
+            entries.append({
+                "guid": guid,
+                "title": title,
+                "text": combined,
+                "url": link,
+                "date": pub_date,
+                "explicit_title": "",
+                "explicit_year": "",
+                "explicit_tmdb_id": "",
+                "poster": "",
+            })
 
     return entries
+
+
+def fetch_fxtwitter_post(status_url_or_id: str) -> Optional[Dict[str, str]]:
+    """
+    Fetches verbatim tweet text and timestamp for a @HIDEO_KOJIMA_EN status via api.fxtwitter.com.
+    """
+    raw = (status_url_or_id or "").strip()
+    m = re.search(r"(?:status/|^(?P<bare>\d{15,22})$)(?P<id>\d{15,22})?", raw)
+    status_id = (m.group("bare") or m.group("id")) if m else ""
+    if not status_id:
+        m2 = X_STATUS_URL_RE.search(raw)
+        status_id = m2.group("id") if m2 else ""
+    if not status_id:
+        return None
+
+    api_url = f"https://api.fxtwitter.com/HIDEO_KOJIMA_EN/status/{status_id}"
+    try:
+        req = urllib.request.Request(
+            api_url,
+            headers={"User-Agent": "KojimaMovieTracker/1.0 (+https://github.com/mblackman)"},
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        tweet = data.get("tweet") or {}
+        text = str(tweet.get("text") or "").strip()
+        if not text:
+            return None
+        created_at = _normalize_date_str(str(tweet.get("created_at") or ""))
+        return {
+            "id": status_id,
+            "text": text,
+            "date": created_at,
+            "url": f"https://x.com/HIDEO_KOJIMA_EN/status/{status_id}",
+        }
+    except Exception as exc:
+        print(f"[warn] fxtwitter lookup failed for {status_id}: {exc}")
+        return None
 
 
 def ingest_raw_post(
@@ -1530,6 +1667,7 @@ def ingest_raw_post(
     explicit_title: Optional[str] = None,
     explicit_year: Optional[str] = None,
     explicit_tmdb_id: Optional[str] = None,
+    poster: Optional[str] = None,
     recommended_at: Optional[str] = None,
     guid: Optional[str] = None,
     db_path: Optional[str] = None,
@@ -1542,9 +1680,9 @@ def ingest_raw_post(
     post_guid = guid or hashlib.sha256(f"{source_url}|{raw_text}".encode("utf-8")).hexdigest()
 
     if explicit_title:
-        title = explicit_title.strip()
+        title = _clean_extracted_title(explicit_title)
         year = (explicit_year or "0000").strip()
-        review = raw_text.strip()
+        review = _clean_rss_description(raw_text) or raw_text.strip()
     else:
         extracted = extract_movie_from_post(raw_text)
         if not extracted:
@@ -1558,6 +1696,7 @@ def ingest_raw_post(
             "title": title,
             "year": year,
             "tmdb_id": tmdb_id,
+            "poster": poster or "",
             "review": review,
             "recommended_at": rec_date,
             "sources": [
@@ -1596,10 +1735,117 @@ def ingest_raw_post(
     return record
 
 
+def discover_kojima_x_reviews_from_news(
+    news_rss_urls: Optional[List[str]] = None,
+    db_path: Optional[str] = None,
+    max_articles_per_feed: int = 12,
+) -> List[Dict[str, Any]]:
+    """
+    Discovers new @HIDEO_KOJIMA_EN movie review statuses cited in entertainment press RSS feeds
+    (Google News / Bing News), resolves the verbatim tweet via api.fxtwitter.com, and ingests it.
+    """
+    init_db(db_path)
+    urls = news_rss_urls if news_rss_urls is not None else DEFAULT_KOJIMA_NEWS_RSS_URLS
+    ingested: List[Dict[str, Any]] = []
+
+    for feed_url in urls:
+        try:
+            req = urllib.request.Request(
+                feed_url,
+                headers={"User-Agent": "Mozilla/5.0 (compatible; KojimaMovieTracker/1.0)"},
+            )
+            with urllib.request.urlopen(req, timeout=12) as resp:
+                xml_text = resp.read().decode("utf-8", errors="replace")
+        except Exception as exc:
+            print(f"[warn] News RSS discovery fetch failed for {feed_url}: {exc}")
+            continue
+
+        entries = parse_rss_or_atom_xml(xml_text)
+        for entry in entries[:max_articles_per_feed]:
+            article_url = entry.get("url") or ""
+            if not article_url:
+                continue
+            article_guid = f"news-article::{article_url}"
+            with _DB_LOCK:
+                conn = get_db_connection(db_path)
+                try:
+                    seen = conn.execute(
+                        "SELECT 1 FROM scrape_log WHERE guid = ?", (article_guid,)
+                    ).fetchone()
+                finally:
+                    conn.close()
+            if seen:
+                continue
+
+            status_ids = set(X_STATUS_URL_RE.findall(entry.get("text") or ""))
+            if not status_ids and article_url.startswith(("http://", "https://")):
+                try:
+                    art_req = urllib.request.Request(
+                        article_url,
+                        headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"},
+                    )
+                    with urllib.request.urlopen(art_req, timeout=10) as art_resp:
+                        html_body = art_resp.read().decode("utf-8", errors="replace")
+                    status_ids.update(X_STATUS_URL_RE.findall(html_body))
+                except Exception:
+                    pass
+
+            for sid in status_ids:
+                status_guid = f"x-status::{sid}"
+                with _DB_LOCK:
+                    conn = get_db_connection(db_path)
+                    try:
+                        seen_status = conn.execute(
+                            "SELECT 1 FROM scrape_log WHERE guid = ? OR feed_url = ?",
+                            (status_guid, f"https://x.com/HIDEO_KOJIMA_EN/status/{sid}"),
+                        ).fetchone()
+                    finally:
+                        conn.close()
+                if seen_status:
+                    continue
+
+                tweet = fetch_fxtwitter_post(sid)
+                if not tweet:
+                    continue
+                rec = ingest_raw_post(
+                    raw_text=tweet["text"],
+                    source_url=tweet["url"],
+                    source_label="X (@HIDEO_KOJIMA_EN)",
+                    source_type="x_review",
+                    recommended_at=tweet["date"],
+                    guid=status_guid,
+                    db_path=db_path,
+                )
+                if rec:
+                    ingested.append(rec)
+
+            with _DB_LOCK:
+                conn = get_db_connection(db_path)
+                try:
+                    conn.execute(
+                        """
+                        INSERT OR IGNORE INTO scrape_log (guid, feed_url, raw_text, extracted_title, tmdb_id, scraped_at)
+                        VALUES (?, ?, ?, '', '', ?)
+                        """,
+                        (
+                            article_guid,
+                            article_url,
+                            entry.get("title") or "",
+                            time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                        ),
+                    )
+                    conn.commit()
+                finally:
+                    conn.close()
+
+    return ingested
+
+
 def poll_rss_feeds(
     feed_urls: Optional[List[str]] = None,
     db_path: Optional[str] = None,
     since: Optional[str] = None,
+    discover_x_from_news: bool = False,
 ) -> List[Dict[str, Any]]:
     """
     Polls configured X/Nitter/Letterboxd RSS feeds, skips already-scraped GUIDs
@@ -1616,7 +1862,7 @@ def poll_rss_feeds(
         try:
             req = urllib.request.Request(
                 url,
-                headers={"User-Agent": "KojimaMovieTracker/1.0 (+https://github.com/mblackman)"},
+                headers={"User-Agent": "Mozilla/5.0 (compatible; KojimaMovieTracker/1.0; +https://github.com/mblackman)"},
             )
             with urllib.request.urlopen(req, timeout=15) as resp:
                 xml_text = resp.read().decode("utf-8", errors="replace")
@@ -1629,11 +1875,13 @@ def poll_rss_feeds(
             if since_date and entry.get("date") and entry["date"] < since_date:
                 continue
             guid = entry["guid"]
+            entry_url = entry.get("url") or url
             with _DB_LOCK:
                 conn = get_db_connection(db_path)
                 try:
                     seen = conn.execute(
-                        "SELECT 1 FROM scrape_log WHERE guid = ?", (guid,)
+                        "SELECT 1 FROM scrape_log WHERE guid = ? OR (feed_url != '' AND feed_url = ?)",
+                        (guid, entry_url),
                     ).fetchone()
                 finally:
                     conn.close()
@@ -1642,15 +1890,27 @@ def poll_rss_feeds(
 
             ingested = ingest_raw_post(
                 raw_text=entry["text"],
-                source_url=entry["url"] or url,
-                source_label="X (@HIDEO_KOJIMA_EN) RSS",
+                source_url=entry_url,
+                source_label="X (@HIDEO_KOJIMA_EN)" if "x.com/" in entry_url else "X (@HIDEO_KOJIMA_EN) RSS",
                 source_type="x_review",
+                explicit_title=entry.get("explicit_title") or None,
+                explicit_year=entry.get("explicit_year") or None,
+                explicit_tmdb_id=entry.get("explicit_tmdb_id") or None,
+                poster=entry.get("poster") or None,
                 recommended_at=entry.get("date", ""),
                 guid=guid,
                 db_path=db_path,
             )
             if ingested:
                 newly_ingested.append(ingested)
+
+    if (
+        discover_x_from_news
+        and feed_urls is None
+        and KOJIMA_DISCOVER_X_REVIEWS
+        and any(u.startswith(("http://", "https://")) for u in urls)
+    ):
+        newly_ingested.extend(discover_kojima_x_reviews_from_news(db_path=db_path))
 
     _LAST_SCRAPE_AT = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     return newly_ingested
@@ -1909,7 +2169,42 @@ def sync_static_files(
 
         ingested: List[Dict[str, Any]] = []
         if scrape_rss and KOJIMA_RSS_URLS:
-            ingested = poll_rss_feeds(db_path=db_path, since=ledger.get("last_updated"))
+            with _DB_LOCK:
+                conn = get_db_connection(db_path)
+                try:
+                    existing_rows = conn.execute(
+                        "SELECT title, tmdb_id, primary_url, sources_json FROM recommendations"
+                    ).fetchall()
+                    now_str = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                    for erow in existing_rows:
+                        urls_to_mark = set()
+                        if erow["primary_url"]:
+                            raw_u = str(erow["primary_url"]).strip()
+                            urls_to_mark.add(raw_u)
+                            urls_to_mark.add(raw_u.rstrip("/"))
+                        try:
+                            for s in json.loads(erow["sources_json"] or "[]"):
+                                if s.get("url"):
+                                    raw_u = str(s["url"]).strip()
+                                    urls_to_mark.add(raw_u)
+                                    urls_to_mark.add(raw_u.rstrip("/"))
+                        except Exception:
+                            pass
+                        for u in urls_to_mark:
+                            conn.execute(
+                                "INSERT OR IGNORE INTO scrape_log (guid, feed_url, raw_text, extracted_title, tmdb_id, scraped_at) VALUES (?, ?, '', ?, ?, ?)",
+                                (u, u, erow["title"], erow["tmdb_id"], now_str),
+                            )
+                            xm = X_STATUS_URL_RE.search(u)
+                            if xm:
+                                conn.execute(
+                                    "INSERT OR IGNORE INTO scrape_log (guid, feed_url, raw_text, extracted_title, tmdb_id, scraped_at) VALUES (?, ?, '', ?, ?, ?)",
+                                    (f"x-status::{xm.group('id')}", u, erow["title"], erow["tmdb_id"], now_str),
+                                )
+                    conn.commit()
+                finally:
+                    conn.close()
+            ingested = poll_rss_feeds(db_path=db_path, discover_x_from_news=True)
 
         with _DB_LOCK:
             conn = get_db_connection(db_path)

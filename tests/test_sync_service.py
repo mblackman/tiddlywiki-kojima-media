@@ -255,6 +255,145 @@ class TestKojimaSyncService(unittest.TestCase):
         )
         self.assertEqual([i["title"] for i in ingested], ["Megalopolis"])
 
+    def test_letterboxd_rss_xml_parser_extracts_film_tags_and_x_links(self):
+        sample_lb_rss = """<?xml version="1.0" encoding="utf-8"?>
+        <rss version="2.0" xmlns:letterboxd="https://letterboxd.com" xmlns:tmdb="https://themoviedb.org">
+          <channel>
+            <item>
+              <title>Caught Stealing, 2025</title>
+              <link>https://letterboxd.com/kojima_hideo/film/caught-stealing/</link>
+              <guid isPermaLink="false">letterboxd-review-1152802149</guid>
+              <pubDate>Mon, 12 Jan 2026 05:42:05 +1300</pubDate>
+              <letterboxd:watchedDate>2026-01-11</letterboxd:watchedDate>
+              <letterboxd:filmTitle>Caught Stealing</letterboxd:filmTitle>
+              <letterboxd:filmYear>2025</letterboxd:filmYear>
+              <tmdb:movieId>1245993</tmdb:movieId>
+              <description><![CDATA[
+                <p><img src="https://a.ltrbxd.com/resized/film-poster/caught-stealing.jpg?v=1"/></p>
+                <p>Darren’s new film has finally been released in Japan, so I went to see Darren Aronofsky’s “Caught Stealing.” Whoa!!! It was insanely good!! Highly recommend!</p>
+                <p><a href="https://x.com/HIDEO_KOJIMA_EN/status/2010290439681982768/" rel="nofollow">x.com/HIDEO_KOJIMA_EN/status/2010290439681982768/</a></p>
+              ]]></description>
+            </item>
+            <item>
+              <title>Best Movies 2025 by Hideo Kojima</title>
+              <link>https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/</link>
+              <guid isPermaLink="false">letterboxd-list-999</guid>
+              <pubDate>Wed, 7 Jan 2026 15:24:23 +1300</pubDate>
+              <description><![CDATA[<p>not ranked</p>]]></description>
+            </item>
+          </channel>
+        </rss>"""
+        entries = kss.parse_rss_or_atom_xml(sample_lb_rss)
+        self.assertEqual(len(entries), 1)
+        entry = entries[0]
+        self.assertEqual(entry["explicit_title"], "Caught Stealing")
+        self.assertEqual(entry["explicit_year"], "2025")
+        self.assertEqual(entry["explicit_tmdb_id"], "1245993")
+        self.assertEqual(entry["date"], "2026-01-11")
+        self.assertEqual(entry["url"], "https://x.com/HIDEO_KOJIMA_EN/status/2010290439681982768")
+        self.assertNotIn("x.com/HIDEO_KOJIMA_EN", entry["text"])
+
+    def test_extract_movie_from_real_2026_kojima_posts(self):
+        cases = [
+            (
+                "Darren’s new film has finally been released in Japan, so I went to see Darren Aronofsky’s “Caught Stealing.” Whoa!!! It was insanely good!!",
+                "Caught Stealing",
+            ),
+            (
+                "At the David Keighley Theater, I watched Christopher Nolan’s “The Odyssey” (shot entirely with IMAX® film cameras) presented in 70mm IMAX® film.",
+                "The Odyssey",
+            ),
+            (
+                "I wasn’t particularly interested at first, but since it’s Zach Cregger’s latest film, I went to see “Resident Evil.”",
+                "Resident Evil",
+            ),
+            (
+                "I had been holding off on posting my thoughts until the interview was released. Director Iñárritu’s “DIGGER” is a film that all of us living in today’s world should see.",
+                "DIGGER",
+            ),
+            (
+                "After seeing the trailer, I had been curious about Patrick Hughes’ “War Machine.” Tonight I decided to watch this one first. Wow, it was quite entertaining.",
+                "War Machine",
+            ),
+            (
+                "I went to the Japan premiere of “Godzilla Minus Zero” at TOHO Cinemas Hibiya.",
+                "Godzilla Minus Zero",
+            ),
+            (
+                "I saw “Supergirl” in IMAX. It was a coming-of-age story about saving oneself.",
+                "Supergirl",
+            ),
+        ]
+        for raw, expected_title in cases:
+            extracted = kss.extract_movie_from_post(raw)
+            self.assertIsNotNone(extracted, f"Failed to extract from: {raw}")
+            self.assertEqual(extracted[0], expected_title)
+
+    def test_sync_static_files_ingests_unseen_rss_posts_regardless_of_ledger_timestamp(self):
+        seed_out = os.path.join(self.temp_dir.name, "seed-recommendations.json")
+        api_out = os.path.join(self.temp_dir.name, "api", "kojima-recommendations.json")
+        with open(seed_out, "w", encoding="utf-8") as fh:
+            json.dump({"last_updated": "2026-10-29T00:00:00Z", "items": []}, fh)
+
+        feed_path = os.path.join(self.temp_dir.name, "feed_2026.xml")
+        with open(feed_path, "w", encoding="utf-8") as fh:
+            fh.write(
+                """<?xml version="1.0" encoding="UTF-8"?>
+                <rss version="2.0"><channel>
+                  <item>
+                    <guid>post-2026-odyssey</guid>
+                    <title>Watched “The Odyssey” (2026) in 70mm IMAX. It was magnificent.</title>
+                    <description>Watched “The Odyssey” (2026) in 70mm IMAX. It was magnificent.</description>
+                    <link>https://x.com/HIDEO_KOJIMA_EN/status/2085501858232271245</link>
+                    <pubDate>Thu, 06 Aug 2026 23:02:44 GMT</pubDate>
+                  </item>
+                </channel></rss>"""
+            )
+
+        old_urls = kss.KOJIMA_RSS_URLS
+        kss.KOJIMA_RSS_URLS = ["file://" + feed_path]
+        try:
+            payload = kss.sync_static_files(
+                seed_json_path=seed_out,
+                api_json_path=api_out,
+                scrape_rss=True,
+                enrich=False,
+                db_path=self.db_path,
+                catalog_path=os.path.join(self.temp_dir.name, "empty.jsonl"),
+            )
+            titles = {i["title"] for i in payload["items"]}
+            self.assertIn("The Odyssey", titles)
+        finally:
+            kss.KOJIMA_RSS_URLS = old_urls
+
+    def test_catalog_includes_2026_recommendations(self):
+        catalog = kss.load_catalog()
+        years_released = {str(i.get("year") or "") for i in catalog}
+        rec_years = {
+            kss._infer_recommended_at(str(i["title"]), i, i.get("sources") or "")[:4]
+            for i in catalog
+        }
+        self.assertIn("2026", years_released)
+        self.assertIn("2026", rec_years)
+        titles = {i["title"] for i in catalog}
+        for expected in (
+            "The Odyssey",
+            "Spider-Man: Brand New Day",
+            "Godzilla Minus Zero",
+            "Whalefall",
+            "Digger",
+            "Resident Evil",
+            "Heart of the Beast",
+            "Backrooms",
+            "Supergirl",
+            "The Mandalorian and Grogu",
+            "War Machine",
+            "Crime 101",
+            "Caught Stealing",
+            "Hamnet",
+        ):
+            self.assertIn(expected, titles)
+
 
 if __name__ == "__main__":
     unittest.main()
