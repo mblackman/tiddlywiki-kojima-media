@@ -190,6 +190,59 @@ function runTests() {
     "Re-syncing must preserve user favorite field"
   );
 
+  // Verify re-syncing identical movie payload does not bump `modified` timestamp
+  const fixedDate = new Date("2025-01-01T00:00:00Z");
+  $tw.wiki.addTiddler(
+    new $tw.Tiddler($tw.wiki.getTiddler("Conclave (2024)"), {
+      modified: fixedDate,
+    })
+  );
+  $tw.rootWidget.dispatchEvent({
+    type: "tm-sync-kojima",
+    paramObject: {
+      items: [
+        {
+          title: "Conclave",
+          year: 2024,
+          tmdb_id: 974576,
+          kojima_score: 4,
+          kojima_tier: "Loved",
+        },
+      ],
+    },
+  });
+  assert.strictEqual(
+    $tw.wiki.getTiddler("Conclave (2024)").fields.modified.toISOString(),
+    fixedDate.toISOString(),
+    "Re-syncing an unchanged movie must not bump its modified timestamp"
+  );
+
+  // Verify syncing a promoted movie (e.g. upgraded to Canon 5) DOES update the tiddler
+  $tw.rootWidget.dispatchEvent({
+    type: "tm-sync-kojima",
+    paramObject: {
+      items: [
+        {
+          title: "Conclave",
+          year: 2024,
+          tmdb_id: 974576,
+          kojima_score: 5,
+          kojima_tier: "Canon",
+        },
+      ],
+    },
+  });
+  assert.strictEqual(
+    $tw.wiki.getTiddler("Conclave (2024)").fields["kojima-score"],
+    "5",
+    "Syncing a promoted movie must update its kojima-score field"
+  );
+  assert.notStrictEqual(
+    $tw.wiki.getTiddler("Conclave (2024)").fields.modified.toISOString(),
+    fixedDate.toISOString(),
+    "Syncing a changed movie must update its modified timestamp"
+  );
+
   // 6. Verify individual Movie tiddler ViewTemplate renders Kojima Enthusiasm & Commentary panel
   const viewTplHtml = $tw.wiki.renderTiddler(
     "text/html",

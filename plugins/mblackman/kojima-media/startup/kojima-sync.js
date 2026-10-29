@@ -12,7 +12,7 @@ configured JSON feed URL (GitHub Pages by default) while preserving existing wat
 
   exports.name = "kojima-media-startup";
   exports.platforms = ["browser", "node"];
-  exports.after = ["startup", "media-manager-startup"];
+  exports.after = ["startup"];
   exports.synchronous = true;
 
   var SYNC_STATE_TIDDLER = "$:/state/kojima-sync/status";
@@ -111,7 +111,25 @@ configured JSON feed URL (GitHub Pages by default) while preserving existing wat
       fields.rating = existingFields.rating;
     }
 
-    $tw.wiki.addTiddler(new $tw.Tiddler(existing, fields));
+    var candidate = new $tw.Tiddler(existing, fields);
+    if (existing) {
+      var changed = false;
+      var keys = Object.keys(fields);
+      for (var k = 0; k < keys.length; k++) {
+        var key = keys[k];
+        if (key === "modified" || key === "created") continue;
+        if (candidate.getFieldString(key) !== existing.getFieldString(key)) {
+          changed = true;
+          break;
+        }
+      }
+      if (!changed) {
+        return false;
+      }
+    }
+
+    $tw.wiki.addTiddler(candidate);
+    return true;
   }
 
   /**

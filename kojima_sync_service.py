@@ -60,6 +60,10 @@ DEFAULT_KOJIMA_NEWS_RSS_URLS = [
     "https://news.google.com/rss/search?q=%22Hideo+Kojima%22+(movie+OR+film+OR+review+OR+watched)+when:1y&hl=en-US&gl=US&ceid=US:en",
     "https://www.bing.com/news/search?q=%22Hideo+Kojima%22+review+movie&format=rss",
 ]
+DEFAULT_KOJIMA_LIST_NEWS_RSS_URLS = [
+    "https://news.google.com/rss/search?q=%22Hideo+Kojima%22+(%22favorite+movies%22+OR+%22best+movies%22+OR+%22top+movies%22+OR+%22favorite+films%22+OR+%22Criterion+Closet%22)+when:1y&hl=en-US&gl=US&ceid=US:en",
+    "https://www.bing.com/news/search?q=%22Hideo+Kojima%22+(%22favorite+movies%22+OR+%22best+movies%22+OR+%22top+movies%22)&format=rss",
+]
 _env_rss_urls = [u.strip() for u in os.getenv("KOJIMA_RSS_URLS", "").split(",") if u.strip()]
 KOJIMA_RSS_URLS = _env_rss_urls if _env_rss_urls else list(DEFAULT_KOJIMA_RSS_URLS)
 KOJIMA_DISCOVER_X_REVIEWS = os.getenv("KOJIMA_DISCOVER_X_REVIEWS", "1") not in ("0", "false", "no")
@@ -1209,6 +1213,66 @@ NON_MOVIE_TITLE_RE = re.compile(
     re.IGNORECASE,
 )
 
+GENERIC_LIST_BLURB_RE = re.compile(
+    r"^(?:named\s+to|selected\s+(?:by|for)|featured\s+(?:on|in)|included\s+(?:on|in)|picked\s+in)\b",
+    re.IGNORECASE,
+)
+
+
+def _is_generic_list_blurb(text: str) -> bool:
+    stripped = (text or "").strip()
+    return not stripped or bool(GENERIC_LIST_BLURB_RE.match(stripped))
+
+
+def _find_existing_recommendation(
+    conn: sqlite3.Connection,
+    title: str,
+    year: str,
+    tmdb_id: str = "",
+) -> Optional[sqlite3.Row]:
+    slug = make_slug(title, year)
+    row = conn.execute("SELECT * FROM recommendations WHERE slug = ?", (slug,)).fetchone()
+    if row is not None:
+        return row
+    if tmdb_id:
+        row = conn.execute(
+            "SELECT * FROM recommendations WHERE tmdb_id = ? AND tmdb_id != ''",
+            (str(tmdb_id),),
+        ).fetchone()
+        if row is not None:
+            return row
+    norm_title = re.sub(r"[^a-z0-9]+", "-", title.strip().lower()).strip("-")
+    candidates = conn.execute(
+        "SELECT * FROM recommendations WHERE slug LIKE ?",
+        (f"{norm_title}::%",),
+    ).fetchall()
+    for cand in candidates:
+        cand_year = str(cand["year"] or "0000").strip()
+        if year == "0000" or cand_year == "0000":
+            return cand
+        if year.isdigit() and cand_year.isdigit() and abs(int(year) - int(cand_year)) <= 1:
+            return cand
+    return None
+
+
+def _merge_sources(
+    incoming_sources: List[Dict[str, str]],
+    existing_sources: List[Dict[str, str]],
+) -> List[Dict[str, str]]:
+    combined: List[Dict[str, str]] = []
+    seen_keys = set()
+    for src in list(incoming_sources) + list(existing_sources):
+        if not isinstance(src, dict):
+            continue
+        url = str(src.get("url") or "").strip().rstrip("/")
+        key = f"url::{url}" if url else f"type::{src.get('type', '')}::{src.get('label', '')}"
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        combined.append(src)
+    combined.sort(key=lambda s: SOURCE_TYPE_LEVELS.get(str(s.get("type") or ""), 0), reverse=True)
+    return combined
+
 
 def upsert_recommendation(
     item: Dict[str, Any],
@@ -1217,19 +1281,19 @@ def upsert_recommendation(
 ) -> Dict[str, Any]:
     """
     Computes (or reuses cached) enthusiasm score for a movie item and persists to SQLite.
+    When an entry already exists (matched by slug, tmdb_id, or title with unknown/±1 year),
+    merges curated/review sources and preserves the longer substantive review text.
     """
     init_db(db_path)
     title = str(item["title"]).strip()
     year = str(item.get("year") or "0000").strip()
+    incoming_tmdb_id = str(item.get("tmdb_id") or "").strip()
     slug = make_slug(title, year)
     review_text = str(item.get("review") or "").strip()
-    sources: List[Dict[str, str]] = item.get("sources") or []
+    sources: List[Dict[str, str]] = list(item.get("sources") or [])
     recommended_at = _infer_recommended_at(title, item, sources)
     sources_json = json.dumps(sources, sort_keys=True)
-    content_hash = hashlib.sha256(
-        f"{SCORING_ENGINE_VERSION}|{title}|{year}|{review_text}|{sources_json}|{recommended_at}|{LLM_PROVIDER}".encode("utf-8")
-    ).hexdigest()
-    valid_hashes = {
+    raw_valid_hashes = {
         hashlib.sha256(
             f"{SCORING_ENGINE_VERSION}|{title}|{year}|{review_text}|{sources_json}|{recommended_at}|{prov}".encode("utf-8")
         ).hexdigest()
@@ -1239,17 +1303,67 @@ def upsert_recommendation(
     with _DB_LOCK:
         conn = get_db_connection(db_path)
         try:
-            existing = conn.execute(
-                "SELECT * FROM recommendations WHERE slug = ?", (slug,)
-            ).fetchone()
+            existing = _find_existing_recommendation(conn, title, year, incoming_tmdb_id)
+            old_slug = str(existing["slug"]) if existing else slug
 
-            if existing and not force_rescore and existing["content_hash"] in valid_hashes:
-                # If tmdb_id was missing previously and we can resolve it now, update it
-                cached_tmdb_id = existing["tmdb_id"] or item.get("tmdb_id") or resolve_tmdb_id(title, year) or ""
-                if cached_tmdb_id != existing["tmdb_id"]:
+            if existing:
+                existing_year = str(existing["year"] or "0000").strip()
+                if year == "0000" and existing_year != "0000":
+                    year = existing_year
+                    slug = old_slug
+                elif existing_year == "0000" and year != "0000":
+                    slug = make_slug(title, year)
+                else:
+                    year = existing_year
+                    slug = old_slug
+
+                try:
+                    old_sources = json.loads(existing["sources_json"] or "[]")
+                except Exception:
+                    old_sources = []
+                sources = _merge_sources(sources, old_sources)
+
+                old_review = str(existing["review"] or "").strip()
+                if old_review:
+                    if _is_generic_list_blurb(review_text) and not _is_generic_list_blurb(old_review):
+                        review_text = old_review
+                    elif (
+                        not _is_generic_list_blurb(old_review)
+                        and not _is_generic_list_blurb(review_text)
+                        and len(old_review) > len(review_text)
+                    ):
+                        review_text = old_review
+                    elif not review_text:
+                        review_text = old_review
+
+                if existing["recommended_at"] and not item.get("recommended_at") and not item.get("kojima_recommended_at"):
+                    recommended_at = str(existing["recommended_at"])
+                else:
+                    recommended_at = _infer_recommended_at(title, item, sources)
+
+            sources_json = json.dumps(sources, sort_keys=True)
+            content_hash = hashlib.sha256(
+                f"{SCORING_ENGINE_VERSION}|{title}|{year}|{review_text}|{sources_json}|{recommended_at}|{LLM_PROVIDER}".encode("utf-8")
+            ).hexdigest()
+            valid_hashes = raw_valid_hashes | {
+                hashlib.sha256(
+                    f"{SCORING_ENGINE_VERSION}|{title}|{year}|{review_text}|{sources_json}|{recommended_at}|{prov}".encode("utf-8")
+                ).hexdigest()
+                for prov in (LLM_PROVIDER, "gemini", "heuristic", "openai")
+            }
+
+            if (
+                existing
+                and not force_rescore
+                and old_slug == slug
+                and existing["content_hash"] in valid_hashes
+                and len(sources) == len(old_sources)
+            ):
+                # Only backfill tmdb_id if explicitly provided on item (avoid repeating network lookups on cache hits)
+                if not existing["tmdb_id"] and incoming_tmdb_id:
                     conn.execute(
                         "UPDATE recommendations SET tmdb_id = ? WHERE slug = ?",
-                        (str(cached_tmdb_id), slug),
+                        (incoming_tmdb_id, slug),
                     )
                     conn.commit()
                 # Backfill poster/plot/director discovered after the original scoring run
@@ -1268,20 +1382,15 @@ def upsert_recommendation(
                 row = conn.execute("SELECT * FROM recommendations WHERE slug = ?", (slug,)).fetchone()
                 return _row_to_feed_dict(row)
 
-            # Merge sources if movie already exists from another source
-            if existing:
-                try:
-                    old_sources = json.loads(existing["sources_json"])
-                except Exception:
-                    old_sources = []
-                seen_urls = {s.get("url", "") for s in sources}
-                for old_src in old_sources:
-                    if old_src.get("url", "") not in seen_urls:
-                        sources.append(old_src)
-                        seen_urls.add(old_src.get("url", ""))
-                sources_json = json.dumps(sources)
+            if existing and old_slug != slug:
+                conn.execute("DELETE FROM recommendations WHERE slug = ?", (old_slug,))
 
-            tmdb_id = str(item.get("tmdb_id") or (existing["tmdb_id"] if existing else "") or resolve_tmdb_id(title, year) or "")
+            tmdb_id = str(
+                incoming_tmdb_id
+                or (existing["tmdb_id"] if existing else "")
+                or (resolve_tmdb_id(title, year) if (not existing or force_rescore) else "")
+                or ""
+            )
             director = str(item.get("director") or (existing["director"] if existing else "") or "")
             runtime = str(item.get("runtime") or (existing["runtime"] if existing else "") or "")
             genres_list = item.get("genres")
@@ -1626,7 +1735,7 @@ def ingest_raw_post(
     if NON_MOVIE_TITLE_RE.search(title):
         return None
 
-    tmdb_id = explicit_tmdb_id or resolve_tmdb_id(title, year) or ""
+    tmdb_id = explicit_tmdb_id or ""
     rec_date = _normalize_date_str(recommended_at or "") or time.strftime("%Y-%m-%d", time.gmtime())
     record = upsert_recommendation(
         {
@@ -2061,25 +2170,202 @@ def _restore_ledger_entry(prev: Dict[str, Any], db_path: Optional[str]) -> None:
             conn.close()
 
 
+def _infer_list_source_type(list_title: str, list_url: str = "") -> Tuple[str, str]:
+    combined = f"{list_title} {list_url}".lower()
+    clean_title = (list_title or "").strip() or "Hideo Kojima Curated List"
+    if "criterion" in combined:
+        return "criterion_closet", clean_title
+    if "gq" in combined or "top 4" in combined or "top-4" in combined:
+        return "gq_top_4", clean_title
+    if "rotten tomatoes" in combined or "five favorite" in combined:
+        return "rt_top_5", clean_title
+    if "top 30" in combined or "top-30" in combined or "junker" in combined:
+        return "junkerhq_top_30", clean_title
+    return "annual_top_list", clean_title
+
+
+def extract_letterboxd_lists_from_rss(xml_text: str) -> List[Dict[str, str]]:
+    """
+    Extracts Letterboxd curated list entries (`<item>` elements without `<letterboxd:filmTitle>`
+    whose link or guid references a list, or whose title is a curated list).
+    """
+    lists: List[Dict[str, str]] = []
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return lists
+
+    for item in root.findall(".//item"):
+        lb_title = (item.findtext(f"{LETTERBOXD_NS}filmTitle") or "").strip()
+        if lb_title:
+            continue
+        title = (item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        guid = (item.findtext("guid") or link or title).strip()
+        pub_date = _normalize_date_str(item.findtext("pubDate") or "")
+        is_list_item = (
+            "/list/" in link
+            or "letterboxd-list-" in guid
+            or bool(re.search(r"\b(?:best|top|favorite|favourite)\s+(?:movies|films)\b", title, re.IGNORECASE))
+        )
+        if is_list_item and link:
+            lists.append({
+                "guid": guid,
+                "title": title,
+                "url": link,
+                "date": pub_date,
+            })
+    return lists
+
+
+def parse_letterboxd_list_html(html_text: str) -> List[Dict[str, str]]:
+    """
+    Extracts movie `{title, year}` items from a Letterboxd list page HTML.
+    """
+    movies: List[Dict[str, str]] = []
+    seen = set()
+
+    for tag_match in re.finditer(
+        r"<(?:div|li|span)\b[^>]*\bdata-(?:film-name|item-name|film-slug)=[^>]*>",
+        html_text,
+        re.IGNORECASE,
+    ):
+        tag_str = tag_match.group(0)
+        name_m = re.search(r'\bdata-film-name=["\']([^"\']+)["\']', tag_str, re.IGNORECASE)
+        item_m = re.search(r'\bdata-item-name=["\']([^"\']+)["\']', tag_str, re.IGNORECASE)
+        year_m = re.search(r'\bdata-film-release-year=["\'](\d{4})["\']', tag_str, re.IGNORECASE)
+        slug_m = re.search(r'\bdata-film-slug=["\']([^"\']+)["\']', tag_str, re.IGNORECASE)
+
+        raw_title = ""
+        year = year_m.group(1) if year_m else ""
+        if name_m:
+            raw_title = html.unescape(name_m.group(1)).strip()
+        elif item_m:
+            raw_item = html.unescape(item_m.group(1)).strip()
+            ym = re.search(r"^(?P<t>.+?)\s*\((?P<y>\d{4})\)\s*$", raw_item)
+            if ym:
+                raw_title = ym.group("t").strip()
+                year = year or ym.group("y")
+            else:
+                raw_title = raw_item
+        if not year and slug_m:
+            sm = re.search(r"-(\d{4})$", slug_m.group(1))
+            if sm:
+                year = sm.group(1)
+
+        title = _clean_extracted_title(raw_title)
+        if not title or NON_MOVIE_TITLE_RE.search(title):
+            continue
+        key = (title.lower(), year or "0000")
+        if key not in seen:
+            seen.add(key)
+            movies.append({"title": title, "year": year or "0000"})
+
+    return movies
+
+
+def reconcile_recent_lists(
+    feed_urls: Optional[List[str]] = None,
+    db_path: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """
+    Periodic reconciliation job that checks Letterboxd curated lists (`/list/` items in RSS)
+    and annual/mid-year list news feeds, promoting any movie already in the library (or newly
+    listed) to its curated tier (`Loved` / `Canon`) while preserving its original review text.
+    """
+    init_db(db_path)
+    urls = feed_urls if feed_urls is not None else KOJIMA_RSS_URLS
+    promoted_or_added: List[Dict[str, Any]] = []
+
+    for url in urls:
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0 (compatible; KojimaMovieTracker/1.0; +https://github.com/mblackman)"},
+            )
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                xml_text = resp.read().decode("utf-8", errors="replace")
+        except Exception as exc:
+            print(f"[warn] Failed to fetch RSS feed for list reconciliation {url}: {exc}")
+            continue
+
+        for list_entry in extract_letterboxd_lists_from_rss(xml_text):
+            list_url = list_entry["url"]
+            list_title = list_entry["title"]
+            list_date = list_entry["date"] or time.strftime("%Y-%m-%d", time.gmtime())
+            try:
+                req = urllib.request.Request(
+                    list_url,
+                    headers={"User-Agent": "Mozilla/5.0 (compatible; KojimaMovieTracker/1.0; +https://github.com/mblackman)"},
+                )
+                with urllib.request.urlopen(req, timeout=15) as resp:
+                    list_html = resp.read().decode("utf-8", errors="replace")
+            except Exception as exc:
+                print(f"[warn] Failed to fetch curated list page {list_url}: {exc}")
+                continue
+
+            source_type, label = _infer_list_source_type(list_title, list_url)
+            for film in parse_letterboxd_list_html(list_html):
+                rec = upsert_recommendation(
+                    {
+                        "title": film["title"],
+                        "year": film["year"],
+                        "review": f"Named to {label}.",
+                        "recommended_at": list_date,
+                        "sources": [
+                            {
+                                "label": label,
+                                "type": source_type,
+                                "url": list_url,
+                                "date": list_date,
+                            }
+                        ],
+                    },
+                    db_path=db_path,
+                )
+                if rec:
+                    promoted_or_added.append(rec)
+
+    if (
+        feed_urls is None
+        and KOJIMA_DISCOVER_X_REVIEWS
+        and any(u.startswith(("http://", "https://")) for u in urls)
+    ):
+        promoted_or_added.extend(
+            discover_kojima_x_reviews_from_news(
+                news_rss_urls=DEFAULT_KOJIMA_LIST_NEWS_RSS_URLS,
+                db_path=db_path,
+            )
+        )
+
+    return promoted_or_added
+
+
 def load_ledger(seed_json_path: str) -> Dict[str, Any]:
     """Reads the persisted ledger. Accepts the legacy bare-array format."""
     if not seed_json_path or not os.path.exists(seed_json_path):
-        return {"last_updated": None, "items": []}
+        return {"last_updated": None, "seen_guids": [], "poster_checked_slugs": [], "items": []}
     try:
         with open(seed_json_path, "r", encoding="utf-8") as fh:
             data = json.load(fh)
     except Exception as exc:
         print(f"[warn] Could not read ledger {seed_json_path}: {exc}")
-        return {"last_updated": None, "items": []}
+        return {"last_updated": None, "seen_guids": [], "poster_checked_slugs": [], "items": []}
     if isinstance(data, list):
-        return {"last_updated": None, "items": data}
-    return {"last_updated": data.get("last_updated"), "items": data.get("items") or []}
+        return {"last_updated": None, "seen_guids": [], "poster_checked_slugs": [], "items": data}
+    return {
+        "last_updated": data.get("last_updated"),
+        "seen_guids": list(data.get("seen_guids") or []),
+        "poster_checked_slugs": list(data.get("poster_checked_slugs") or []),
+        "items": data.get("items") or [],
+    }
 
 
 def sync_static_files(
     seed_json_path: str = "demo/seed-recommendations.json",
     api_json_path: str = "build/api/kojima-recommendations.json",
     scrape_rss: bool = True,
+    reconcile_lists: bool = False,
     force_refresh: bool = False,
     enrich: bool = True,
     db_path: Optional[str] = None,
@@ -2091,8 +2377,10 @@ def sync_static_files(
          so unchanged movies are never re-scored or re-fetched.
       2. Upserts the catalog (SEED_RECOMMENDATIONS + catalog/kojima-canon.jsonl); only new or
          edited entries (content_hash mismatch) are scored. Missing posters are enriched
-         from Wikipedia (keyless) and TMDB (when TMDB_API_KEY is set).
-      3. Polls KOJIMA_RSS_URLS, skipping posts dated before the ledger's `last_updated`.
+         from Wikipedia (keyless) and TMDB (when TMDB_API_KEY is set), skipping slugs already
+         checked in previous daily runs unless `force_refresh` or `reconcile_lists` is set.
+      3. Seeds `scrape_log` with persisted `seen_guids` and all known source URLs, then polls
+         KOJIMA_RSS_URLS (and when `reconcile_lists=True`, reconciles Letterboxd & annual lists).
       4. Writes the ledger (bumping `last_updated` only when items changed) and the static API payload.
     """
     temp_dir = None
@@ -2103,6 +2391,8 @@ def sync_static_files(
         init_db(db_path)
         ledger = load_ledger(seed_json_path)
         previous_items = ledger["items"]
+        poster_checked = set() if force_refresh else set(ledger.get("poster_checked_slugs") or [])
+        seen_guids_list: List[str] = list(ledger.get("seen_guids") or [])
         catalog = load_catalog(catalog_path)
         catalog_slugs = {
             make_slug(str(i["title"]), str(i.get("year") or "0000")) for i in catalog
@@ -2119,10 +2409,16 @@ def sync_static_files(
                 _restore_ledger_entry(prev, db_path)
 
         enriched = 0
+        current_year = int(time.strftime("%Y", time.gmtime()))
         for raw_item in catalog:
             item = dict(raw_item)
-            if enrich and not item.get("poster"):
-                slug = make_slug(str(item["title"]), str(item.get("year") or "0000"))
+            slug = make_slug(str(item["title"]), str(item.get("year") or "0000"))
+            item_year = str(item.get("year") or "0000").strip()
+            is_recent = item_year.isdigit() and int(item_year) >= current_year - 1
+            should_try_enrich = enrich and not item.get("poster") and (
+                slug not in poster_checked or force_refresh or (reconcile_lists and is_recent)
+            )
+            if should_try_enrich:
                 conn = get_db_connection(db_path)
                 try:
                     row = conn.execute(
@@ -2132,14 +2428,18 @@ def sync_static_files(
                     conn.close()
                 if not (row and row["poster"]):
                     meta = fetch_wikipedia_metadata(str(item["title"]), str(item.get("year") or ""))
+                    poster_checked.add(slug)
                     if meta.get("poster"):
                         item["poster"] = meta["poster"]
                         item["plot"] = item.get("plot") or meta.get("plot", "")
                         enriched += 1
                     time.sleep(0.1)
+                else:
+                    poster_checked.add(slug)
             upsert_recommendation(item, force_rescore=force_refresh, db_path=db_path)
 
         ingested: List[Dict[str, Any]] = []
+        reconciled: List[Dict[str, Any]] = []
         if scrape_rss and KOJIMA_RSS_URLS:
             with _DB_LOCK:
                 conn = get_db_connection(db_path)
@@ -2148,6 +2448,12 @@ def sync_static_files(
                         "SELECT title, tmdb_id, primary_url, sources_json FROM recommendations"
                     ).fetchall()
                     now_str = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                    for saved_guid in seen_guids_list:
+                        if saved_guid:
+                            conn.execute(
+                                "INSERT OR IGNORE INTO scrape_log (guid, feed_url, raw_text, extracted_title, tmdb_id, scraped_at) VALUES (?, '', '', '', '', ?)",
+                                (saved_guid, now_str),
+                            )
                     for erow in existing_rows:
                         urls_to_mark = set()
                         if erow["primary_url"]:
@@ -2177,6 +2483,24 @@ def sync_static_files(
                 finally:
                     conn.close()
             ingested = poll_rss_feeds(db_path=db_path, discover_x_from_news=True)
+            if reconcile_lists:
+                reconciled = reconcile_recent_lists(db_path=db_path)
+
+            with _DB_LOCK:
+                conn = get_db_connection(db_path)
+                try:
+                    log_rows = conn.execute(
+                        "SELECT guid FROM scrape_log ORDER BY scraped_at DESC LIMIT 500"
+                    ).fetchall()
+                    known_set = set(seen_guids_list)
+                    for lr in log_rows:
+                        g = str(lr["guid"] or "").strip()
+                        if g and g not in known_set:
+                            seen_guids_list.append(g)
+                            known_set.add(g)
+                    seen_guids_list = seen_guids_list[-500:]
+                finally:
+                    conn.close()
 
         with _DB_LOCK:
             conn = get_db_connection(db_path)
@@ -2197,14 +2521,19 @@ def sync_static_files(
 
     if seed_json_path:
         os.makedirs(os.path.dirname(os.path.abspath(seed_json_path)), exist_ok=True)
+        ledger_out: Dict[str, Any] = {
+            "last_updated": last_updated,
+            "scoring_version": SCORING_ENGINE_VERSION,
+            "count": len(ledger_items),
+        }
+        if seen_guids_list:
+            ledger_out["seen_guids"] = seen_guids_list
+        if poster_checked:
+            ledger_out["poster_checked_slugs"] = sorted(poster_checked)
+        ledger_out["items"] = ledger_items
         with open(seed_json_path, "w", encoding="utf-8") as fh:
             json.dump(
-                {
-                    "last_updated": last_updated,
-                    "scoring_version": SCORING_ENGINE_VERSION,
-                    "count": len(ledger_items),
-                    "items": ledger_items,
-                },
+                ledger_out,
                 fh,
                 indent=2,
                 ensure_ascii=False,
@@ -2218,6 +2547,7 @@ def sync_static_files(
         "scoring_version": SCORING_ENGINE_VERSION,
         "llm_provider": LLM_PROVIDER,
         "newly_ingested_count": len(ingested),
+        "reconciled_count": len(reconciled),
         "enriched_count": enriched,
         "changed": changed,
         "count": len(feed),
@@ -2351,19 +2681,21 @@ def _background_scraper_loop(interval_seconds: int) -> None:
 if __name__ == "__main__":
     import sys
 
-    if "--sync-static" in sys.argv:
+    if "--sync-static" in sys.argv or "--reconcile-lists" in sys.argv:
         seed_out = os.environ.get("KOJIMA_SEED_JSON_PATH", "demo/seed-recommendations.json")
         api_out = os.environ.get("KOJIMA_API_JSON_PATH", "build/api/kojima-recommendations.json")
         payload = sync_static_files(
             seed_json_path=seed_out,
             api_json_path=api_out,
             scrape_rss=True,
+            reconcile_lists="--reconcile-lists" in sys.argv,
             force_refresh="--force-rescore" in sys.argv,
             enrich="--no-enrich" not in sys.argv and os.environ.get("KOJIMA_ENRICH", "1") != "0",
         )
         print(
             f"✅ {payload['count']} Kojima recommendations "
-            f"(+{payload['newly_ingested_count']} from RSS, {payload['enriched_count']} posters enriched, "
+            f"(+{payload['newly_ingested_count']} from RSS, {payload['reconciled_count']} list items reconciled, "
+            f"{payload['enriched_count']} posters enriched, "
             f"{'changed' if payload['changed'] else 'unchanged'}; last_updated={payload['last_updated']}) "
             f"-> {seed_out} & {api_out}"
         )

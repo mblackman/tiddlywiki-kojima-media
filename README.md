@@ -49,6 +49,9 @@ npm install
 # Update recommendations feed & seed demo tiddlers
 npm run seed-demo
 
+# Reconcile curated/annual lists & promote previously reviewed movies
+npm run reconcile-lists
+
 # Start live local TiddlyWiki server at http://localhost:8080
 npm run dev
 

@@ -8,17 +8,24 @@ on:
     branches:
       - main
   schedule:
-    # Runs daily at 06:00 UTC to refresh the Kojima movie recommendations feed & demo site
+    # Daily at 06:00 UTC: incremental RSS & X review sync (skips already-seen GUIDs and cached movies)
     - cron: "0 6 * * *"
+    # Weekly on Sundays at 08:00 UTC: reconcile curated lists & recent movies for delayed list promotions
+    - cron: "0 8 * * 0"
+    # Extra mid-year & year-end list reconciliation runs (Jan, Jun, Jul, Dec on the 1st & 15th)
+    - cron: "0 8 1,15 1,6,7,12 *"
   workflow_dispatch:
     inputs:
+      reconcile_lists:
+        description: "Reconcile curated/annual lists & promote previously reviewed movies"
+        type: boolean
+        default: true
       force_rescore:
         description: "Re-rate every movie (run once after changing LLM_PROVIDER)"
         type: boolean
         default: false
 
-# Workflow-level so every generate-feed run (including the one inside build-all)
-# uses the same provider; it is part of each entry's content hash.
+# Workflow-level so every generate-feed run uses the same provider; it is part of each entry's content hash.
 env:
   LLM_PROVIDER: ${{ vars.LLM_PROVIDER || 'heuristic' }}
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -53,7 +60,9 @@ jobs:
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
           KOJIMA_RSS_URLS: ${{ vars.KOJIMA_RSS_URLS || secrets.KOJIMA_RSS_URLS }}
-        run: npm run generate-feed
+          RECONCILE_FLAG: ${{ (github.event.schedule == '0 8 * * 0' || github.event.schedule == '0 8 1,15 1,6,7,12 *' || inputs.reconcile_lists) && '--reconcile-lists' || '' }}
+          RESCORE_FLAG: ${{ inputs.force_rescore && '--force-rescore' || '' }}
+        run: npm run generate-feed -- $RECONCILE_FLAG $RESCORE_FLAG
 
       - name: Run tests
         run: npm test
@@ -66,6 +75,7 @@ jobs:
         with:
           name: kojima-media-plugin
           path: |
+            demo/seed-recommendations.json
             build/kojima-media.tid
             build/kojima-media-plugin.json
             dist/kojima-media-plugin.json
@@ -73,6 +83,16 @@ jobs:
             build/api/kojima-recommendations.json
           if-no-files-found: error
           retention-days: 14
+
+      - name: Setup Pages
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./build
 
   deploy-pages:
     needs: test-and-build
@@ -87,29 +107,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Download synced seed dataset artifact
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: actions/download-artifact@v4
         with:
-          python-version: "3.12"
+          name: kojima-media-plugin
+          path: .
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Sync & score Kojima recommendations feed
-        env:
-          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
-          KOJIMA_RSS_URLS: ${{ vars.KOJIMA_RSS_URLS || secrets.KOJIMA_RSS_URLS }}
-        run: npm run generate-feed -- ${{ inputs.force_rescore && '--force-rescore' || '' }}
-
-      - name: Commit updated seed dataset if new recommendations were scraped
+      - name: Commit updated seed dataset if recommendations changed
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           if ! git diff --quiet demo/seed-recommendations.json; then
@@ -119,17 +127,6 @@ jobs:
             git commit -m "chore(data): update Kojima movie recommendations feed [skip ci]"
             git push origin HEAD:main
           fi
-
-      - name: Build demo wiki & static JSON feed
-        run: npm run build-all
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./build
 
       - name: Deploy to GitHub Pages
         id: deployment

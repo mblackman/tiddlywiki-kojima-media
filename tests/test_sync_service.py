@@ -430,6 +430,211 @@ class TestKojimaSyncService(unittest.TestCase):
         ):
             self.assertIn(expected, titles)
 
+    def test_delayed_list_promotion_merges_source_upgrades_tier_and_preserves_review(self):
+        long_x_review = (
+            "I saw 'Supergirl' in IMAX. It was a coming-of-age story about saving oneself, "
+            "Kara, as she struggles with her own trauma."
+        )
+        initial = kss.ingest_raw_post(
+            raw_text=long_x_review,
+            source_url="https://x.com/HIDEO_KOJIMA_EN/status/1111111111111111111",
+            explicit_title="Supergirl",
+            explicit_year="2026",
+            db_path=self.db_path,
+        )
+        self.assertEqual(initial["kojima_score"], 2)
+        self.assertEqual(initial["kojima_tier"], "Noted")
+
+        # Months later, Kojima adds Supergirl to his Year-End Top List (even without year or with short blurb)
+        promoted = kss.upsert_recommendation(
+            {
+                "title": "Supergirl",
+                "year": "0000",
+                "review": "Named to Hideo Kojima's Top Movies of 2026 list.",
+                "sources": [
+                    {
+                        "label": "Top Films of 2026 (X / Letterboxd)",
+                        "type": "annual_top_list",
+                        "url": "https://letterboxd.com/kojima_hideo/list/best-movies-2026/",
+                        "date": "2026-12-20",
+                    }
+                ],
+            },
+            db_path=self.db_path,
+        )
+        self.assertEqual(promoted["year"], "2026")
+        self.assertEqual(promoted["kojima_score"], 4)
+        self.assertEqual(promoted["kojima_tier"], "Loved")
+        self.assertEqual(promoted["kojima_review"], long_x_review)
+        sources = json.loads(promoted["kojima_sources_json"])
+        source_types = {s.get("type") for s in sources}
+        self.assertEqual(source_types, {"x_review", "annual_top_list"})
+
+        # Ensure only one row exists in SQLite (no duplicate supergirl::0000 row)
+        conn = kss.get_db_connection(self.db_path)
+        try:
+            rows = conn.execute(
+                "SELECT slug, year, kojima_score FROM recommendations WHERE lower(title) = 'supergirl'"
+            ).fetchall()
+        finally:
+            conn.close()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["slug"], "supergirl::2026")
+
+    def test_daily_sync_persists_seen_guids_and_skips_redundant_retries(self):
+        seed_out = os.path.join(self.temp_dir.name, "seed-recommendations.json")
+        api_out = os.path.join(self.temp_dir.name, "api", "kojima-recommendations.json")
+        catalog_file = os.path.join(self.temp_dir.name, "mini-catalog.jsonl")
+        with open(catalog_file, "w", encoding="utf-8") as fh:
+            fh.write(
+                json.dumps(
+                    {
+                        "title": "Obscure Unpostered Film",
+                        "year": "1977",
+                        "director": "Unknown Director",
+                        "review": "A classic film from my youth.",
+                        "sources": [
+                            {
+                                "label": "My Favorite Films",
+                                "type": "junkerhq_top_30",
+                                "url": "https://junkerhq.net/favoritefilms.html",
+                            }
+                        ],
+                    }
+                )
+                + "\n"
+            )
+
+        with mock.patch.object(kss, "SEED_RECOMMENDATIONS", []), mock.patch.object(
+            kss, "fetch_wikipedia_metadata", return_value={}
+        ) as wiki_mock, mock.patch.object(
+            kss, "resolve_tmdb_id", return_value=None
+        ) as tmdb_mock:
+            first = kss.sync_static_files(
+                seed_json_path=seed_out,
+                api_json_path=api_out,
+                scrape_rss=False,
+                enrich=True,
+                catalog_path=catalog_file,
+            )
+            self.assertEqual(first["count"], 1)
+            self.assertEqual(wiki_mock.call_count, 1)
+
+            wiki_mock.reset_mock()
+            tmdb_mock.reset_mock()
+
+            # Second daily run should NOT retry Wikipedia or TMDB for already-checked catalog movie
+            second = kss.sync_static_files(
+                seed_json_path=seed_out,
+                api_json_path=api_out,
+                scrape_rss=False,
+                enrich=True,
+                catalog_path=catalog_file,
+            )
+            self.assertEqual(second["count"], 1)
+            self.assertFalse(second["changed"])
+            self.assertEqual(wiki_mock.call_count, 0)
+            self.assertEqual(tmdb_mock.call_count, 0)
+
+    def test_reconcile_lists_ingests_letterboxd_list_and_upgrades_existing_movie(self):
+        seed_out = os.path.join(self.temp_dir.name, "seed-recommendations.json")
+        api_out = os.path.join(self.temp_dir.name, "api", "kojima-recommendations.json")
+        catalog_file = os.path.join(self.temp_dir.name, "empty-catalog.jsonl")
+        with open(catalog_file, "w", encoding="utf-8") as fh:
+            fh.write("")
+
+        # Seed with a movie that Kojima initially gave a neutral 'Noted' X review
+        with open(seed_out, "w", encoding="utf-8") as fh:
+            json.dump(
+                {
+                    "last_updated": "2026-08-01T00:00:00Z",
+                    "items": [
+                        {
+                            "title": "Supergirl",
+                            "year": "2026",
+                            "tmdb_id": "",
+                            "director": "Craig Gillespie",
+                            "runtime": "",
+                            "genres": [],
+                            "poster": "https://example.com/supergirl.jpg",
+                            "plot": "Kara Zor-El story.",
+                            "kojima_score": 2,
+                            "kojima_tier": "Noted",
+                            "kojima_review": "I saw 'Supergirl' in IMAX. It was a coming-of-age story about saving oneself.",
+                            "kojima_word_count": 15,
+                            "kojima_is_dismissal": "no",
+                            "kojima_sentiment_summary": "Mentions or discusses the film without clear praise.",
+                            "kojima_score_breakdown": "Noted (2/5) - Mentions or discusses the film without clear praise.",
+                            "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/1111111111111111111",
+                            "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
+                            "kojima_recommended_at": "2026-06-20",
+                            "kojima_sources_json": json.dumps(
+                                [
+                                    {
+                                        "label": "X (@HIDEO_KOJIMA_EN)",
+                                        "type": "x_review",
+                                        "url": "https://x.com/HIDEO_KOJIMA_EN/status/1111111111111111111",
+                                        "date": "2026-06-20",
+                                    }
+                                ]
+                            ),
+                            "content_hash": "old-hash",
+                        }
+                    ],
+                },
+                fh,
+            )
+
+        list_html = """<!DOCTYPE html>
+        <html><head><title>Best Movies 2026 by Hideo Kojima</title></head>
+        <body>
+          <ul class="poster-list">
+            <li class="poster-container">
+              <div class="film-poster" data-film-name="Supergirl" data-film-release-year="2026" data-film-slug="supergirl-2026">
+                <img alt="Supergirl" />
+              </div>
+            </li>
+          </ul>
+        </body></html>"""
+        list_html_path = os.path.join(self.temp_dir.name, "list_2026.html")
+        with open(list_html_path, "w", encoding="utf-8") as fh:
+            fh.write(list_html)
+
+        lb_rss = f"""<?xml version="1.0" encoding="utf-8"?>
+        <rss version="2.0" xmlns:letterboxd="https://letterboxd.com">
+          <channel>
+            <item>
+              <title>Best Movies 2026 by Hideo Kojima</title>
+              <link>file://{list_html_path}</link>
+              <guid isPermaLink="false">letterboxd-list-2026</guid>
+              <pubDate>Wed, 20 Dec 2026 15:24:23 +0000</pubDate>
+              <description><![CDATA[<p>Hideo Kojima's top movies of 2026.</p>]]></description>
+            </item>
+          </channel>
+        </rss>"""
+        rss_path = os.path.join(self.temp_dir.name, "lb_rss.xml")
+        with open(rss_path, "w", encoding="utf-8") as fh:
+            fh.write(lb_rss)
+
+        with mock.patch.object(kss, "SEED_RECOMMENDATIONS", []), mock.patch.object(
+            kss, "KOJIMA_RSS_URLS", ["file://" + rss_path]
+        ):
+            payload = kss.sync_static_files(
+                seed_json_path=seed_out,
+                api_json_path=api_out,
+                scrape_rss=True,
+                reconcile_lists=True,
+                enrich=False,
+                catalog_path=catalog_file,
+            )
+
+        self.assertEqual(payload["count"], 1)
+        item = payload["items"][0]
+        self.assertEqual(item["title"], "Supergirl")
+        self.assertEqual(item["kojima_score"], 4)
+        self.assertEqual(item["kojima_tier"], "Loved")
+        self.assertIn("coming-of-age story", item["kojima_review"])
+
 
 if __name__ == "__main__":
     unittest.main()
