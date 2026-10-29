@@ -61,12 +61,18 @@ function runTests() {
     `Demo wiki should not import demo Books, Manga, or Logs from media-importer, found: ${demoBooksOrManga.join(", ")}`
   );
 
-  // Verify clean DefaultTiddlers on the demo page
+  // Verify clean DefaultTiddlers and DemoStylesheet on the demo page
   const defaultTiddlers = $tw.wiki.getTiddlerText("$:/DefaultTiddlers", "").trim();
   assert.strictEqual(
     defaultTiddlers,
-    "[[Kojima Movie Recommendations]] [[$:/plugins/mblackman/kojima-media]]",
-    "DefaultTiddlers should show Kojima Movie Recommendations and the plugin tiddler below it"
+    "[[Kojima Movie Recommendations]]",
+    "DefaultTiddlers should focus solely on Kojima Movie Recommendations"
+  );
+  const demoStylesheet = $tw.wiki.getTiddlerText("$:/DemoStylesheet", "");
+  assert(
+    demoStylesheet.includes(".tc-sidebar-scrollable") &&
+      demoStylesheet.includes("max-inline-size: 1140px"),
+    "DemoStylesheet should hide TiddlyWiki sidebar chrome and center the story river"
   );
 
   // Verify default feed URL points to the hosted GitHub Pages JSON feed
@@ -102,6 +108,8 @@ function runTests() {
   assert(!tokensCss.includes("<<colour"), "suite-tokens must evaluate all <<colour>> macros");
   assert(kojimaCss.includes("container: kj-dashboard / inline-size"), "kojima.tid must declare container query context");
   assert(kojimaCss.includes("font-variant-numeric: tabular-nums"), "kojima.tid must use tabular-nums");
+  assert(kojimaCss.includes("content-visibility: auto"), "kojima.tid must defer below-the-fold cards with content-visibility: auto");
+  assert(kojimaCss.includes("contain-intrinsic-size:"), "kojima.tid must pair content-visibility: auto with contain-intrinsic-size");
 
   // 3. Verify `Kojima Movie Recommendations` dashboard renders seeded movies sorted by kojima-score
   const seenMovies = $tw.wiki.filterTiddlers("[tag[Movie]tag[Kojima]field:status[Completed]]");
@@ -125,6 +133,15 @@ function runTests() {
   assert(
     /class="kj-score-badge kj-score-badge--d-tier"[\s\S]*?aria-label="1 of 5 stars"[^>]*>★☆☆☆☆<\/span>\s*Dismissed/.test(dashboardHtml),
     "Dashboard should render 1-star Dismissed badge"
+  );
+  assert(
+    dashboardHtml.includes("kj-score-badge--b-tier") && dashboardHtml.includes("kj-score-badge--c-tier"),
+    "Dashboard should render distinct b-tier (Liked) and c-tier (Noted) badges"
+  );
+  assert(
+    !dashboardHtml.includes('<p><div class="kj-poster-wrap">') &&
+      !dashboardHtml.includes('<p><div class="kj-movie-actions">'),
+    "Dashboard cards must not wrap grid child columns in <p> elements"
   );
   assert(!dashboardHtml.includes("/100"), "Dashboard should no longer render 0-100 scores");
 
@@ -204,6 +221,10 @@ function runTests() {
   assert(
     sortedRuntimeAsc.indexOf("Django (1966)") < sortedRuntimeAsc.indexOf("Avatar: Fire and Ash (2025)"),
     "Sorting by runtime-asc should place 91-min Django before 192-min Avatar"
+  );
+  assert(
+    sortedRuntimeAsc.indexOf("Avatar: Fire and Ash (2025)") < sortedRuntimeAsc.indexOf("12 Angry Men (1957)"),
+    "Sorting by runtime-asc should push movies with missing runtime after movies with known runtimes"
   );
   $tw.wiki.setText("$:/state/kojima-dashboard/sort", "text", null, "score-desc");
 

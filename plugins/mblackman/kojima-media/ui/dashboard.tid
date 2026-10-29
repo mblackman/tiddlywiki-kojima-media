@@ -10,13 +10,12 @@ type: text/vnd.tiddlywiki
 \define sort-year-desc() [!nsort[kojima-score]] +[!nsort[year]]
 \define sort-year-asc() [!nsort[kojima-score]] +[nsort[year]]
 \define sort-words-desc() [!nsort[kojima-score]] +[!nsort[kojima-word-count]]
-\define sort-runtime-asc() [!nsort[kojima-score]] +[nsort[runtime]]
-\define sort-runtime-desc() [!nsort[kojima-score]] +[!nsort[runtime]]
+\define sort-runtime-asc() [!nsort[kojima-score]] :sort:number[{!!runtime}!is[blank]!match[0]!match[unknown]else[99999]]
+\define sort-runtime-desc() [!nsort[kojima-score]] :!sort:number[{!!runtime}!is[blank]!match[0]!match[unknown]else[0]]
 \define sort-title-asc() [sort[englishTitle]]
-\define sort-director-asc() [!nsort[kojima-score]] +[sort[director]]
+\define sort-director-asc() [!nsort[kojima-score]] :sort:string[enlist{!!director}join[, ]!is[blank]else[zzzz]]
 
 <div class="kj-dashboard-shell">
-
   <!-- HEADER & SYNC TOOLBAR -->
   <div class="kj-header">
     <div class="kj-header__title-group">
@@ -33,7 +32,6 @@ type: text/vnd.tiddlywiki
         A curated list of movie recommendations from Hideo Kojima.
       </p>
     </div>
-
     <div class="kj-header__actions">
       <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima" tooltip="Download the latest Kojima recommendations feed">
         🔄 Sync Kojima Feed
@@ -50,7 +48,6 @@ type: text/vnd.tiddlywiki
       </$list>
     </div>
   </div>
-
   <!-- PROGRESS SUMMARY METRIC CARDS -->
   <$let
     totalCount={{{ [tag[Movie]tag[Kojima]count[]] }}}
@@ -77,7 +74,6 @@ type: text/vnd.tiddlywiki
       </div>
     </div>
   </$let>
-
   <!-- FILTER & SEARCH CONTROLS -->
   <$let
     statusFilter={{{ [[$:/state/kojima-dashboard/status]get[text]else[All]] }}}
@@ -99,7 +95,6 @@ type: text/vnd.tiddlywiki
           </$button>
         </$list>
       </div>
-
       <div class="kj-filter-controls">
         <div class="kj-search-input-wrap">
           <$edit-text
@@ -110,7 +105,6 @@ type: text/vnd.tiddlywiki
             class="kj-input"
           />
         </div>
-
         <$select tiddler="$:/state/kojima-dashboard/sort" default="score-desc" class="kj-select" aria-label="Sort Kojima recommendations">
           <option value="score-desc">Sort: ★ Enthusiasm (High → Low)</option>
           <option value="score-asc">Sort: ★ Enthusiasm (Low → High)</option>
@@ -124,7 +118,6 @@ type: text/vnd.tiddlywiki
           <option value="title-asc">Sort: 🔤 Title (A → Z)</option>
           <option value="director-asc">Sort: 🎥 Director (A → Z)</option>
         </$select>
-
         <$select tiddler="$:/state/kojima-dashboard/level" default="All" class="kj-select" aria-label="Filter by enthusiasm level">
           <option value="All">All Levels</option>
           <option value="Canon">★★★★★ Canon</option>
@@ -135,7 +128,6 @@ type: text/vnd.tiddlywiki
         </$select>
       </div>
     </div>
-
     <!-- RANKED MOVIE LIST -->
     <div class="kj-movie-list">
       <$list
@@ -145,11 +137,11 @@ type: text/vnd.tiddlywiki
         <$let
           isDismissal={{{ [{!!kojima-is-dismissal}match[yes]then[yes]else[no]] }}}
           isCompleted={{{ [{!!status}match[Completed]then[yes]else[no]] }}}
-          cardClass={{{ [<isDismissal>match[yes]then[kj-movie-card kj-movie-card--dismissal]] :else[<isCompleted>match[yes]then[kj-movie-card kj-movie-card--completed]else[kj-movie-card]] }}}
+          isNoted={{{ [{!!kojima-score}match[2]then[yes]else[no]] }}}
+          cardClass={{{ [<isDismissal>match[yes]then[kj-movie-card kj-movie-card--dismissal]] :else[<isCompleted>match[yes]then[kj-movie-card kj-movie-card--completed]] :else[<isNoted>match[yes]then[kj-movie-card kj-movie-card--noted]else[kj-movie-card]] }}}
           statusLower={{{ [{!!status}lowercase[]else[backlog]] }}}
         >
           <div class=<<cardClass>>>
-
             <!-- POSTER -->
             <div class="kj-poster-wrap">
               <$list filter="[all[current]has[image]!field:image[]]" variable="ignoreImg">
@@ -159,7 +151,6 @@ type: text/vnd.tiddlywiki
                 <div class="kj-poster-placeholder">🎬<br/><$text text={{!!year}}/></div>
               </$list>
             </div>
-
             <!-- DETAILS & KOJIMA REVIEW -->
             <div class="kj-movie-body">
               <div class="kj-movie-title-row">
@@ -168,7 +159,6 @@ type: text/vnd.tiddlywiki
                   <$view field="title"/>
                 </$link>
               </div>
-
               <div class="kj-movie-submeta">
                 <$list filter="[all[current]has[director]!field:director[]]" variable="ignoreDir">
                   <span>Dir. <b><$text text={{{ [enlist{!!director}search-replace:g[_],[ ]join[, ]] }}}/></b></span>
@@ -186,13 +176,10 @@ type: text/vnd.tiddlywiki
                   <span>• 📝 <$text text={{!!kojima-word-count}}/> words</span>
                 </$list>
               </div>
-
               <blockquote class="kj-review-quote">
                 "<$text text={{!!kojima-review}}/>"
               </blockquote>
-
               <div class="kj-movie-footer">
-                <span><$text text={{!!kojima-score-breakdown}}/></span>
                 <$let sourcesJson={{!!kojima-sources-json}}>
                   <$list filter="[<sourcesJson>!is[blank]jsonindexes[]]" variable="srcIdx" emptyMessage="<$list filter='[all[current]has[kojima-primary-url]!field:kojima-primary-url[]]'><a href={{!!kojima-primary-url}} target='_blank' rel='noopener noreferrer' class='kj-source-link'>🔗 <$text text={{!!kojima-primary-source}}/> ↗</a></$list>">
                     <$let
@@ -214,7 +201,6 @@ type: text/vnd.tiddlywiki
                 </$list>
               </div>
             </div>
-
             <!-- SEEN / STATUS TOGGLE -->
             <div class="kj-movie-actions">
               <$list filter="[all[current]field:status[Completed]]" variable="ignoreSeen">
@@ -233,11 +219,9 @@ type: text/vnd.tiddlywiki
                 Status: <b><$text text={{{ [{!!status}!is[blank]else[Backlog]] }}}/></b>
               </span>
             </div>
-
           </div>
         </$let>
       </$list>
     </div>
   </$let>
-
 </div>

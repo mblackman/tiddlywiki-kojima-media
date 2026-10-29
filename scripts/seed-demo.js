@@ -33,6 +33,7 @@ function formatBracketList(items) {
 
 const ALLOWED_DEMO_FILES = new Set([
   "$__DefaultTiddlers.tid",
+  "$__DemoStylesheet.tid",
   "$__SiteTitle.tid",
   "$__SiteSubtitle.tid",
   "$__plugins_mblackman_media-importer.json",

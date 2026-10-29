@@ -13,13 +13,11 @@ type: text/vnd.tiddlywiki
         🎬 Kojima Tracker →
       </$link>
     </div>
-
     <$list filter="[all[current]has[kojima-review]!field:kojima-review[]]" variable="ignoreRev">
       <blockquote class="kj-review-quote">
         "<$text text={{!!kojima-review}}/>"
       </blockquote>
     </$list>
-
     <div class="kj-movie-footer">
       <$list filter="[all[current]has[kojima-recommended-at]!field:kojima-recommended-at[]]" variable="ignoreRecDate">
         <span>📅 Recommended: <b><$text text={{!!kojima-recommended-at}}/></b></span>

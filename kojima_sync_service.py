@@ -756,7 +756,8 @@ RAVE_PHRASES = [
     "masterpiece", "history of cinema", "miracle", "god of cinema", "first god", "burned into my brain",
     "more than a film", "too good to be true", "so, so good", "speechless", "tearjerker", "must-see",
     "must-watch", "best film", "best films", "best movie", "best movies", "top two", "top three",
-    "number one", "number-one", "of the year", "blown away", "should see",
+    "number one", "number-one", "of the year", "blown away", "should see", "best possible way",
+    "tears to my eyes",
 ]
 
 STRONG_PRAISE_TERMS = [
@@ -768,7 +769,8 @@ STRONG_PRAISE_TERMS = [
 MILD_PRAISE_TERMS = [
     "excellent", "great", "loved", "love it", "enjoyed", "beautiful", "satisfying", "spot-on",
     "impressive", "moving", "fun", "gripping", "terrific", "wonderful", "recommend", "recommended",
-    "well made", "well-made", "high-quality", "entertaining",
+    "well made", "well-made", "high-quality", "entertaining", "outstanding", "craftsmanlike",
+    "works fairly well", "never lets up",
 ]
 
 REWATCH_OR_OWNERSHIP_RE = re.compile(
@@ -1202,6 +1204,11 @@ def _infer_recommended_at(title: str, item: Dict[str, Any], sources: List[Dict[s
 
 SCORING_ENGINE_VERSION = "v3.0"
 
+NON_MOVIE_TITLE_RE = re.compile(
+    r"\b(?:stranger\s+things\s*\d*|season\s+\d+|episode\s+\d+)\b",
+    re.IGNORECASE,
+)
+
 
 def upsert_recommendation(
     item: Dict[str, Any],
@@ -1222,6 +1229,12 @@ def upsert_recommendation(
     content_hash = hashlib.sha256(
         f"{SCORING_ENGINE_VERSION}|{title}|{year}|{review_text}|{sources_json}|{recommended_at}|{LLM_PROVIDER}".encode("utf-8")
     ).hexdigest()
+    valid_hashes = {
+        hashlib.sha256(
+            f"{SCORING_ENGINE_VERSION}|{title}|{year}|{review_text}|{sources_json}|{recommended_at}|{prov}".encode("utf-8")
+        ).hexdigest()
+        for prov in (LLM_PROVIDER, "gemini", "heuristic", "openai")
+    }
 
     with _DB_LOCK:
         conn = get_db_connection(db_path)
@@ -1230,7 +1243,7 @@ def upsert_recommendation(
                 "SELECT * FROM recommendations WHERE slug = ?", (slug,)
             ).fetchone()
 
-            if existing and not force_rescore and existing["content_hash"] == content_hash:
+            if existing and not force_rescore and existing["content_hash"] in valid_hashes:
                 # If tmdb_id was missing previously and we can resolve it now, update it
                 cached_tmdb_id = existing["tmdb_id"] or item.get("tmdb_id") or resolve_tmdb_id(title, year) or ""
                 if cached_tmdb_id != existing["tmdb_id"]:
@@ -1239,11 +1252,17 @@ def upsert_recommendation(
                         (str(cached_tmdb_id), slug),
                     )
                     conn.commit()
-                # Backfill poster/plot discovered after the original scoring run
+                # Backfill poster/plot/director discovered after the original scoring run
                 if not existing["poster"] and item.get("poster"):
                     conn.execute(
                         "UPDATE recommendations SET poster = ?, plot = CASE WHEN plot = '' THEN ? ELSE plot END WHERE slug = ?",
                         (str(item["poster"]), str(item.get("plot") or ""), slug),
+                    )
+                    conn.commit()
+                if not existing["director"] and item.get("director"):
+                    conn.execute(
+                        "UPDATE recommendations SET director = ? WHERE slug = ?",
+                        (str(item["director"]), slug),
                     )
                     conn.commit()
                 row = conn.execute("SELECT * FROM recommendations WHERE slug = ?", (slug,)).fetchone()
@@ -1604,6 +1623,9 @@ def ingest_raw_post(
             return None
         title, year, review = extracted
 
+    if NON_MOVIE_TITLE_RE.search(title):
+        return None
+
     tmdb_id = explicit_tmdb_id or resolve_tmdb_id(title, year) or ""
     rec_date = _normalize_date_str(recommended_at or "") or time.strftime("%Y-%m-%d", time.gmtime())
     record = upsert_recommendation(
@@ -1894,14 +1916,19 @@ def load_catalog(catalog_path: Optional[str] = None) -> List[Dict[str, Any]]:
     return items
 
 
+WIKIPEDIA_DIRECTOR_RE = re.compile(
+    r"\bdirected by ([A-Z][\w\s.\-’'ñáéíóúüöäëïç,&]+?)(?=\s+(?:and\s+(?:written|produced|starring|based|edited|featuring)|from\s+a|based\s+on|starring\b|with\b|who\b|in\s+his|in\s+her|in\s+their|that\b|which\b)|[.,;()])"
+)
+
+
 def fetch_wikipedia_metadata(title: str, year: Optional[str] = None) -> Dict[str, str]:
     """
-    Keyless poster/plot enrichment via the Wikipedia search + REST summary APIs.
+    Keyless poster/plot/director enrichment via the Wikipedia search + REST summary APIs.
     Rejects matches whose description is not a film or does not mention the release year.
     """
     query = f"{title} {year} film" if year and year != "0000" else f"{title} film"
     search_url = "https://en.wikipedia.org/w/api.php?" + urllib.parse.urlencode(
-        {"action": "query", "list": "search", "srsearch": query, "srlimit": "1", "format": "json"}
+        {"action": "query", "list": "search", "srsearch": query, "srlimit": "5", "format": "json"}
     )
     try:
         req = urllib.request.Request(search_url, headers=WIKIPEDIA_HEADERS)
@@ -1909,23 +1936,53 @@ def fetch_wikipedia_metadata(title: str, year: Optional[str] = None) -> Dict[str
             results = json.loads(resp.read().decode("utf-8")).get("query", {}).get("search", [])
         if not results:
             return {}
-        page = str(results[0]["title"]).replace(" ", "_")
-        summary_url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + urllib.parse.quote(page, safe="")
-        req = urllib.request.Request(summary_url, headers=WIKIPEDIA_HEADERS)
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            summary = json.loads(resp.read().decode("utf-8"))
     except Exception as exc:
         print(f"[warn] Wikipedia lookup failed for {title}: {exc}")
         return {}
 
-    description = str(summary.get("description") or "").lower()
-    extract = str(summary.get("extract") or "")
-    if "film" not in description and "movie" not in description:
-        return {}
-    if year and year != "0000" and year not in description and year not in extract:
-        return {}
-    poster = str((summary.get("thumbnail") or {}).get("source") or "").split("?")[0]
-    return {"poster": poster, "plot": extract}
+    norm_t = re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+
+    def _rank_candidate(cand: Dict[str, Any]) -> int:
+        raw_rt = str(cand.get("title") or "")
+        base_rt = re.sub(r"\s*\([^)]*(?:film|movie)[^)]*\)\s*$", "", raw_rt, flags=re.IGNORECASE)
+        norm_rt = re.sub(r"[^a-z0-9]+", " ", base_rt.lower()).strip()
+        if norm_rt == norm_t:
+            return 0
+        return 1
+
+    for res in sorted(results, key=_rank_candidate):
+        raw_rt = str(res.get("title") or "")
+        base_rt = re.sub(r"\s*\([^)]*(?:film|movie)[^)]*\)\s*$", "", raw_rt, flags=re.IGNORECASE)
+        norm_rt = re.sub(r"[^a-z0-9]+", " ", base_rt.lower()).strip()
+        if norm_rt != norm_t:
+            continue
+        page = raw_rt.replace(" ", "_")
+        summary_url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + urllib.parse.quote(page, safe="")
+        try:
+            req = urllib.request.Request(summary_url, headers=WIKIPEDIA_HEADERS)
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                summary = json.loads(resp.read().decode("utf-8"))
+        except Exception:
+            continue
+
+        description = str(summary.get("description") or "").lower()
+        extract = str(summary.get("extract") or "")
+        if "film" not in description and "movie" not in description and "documentary" not in description:
+            continue
+        if year and year != "0000":
+            valid_years = (
+                {str(int(year) - 1), year, str(int(year) + 1)}
+                if year.isdigit()
+                else {year}
+            )
+            if not any(vy in description or vy in extract or vy in raw_rt for vy in valid_years):
+                continue
+        poster = str((summary.get("thumbnail") or {}).get("source") or "").split("?")[0]
+        dm = WIKIPEDIA_DIRECTOR_RE.search(extract) or WIKIPEDIA_DIRECTOR_RE.search(str(summary.get("description") or ""))
+        director = dm.group(1).strip() if dm else ""
+        return {"poster": poster, "plot": extract, "director": director}
+
+    return {}
 
 
 def _row_to_ledger_dict(row: sqlite3.Row) -> Dict[str, Any]:
@@ -1957,7 +2014,7 @@ def _ledger_entry_to_item(prev: Dict[str, Any]) -> Dict[str, Any]:
 def _restore_ledger_entry(prev: Dict[str, Any], db_path: Optional[str]) -> None:
     """Inserts a persisted ledger entry verbatim (no re-scoring, no network calls)."""
     title = str(prev.get("title") or "").strip()
-    if not title:
+    if not title or NON_MOVIE_TITLE_RE.search(title):
         return
     year = str(prev.get("year") or "0000").strip()
     genres = prev.get("genres") if isinstance(prev.get("genres"), list) else []

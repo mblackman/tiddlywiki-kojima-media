@@ -1,0 +1,93 @@
+title: $:/DemoStylesheet
+tags: $:/tags/Stylesheet
+type: text/vnd.tiddlywiki
+
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline
+
+/* ==========================================================================
+   KOJIMA MOVIE TRACKER — WEB DEMO APP-SHELL STYLESHEET
+   Hides TiddlyWiki authoring chrome (sidebar, topbar, tiddler toolbars, tags,
+   and timestamps) and centers the recommendations list as a standalone web app.
+   ========================================================================== */
+
+body.tc-body {
+  background: var(--suite-bg-canvas);
+  color: var(--suite-fg-primary);
+}
+
+/* Hide TiddlyWiki sidebar, topbar toggle, and dirty saver indicator */
+.tc-sidebar-scrollable,
+.tc-topbar,
+.tc-dirty-indicator {
+  display: none !important;
+}
+
+/* Keep page container and dropzone full-width block elements (never shrink-to-fit flex) */
+.tc-page-container-wrapper,
+.tc-page-container,
+.tc-dropzone {
+  display: block !important;
+  inline-size: 100% !important;
+  max-inline-size: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tc-story-river {
+  display: block !important;
+  float: none !important;
+  inline-size: 100% !important;
+  max-inline-size: 1140px !important;
+  margin-inline: auto !important;
+  margin-block: 0 !important;
+  padding-block: clamp(1rem, 2.5vw, 2.25rem) !important;
+  padding-inline: clamp(0.75rem, 2vw, 1.5rem) !important;
+  box-sizing: border-box !important;
+}
+
+/* Modern centered card frame for the dashboard & opened movie details */
+.tc-tiddler-frame {
+  display: block !important;
+  inline-size: 100% !important;
+  max-inline-size: 100% !important;
+  box-sizing: border-box !important;
+  background: var(--suite-surface-primary);
+  border: 1px solid var(--suite-border-subtle);
+  border-radius: var(--suite-radius-lg, 14px);
+  box-shadow: var(--suite-shadow-sm);
+  padding: clamp(1.125rem, 2.5vw, 1.875rem) !important;
+  margin-block-end: 1.25rem !important;
+}
+
+/* Hide all TiddlyWiki frame chrome on the primary recommendations dashboard */
+.tc-tiddler-frame[data-tiddler-title="Kojima Movie Recommendations"] > .tc-tiddler-title,
+.tc-tiddler-frame[data-tiddler-title="Kojima Movie Recommendations"] .tc-subtitle,
+.tc-tiddler-frame[data-tiddler-title="Kojima Movie Recommendations"] .tc-tags-wrapper {
+  display: none !important;
+}
+
+.tc-tiddler-frame[data-tiddler-title="Kojima Movie Recommendations"] .tc-tiddler-body {
+  display: block !important;
+  inline-size: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* On opened movie detail tiddlers, keep only the Close button and hide TW authoring buttons/tags */
+.tc-tiddler-frame:not([data-tiddler-title="Kojima Movie Recommendations"]) .tc-subtitle,
+.tc-tiddler-frame:not([data-tiddler-title="Kojima Movie Recommendations"]) .tc-tags-wrapper,
+.tc-tiddler-frame:not([data-tiddler-title="Kojima Movie Recommendations"]) .tc-tiddler-controls button:not(.tc-btn-\%24\%3A\%2Fcore\%2Fui\%2FButtons\%2Fclose) {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .tc-story-river {
+    padding-block: 0.5rem !important;
+    padding-inline: 0.5rem !important;
+  }
+
+  .tc-tiddler-frame {
+    padding: 0.875rem !important;
+    border-radius: var(--suite-radius-md, 10px);
+  }
+}

@@ -11,9 +11,11 @@ type: text/vnd.tiddlywiki
    Tier 3: Defines scoped --kj-* component tokens backed by --suite-*
    ========================================================================== */
 
-/* Hide raw TiddlyWiki titlebar heading on the dashboard tiddler while keeping controls */
+/* Hide raw TiddlyWiki titlebar heading, subtitle, and tags on the dashboard tiddler */
 .tc-tiddler-frame[data-tiddler-title="Kojima Movie Recommendations"] .tc-tiddler-title .tc-title,
-[data-tiddler-title="Kojima Movie Recommendations"] .tc-titlebar h2.tc-title {
+[data-tiddler-title="Kojima Movie Recommendations"] .tc-titlebar h2.tc-title,
+.tc-tiddler-frame[data-tiddler-title="Kojima Movie Recommendations"] .tc-subtitle,
+.tc-tiddler-frame[data-tiddler-title="Kojima Movie Recommendations"] .tc-tags-wrapper {
   display: none;
 }
 
@@ -26,7 +28,9 @@ type: text/vnd.tiddlywiki
   --kj-subtle-bg: var(--suite-surface-subtle);
 
   container: kj-dashboard / inline-size;
+  inline-size: 100%;
   max-inline-size: var(--kj-max-width);
+  box-sizing: border-box;
   margin-inline: auto;
   font-family: var(--suite-font-sans);
   color: var(--suite-fg-primary);
@@ -356,6 +360,12 @@ a.kj-btn--primary:hover,
 }
 
 /* --- Ranked Movie Cards List --- */
+.kj-dashboard-shell > p,
+.kj-movie-card > p {
+  display: contents;
+  margin: 0;
+}
+
 .kj-movie-list {
   display: flex;
   flex-direction: column;
@@ -377,9 +387,19 @@ a.kj-btn--primary:hover,
   transition: border-color 0.16s ease, box-shadow 0.16s ease;
 }
 
+/* Defer layout/paint of below-the-fold cards while preventing 0px collapse */
+.kj-movie-list > .kj-movie-card:nth-child(n + 6) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 180px;
+}
+
 .kj-movie-card:hover {
   border-color: var(--suite-border-strong);
   box-shadow: var(--suite-shadow-sm);
+}
+
+.kj-movie-card--noted {
+  border-inline-start-color: var(--suite-border-strong);
 }
 
 .kj-movie-card--dismissal {
@@ -460,6 +480,18 @@ a.kj-btn--primary:hover,
   border-color: var(--suite-status-success-border);
 }
 
+.kj-score-badge--b-tier {
+  background: var(--suite-status-info-bg);
+  color: var(--suite-status-info-fg);
+  border-color: var(--suite-status-info-border);
+}
+
+.kj-score-badge--c-tier {
+  background: var(--suite-surface-subtle);
+  color: var(--suite-fg-secondary);
+  border-color: var(--suite-border-strong);
+}
+
 .kj-score-badge--d-tier {
   background: var(--suite-status-danger-bg);
   color: var(--suite-status-danger-fg);
@@ -505,6 +537,10 @@ a.kj-btn--primary:hover,
   line-height: 1.55;
   text-wrap: pretty;
   overflow-wrap: break-word;
+}
+
+.kj-movie-card--noted .kj-review-quote {
+  border-inline-start-color: var(--suite-border-strong);
 }
 
 .kj-movie-card--dismissal .kj-review-quote {
