@@ -1,0 +1,24 @@
+{
+  "name": "tiddlywiki-kojima-media",
+  "version": "0.1.0",
+  "description": "Hideo Kojima Movie Recommendations, Multi-Factor Enthusiasm Ranking, and Sync Service for TiddlyWiki",
+  "main": "npm run build-all",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "serve": "npm run seed-demo && TIDDLYWIKI_PLUGIN_PATH=plugins npx tiddlywiki demo --listen port=8080",
+    "seed-demo": "node scripts/seed-demo.js",
+    "clean-runtime": "node scripts/clean-runtime.js",
+    "build-plugin": "node scripts/build-plugin.js",
+    "build-demo": "npm run seed-demo && TIDDLYWIKI_PLUGIN_PATH=plugins npx tiddlywiki demo --output build --build index",
+    "build-library": "TIDDLYWIKI_PLUGIN_PATH=plugins npx tiddlywiki demo --output build/library --build library",
+    "build-all": "npm run clean-runtime && npm run seed-demo && npm run build-plugin && npm run build-demo && npm run build-library && npm run clean-runtime",
+    "test:python": "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+    "test:tw": "node tests/test-plugin.js",
+    "test": "npm run test:python && npm run test:tw && npm run clean-runtime"
+  },
+  "author": "Matt Blackman",
+  "license": "MIT",
+  "devDependencies": {
+    "tiddlywiki": "^5.3.8"
+  }
+}

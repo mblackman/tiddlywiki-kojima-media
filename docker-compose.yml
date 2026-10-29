@@ -1,0 +1,31 @@
+services:
+  kojima-movie-sync:
+    image: python:3.12-slim
+    container_name: kojima-movie-sync
+    working_dir: /app
+    volumes:
+      - ./kojima_sync_service.py:/app/kojima_sync_service.py:ro
+      - kojima_data:/data
+    environment:
+      - PORT=8765
+      - KOJIMA_DB_PATH=/data/kojima_reviews.db
+      # Optional: TMDB API Key to resolve newly scraped X posts automatically
+      - TMDB_API_KEY=${TMDB_API_KEY:-}
+      # Optional: Comma-separated X/Nitter or Letterboxd RSS feed URLs for background polling
+      - KOJIMA_RSS_URLS=${KOJIMA_RSS_URLS:-}
+      - SCRAPE_INTERVAL_SECONDS=${SCRAPE_INTERVAL_SECONDS:-3600}
+      # AI Sentiment Provider: "gemini", "openai", "ollama", or "heuristic"
+      - LLM_PROVIDER=${LLM_PROVIDER:-heuristic}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434/api/generate}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.1}
+    ports:
+      - "8765:8765"
+    command: ["python3", "/app/kojima_sync_service.py"]
+    restart: unless-stopped
+
+volumes:
+  kojima_data:

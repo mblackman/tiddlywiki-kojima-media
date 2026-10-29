@@ -1,0 +1,52 @@
+{
+  "description": "Kojima Movie Tracker + Media Importer Demo & Development Wiki",
+  "plugins": [
+    "tiddlywiki/tiddlyweb",
+    "tiddlywiki/filesystem",
+    "tiddlywiki/highlight",
+    "tiddlywiki/pluginlibrary",
+    "mblackman/kojima-media"
+  ],
+  "themes": [
+    "tiddlywiki/vanilla",
+    "tiddlywiki/snowwhite"
+  ],
+  "build": {
+    "index": [
+      "--rendertiddler",
+      "$:/plugins/tiddlywiki/tiddlyweb/save/offline",
+      "index.html",
+      "text/plain"
+    ],
+    "kojima-media": [
+      "--rendertiddler",
+      "$:/plugins/mblackman/kojima-media",
+      "kojima-media.tid",
+      "text/plain",
+      "$:/core/templates/exporters/TidFile",
+      "exportFilter",
+      "[<currentTiddler>]",
+      "--rendertiddler",
+      "$:/plugins/mblackman/kojima-media",
+      "kojima-media-plugin.json",
+      "text/plain",
+      "$:/core/templates/json-tiddler"
+    ],
+    "library": [
+      "--makelibrary",
+      "$:/UpgradeLibrary",
+      "--savelibrarytiddlers",
+      "$:/UpgradeLibrary",
+      "[prefix[$:/plugins/mblackman/]]",
+      "recipes/library/tiddlers/",
+      "$:/UpgradeLibrary/List",
+      "--savetiddler",
+      "$:/UpgradeLibrary/List",
+      "recipes/library/tiddlers.json",
+      "--rendertiddler",
+      "$:/plugins/tiddlywiki/pluginlibrary/library.template.html",
+      "index.html",
+      "text/plain"
+    ]
+  }
+}

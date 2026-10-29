@@ -1,0 +1,53 @@
+title: $:/plugins/mblackman/kojima-media/view-template
+tags: $:/tags/ViewTemplate
+list-after: $:/plugins/mblackman/media-importer/view-template
+type: text/vnd.tiddlywiki
+
+<$list filter="[all[current]tag[Kojima]]" variable="ignoreKojimaTpl">
+<div class="kj-movie-card kj-view-panel">
+  <div class="kj-movie-body">
+    <div class="kj-movie-title-row">
+      <span class="kj-score-badge kj-score-badge--s-tier" title={{!!kojima-score-breakdown}}>
+        ⚡ <$text text={{{ [{!!kojima-score}!is[blank]else[0]] }}}/>/100
+      </span>
+      <strong>Hideo Kojima Recommendation</strong>
+      <$list filter="[all[current]has[kojima-tier]!field:kojima-tier[]]" variable="ignoreTier">
+        <span class="kj-tier-pill"><$text text={{!!kojima-tier}}/></span>
+      </$list>
+      <$link to="Kojima Movie Recommendations" class="kj-btn kj-btn--sm kj-ml-auto">
+        🎬 Kojima Tracker →
+      </$link>
+    </div>
+
+    <$list filter="[all[current]has[kojima-review]!field:kojima-review[]]" variable="ignoreRev">
+      <blockquote class="kj-review-quote">
+        "<$text text={{!!kojima-review}}/>"
+      </blockquote>
+    </$list>
+
+    <div class="kj-movie-footer">
+      <$list filter="[all[current]has[kojima-recommended-at]!field:kojima-recommended-at[]]" variable="ignoreRecDate">
+        <span>📅 Recommended: <b><$text text={{!!kojima-recommended-at}}/></b></span>
+      </$list>
+      <span><$text text={{!!kojima-score-breakdown}}/></span>
+      <$list filter="[all[current]has[kojima-sentiment-summary]!field:kojima-sentiment-summary[]]" variable="ignoreSent">
+        <span>🧠 <$text text={{!!kojima-sentiment-summary}}/></span>
+      </$list>
+      <$let sourcesJson={{!!kojima-sources-json}}>
+        <$list filter="[<sourcesJson>!is[blank]jsonindexes[]]" variable="srcIdx">
+          <$let
+            srcLabel={{{ [<sourcesJson>jsonget<srcIdx>,[label]] }}}
+            srcUrl={{{ [<sourcesJson>jsonget<srcIdx>,[url]] }}}
+          >
+            <$list filter="[<srcUrl>!is[blank]]" variable="ignoreHasUrl">
+              <a href=<<srcUrl>> target="_blank" rel="noopener noreferrer" class="kj-source-link">
+                🔗 <$text text=<<srcLabel>>/> ↗
+              </a>
+            </$list>
+          </$let>
+        </$list>
+      </$let>
+    </div>
+  </div>
+</div>
+</$list>

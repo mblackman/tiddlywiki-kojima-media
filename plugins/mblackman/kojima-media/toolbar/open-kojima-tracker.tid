@@ -1,0 +1,25 @@
+title: $:/plugins/mblackman/kojima-media/toolbar/open-kojima-tracker
+tags: $:/tags/PageControls
+caption: Kojima Movie Tracker
+description: Open Hideo Kojima Movie Recommendations dashboard
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$button
+  to="Kojima Movie Recommendations"
+  tooltip="Open Hideo Kojima Movie Recommendations"
+  aria-label="Kojima Movie Tracker"
+  class=<<tv-config-toolbar-class>>
+>
+  <$list filter="[<tv-config-toolbar-icons>match[yes]]">
+    <svg class="tc-image-button" viewBox="0 0 24 24" width="22pt" height="22pt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+      <line x1="7" y1="2" x2="7" y2="22"/>
+      <line x1="17" y1="2" x2="17" y2="22"/>
+      <polygon points="13 7 9 13 12 13 11 17 15 11 12 11 13 7"/>
+    </svg>
+  </$list>
+  <$list filter="[<tv-config-toolbar-text>match[yes]]">
+    <span class="tc-btn-text">Kojima Movies</span>
+  </$list>
+</$button>

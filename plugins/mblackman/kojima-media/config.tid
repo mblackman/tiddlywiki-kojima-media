@@ -1,0 +1,54 @@
+title: $:/plugins/mblackman/kojima-media/config
+tags: $:/tags/ControlPanel/SettingsTab
+caption: Kojima Movie Tracker
+type: text/vnd.tiddlywiki
+
+<div class="kj-settings-panel">
+  <h3 class="kj-settings-heading">🎬 Kojima Movie Tracker Settings</h3>
+  <p class="kj-settings-desc">
+    Configure the connection to the local Docker sync service (`kojima_sync_service.py`) and TMDB API key used by `media-importer`.
+  </p>
+
+  <div class="kj-settings-grid">
+    <div class="kj-field-group">
+      <label class="kj-label">Kojima Sync Service Endpoint URL</label>
+      <$edit-text
+        tiddler="$:/plugins/mblackman/media-importer/configs/kojima-sync-url"
+        tag="input"
+        default="http://localhost:8765/api/kojima-recommendations"
+        placeholder="http://localhost:8765/api/kojima-recommendations"
+        class="kj-input"
+      />
+      <span class="kj-field-hint">
+        Default: <code>http://localhost:8765/api/kojima-recommendations</code> (served by <code>docker compose up -d</code>).
+      </span>
+    </div>
+
+    <div class="kj-field-group">
+      <label class="kj-label">TMDB API Key (Shared with Media Importer)</label>
+      <$edit-text
+        tiddler="$:/plugins/mblackman/media-importer/configs/tmdb-api-key"
+        tag="input"
+        type="password"
+        default=""
+        placeholder="Enter TMDB v3 API Key"
+        class="kj-input"
+      />
+      <span class="kj-field-hint">
+        Used by <code>tm-fetch-Movie</code> to fetch full cast, director, runtime, and poster art from <a href="https://www.themoviedb.org/documentation/api" target="_blank" rel="noopener noreferrer">TMDB ↗</a>.
+      </span>
+    </div>
+  </div>
+
+  <div class="kj-settings-actions">
+    <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima">
+      🔄 Sync from Docker Service
+    </$button>
+    <$button class="kj-btn" message="tm-sync-kojima-seed">
+      ⚡ Load Curated Seed (25 Movies)
+    </$button>
+    <$link to="Kojima Movie Recommendations" class="kj-btn">
+      Open Dashboard →
+    </$link>
+  </div>
+</div>

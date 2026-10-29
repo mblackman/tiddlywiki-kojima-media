@@ -1,0 +1,261 @@
+title: Kojima Movie Recommendations
+tags: [[Media Dashboard]]
+caption: 🎬 Kojima Movie Tracker
+type: text/vnd.tiddlywiki
+
+\define sort-score-desc() [sort[englishTitle]] +[!nsort[kojima-score]]
+\define sort-score-asc() [sort[englishTitle]] +[nsort[kojima-score]]
+\define sort-rec-desc() [!nsort[kojima-score]] +[!sort[kojima-recommended-at]]
+\define sort-rec-asc() [!nsort[kojima-score]] +[sort[kojima-recommended-at]]
+\define sort-year-desc() [!nsort[kojima-score]] +[!nsort[year]]
+\define sort-year-asc() [!nsort[kojima-score]] +[nsort[year]]
+\define sort-words-desc() [!nsort[kojima-score]] +[!nsort[kojima-word-count]]
+\define sort-runtime-asc() [!nsort[kojima-score]] +[nsort[runtime]]
+\define sort-runtime-desc() [!nsort[kojima-score]] +[!nsort[runtime]]
+\define sort-title-asc() [sort[englishTitle]]
+\define sort-director-asc() [!nsort[kojima-score]] +[sort[director]]
+
+<div class="kj-dashboard-shell">
+
+  <!-- HEADER & SYNC TOOLBAR -->
+  <div class="kj-header">
+    <div class="kj-header__title-group">
+      <div class="kj-header__heading-row">
+        <svg class="kj-header__icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+          <line x1="7" y1="2" x2="7" y2="22"/>
+          <line x1="17" y1="2" x2="17" y2="22"/>
+          <polygon points="13 7 9 13 12 13 11 17 15 11 12 11 13 7"/>
+        </svg>
+        <h2 class="kj-header__title">Hideo Kojima Movie Recommendations</h2>
+      </div>
+      <p class="kj-header__subtitle">
+        Ranked by 0–100 Multi-Factor Enthusiasm Score • Canonical <code>Movie</code> tiddlers managed via <code>media-importer</code> (TMDB)
+      </p>
+    </div>
+
+    <div class="kj-header__actions">
+      <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima" tooltip="Sync from Docker service (http://localhost:8765/api/kojima-recommendations) and enrich via TMDB">
+        🔄 Sync Kojima Feed
+      </$button>
+      <$button class="kj-btn" message="tm-sync-kojima-seed" tooltip="Load or refresh the 25 curated Kojima movie recommendations immediately">
+        ⚡ Load Curated Seed
+      </$button>
+      <$list filter="[[$:/plugins/mblackman/media-importer/ui/media-library]is[tiddler]] [[$:/plugins/mblackman/media-importer/ui/media-library]is[shadow]] +[limit[1]]" variable="ignoreLib">
+        <$link to="$:/plugins/mblackman/media-importer/ui/media-library" class="kj-btn">
+          Media Library →
+        </$link>
+      </$list>
+      <$list filter="[[$:/state/kojima-sync/status]has[text]!field:text[]]" variable="ignoreSyncStatus">
+        <span class="kj-sync-status" role="status" aria-live="polite">
+          {{$:/state/kojima-sync/status}}
+        </span>
+      </$list>
+    </div>
+  </div>
+
+  <!-- PROGRESS SUMMARY METRIC CARDS -->
+  <$let
+    totalCount={{{ [tag[Movie]tag[Kojima]count[]] }}}
+    seenCount={{{ [tag[Movie]tag[Kojima]field:status[Completed]count[]] }}}
+    backlogCount={{{ [tag[Movie]tag[Kojima]field:status[Backlog]count[]] }}}
+    essentialCount={{{ [tag[Movie]tag[Kojima]] :filter[{!!kojima-score}compare:number:gteq[75]] +[count[]] }}}
+  >
+    <div class="kj-stats-grid">
+      <div class="kj-stat-card kj-stat-card--accent">
+        <span class="kj-stat-card__label">Total Tracked</span>
+        <span class="kj-stat-card__value"><<totalCount>></span>
+      </div>
+      <div class="kj-stat-card kj-stat-card--success">
+        <span class="kj-stat-card__label">Seen (Completed)</span>
+        <span class="kj-stat-card__value kj-stat-card__value--success"><<seenCount>></span>
+      </div>
+      <div class="kj-stat-card kj-stat-card--warning">
+        <span class="kj-stat-card__label">Backlog (Unseen)</span>
+        <span class="kj-stat-card__value kj-stat-card__value--warning"><<backlogCount>></span>
+      </div>
+      <div class="kj-stat-card kj-stat-card--info">
+        <span class="kj-stat-card__label">S/A-Tier Essentials (75+)</span>
+        <span class="kj-stat-card__value kj-stat-card__value--info"><<essentialCount>></span>
+      </div>
+    </div>
+  </$let>
+
+  <!-- FILTER & SEARCH CONTROLS -->
+  <$let
+    statusFilter={{{ [[$:/state/kojima-dashboard/status]get[text]else[All]] }}}
+    tierFilter={{{ [[$:/state/kojima-dashboard/tier]get[text]else[All]] }}}
+    tierPrefix={{{ [<tierFilter>match[All]then[]else<tierFilter>] }}}
+    searchToken={{{ [[$:/temp/kojima-dashboard/search]get[text]trim[]!is[blank]else[ ]] }}}
+    dismissalFilter={{{ [[$:/state/kojima-dashboard/dismissals]get[text]else[show]] }}}
+    excludedDismissal={{{ [<dismissalFilter>match[hide]then[yes]else[__none__]] }}}
+    sortMode={{{ [[$:/state/kojima-dashboard/sort]get[text]else[score-desc]] }}}
+    sortSubfilter={{{ [<sortMode>match[score-asc]then<sort-score-asc>] :else[<sortMode>match[recommended-desc]then<sort-rec-desc>] :else[<sortMode>match[recommended-asc]then<sort-rec-asc>] :else[<sortMode>match[year-desc]then<sort-year-desc>] :else[<sortMode>match[year-asc]then<sort-year-asc>] :else[<sortMode>match[words-desc]then<sort-words-desc>] :else[<sortMode>match[runtime-asc]then<sort-runtime-asc>] :else[<sortMode>match[runtime-desc]then<sort-runtime-desc>] :else[<sortMode>match[title-asc]then<sort-title-asc>] :else[<sortMode>match[director-asc]then<sort-director-asc>] :else[<sort-score-desc>] }}}
+  >
+    <div class="kj-filter-bar" role="region" aria-label="Filter and sort Kojima recommendations">
+      <div class="kj-chip-group" role="group" aria-label="Watch status filter">
+        <$list filter="All Backlog Completed Active Dropped" variable="st">
+          <$button
+            class={{{ [<statusFilter>match<st>then[kj-chip kj-chip--active]else[kj-chip]] }}}
+            aria-pressed={{{ [<statusFilter>match<st>then[true]else[false]] }}}
+          >
+            <$action-setfield $tiddler="$:/state/kojima-dashboard/status" text=<<st>> />
+            <$text text=<<st>>/>
+          </$button>
+        </$list>
+      </div>
+
+      <div class="kj-filter-controls">
+        <div class="kj-search-input-wrap">
+          <$edit-text
+            tiddler="$:/temp/kojima-dashboard/search"
+            tag="input"
+            default=""
+            placeholder="Search movie, director, or review..."
+            class="kj-input"
+          />
+        </div>
+
+        <$select tiddler="$:/state/kojima-dashboard/sort" default="score-desc" class="kj-select" aria-label="Sort Kojima recommendations">
+          <option value="score-desc">Sort: ⚡ Enthusiasm Score (High → Low)</option>
+          <option value="score-asc">Sort: ⚡ Enthusiasm Score (Low → High)</option>
+          <option value="recommended-desc">Sort: 📅 Date Recommended (Newest)</option>
+          <option value="recommended-asc">Sort: 📅 Date Recommended (Oldest)</option>
+          <option value="year-desc">Sort: 🎬 Release Year (Newest Films)</option>
+          <option value="year-asc">Sort: 🎬 Release Year (Oldest Classics)</option>
+          <option value="words-desc">Sort: 📝 Review Depth (Longest Write-Up)</option>
+          <option value="runtime-asc">Sort: ⏱️ Runtime (Shortest / Quick Watch)</option>
+          <option value="runtime-desc">Sort: ⏱️ Runtime (Longest Epics)</option>
+          <option value="title-asc">Sort: 🔤 Title (A → Z)</option>
+          <option value="director-asc">Sort: 🎥 Director (A → Z)</option>
+        </$select>
+
+        <$select tiddler="$:/state/kojima-dashboard/tier" default="All" class="kj-select" aria-label="Filter by Kojima Tier">
+          <option value="All">All Tiers</option>
+          <option value="S-Tier">S-Tier (90–100)</option>
+          <option value="A-Tier">A-Tier (75–89)</option>
+          <option value="B-Tier">B-Tier (55–74)</option>
+          <option value="C-Tier">C-Tier (25–54)</option>
+          <option value="D-Tier">D-Tier (Dismissals)</option>
+        </$select>
+
+        <label class="kj-checkbox-label">
+          <$checkbox tiddler="$:/state/kojima-dashboard/dismissals" field="text" checked="hide" unchecked="show" default="show">
+            <span>Hide 1-Sentence Dismissals</span>
+          </$checkbox>
+        </label>
+      </div>
+    </div>
+
+    <!-- RANKED MOVIE LIST -->
+    <div class="kj-movie-list">
+      <$list
+        filter="[tag[Movie]tag[Kojima]search:title,director,kojima-review:literal,caseinsensitive<searchToken>] :filter[<statusFilter>match[All]then{!!status}else<statusFilter>match{!!status}] :filter[{!!kojima-tier}prefix<tierPrefix>] :filter[{!!kojima-is-dismissal}!match<excludedDismissal>] +[subfilter<sortSubfilter>]"
+        emptyMessage="<div class='kj-empty-state'><div>No Kojima movie recommendations match the active filters.</div><div>Click <b>🔄 Sync Kojima Feed</b> or <b>⚡ Load Curated Seed</b> above to populate your tracker.</div></div>"
+      >
+        <$let
+          isDismissal={{{ [{!!kojima-is-dismissal}match[yes]then[yes]else[no]] }}}
+          isCompleted={{{ [{!!status}match[Completed]then[yes]else[no]] }}}
+          scoreVal={{{ [{!!kojima-score}!is[blank]else[0]] }}}
+          scoreClass={{{ [<scoreVal>compare:number:gteq[90]then[kj-score-badge kj-score-badge--s-tier]] :else[<scoreVal>compare:number:gteq[75]then[kj-score-badge kj-score-badge--a-tier]] :else[<isDismissal>match[yes]then[kj-score-badge kj-score-badge--d-tier]else[kj-score-badge]] }}}
+          cardClass={{{ [<isDismissal>match[yes]then[kj-movie-card kj-movie-card--dismissal]] :else[<isCompleted>match[yes]then[kj-movie-card kj-movie-card--completed]else[kj-movie-card]] }}}
+          statusLower={{{ [{!!status}lowercase[]else[backlog]] }}}
+        >
+          <div class=<<cardClass>>>
+
+            <!-- POSTER -->
+            <div class="kj-poster-wrap">
+              <$list filter="[all[current]has[image]!field:image[]]" variable="ignoreImg">
+                <img src={{!!image}} alt={{!!title}} class="kj-poster-img" loading="lazy" />
+              </$list>
+              <$list filter="[all[current]!has[image]] [all[current]field:image[]] +[limit[1]]" variable="ignoreNoImg">
+                <div class="kj-poster-placeholder">🎬<br/><$text text={{!!year}}/></div>
+              </$list>
+            </div>
+
+            <!-- DETAILS & KOJIMA REVIEW -->
+            <div class="kj-movie-body">
+              <div class="kj-movie-title-row">
+                <span class=<<scoreClass>> title={{!!kojima-score-breakdown}}>
+                  ⚡ <$text text=<<scoreVal>>/>/100
+                </span>
+                <$link to={{!!title}} class="kj-movie-title-link">
+                  <$view field="title"/>
+                </$link>
+                <$list filter="[all[current]has[kojima-tier]!field:kojima-tier[]]" variable="ignoreTier">
+                  <span class="kj-tier-pill"><$text text={{!!kojima-tier}}/></span>
+                </$list>
+              </div>
+
+              <div class="kj-movie-submeta">
+                <$list filter="[all[current]has[director]!field:director[]]" variable="ignoreDir">
+                  <span>Dir. <b><$text text={{{ [enlist{!!director}search-replace:g[_],[ ]join[, ]] }}}/></b></span>
+                </$list>
+                <$list filter="[all[current]has[runtime]!field:runtime[]!field:runtime[unknown]]" variable="ignoreRun">
+                  <span>• <$text text={{!!runtime}}/> min</span>
+                </$list>
+                <$list filter="[all[current]has[genres]!field:genres[]]" variable="ignoreGen">
+                  <span>• <$text text={{{ [enlist{!!genres}search-replace:g[_],[ ]join[, ]] }}}/></span>
+                </$list>
+                <$list filter="[all[current]has[kojima-recommended-at]!field:kojima-recommended-at[]]" variable="ignoreRecDate">
+                  <span>• 📅 Recommended: <b><$text text={{!!kojima-recommended-at}}/></b></span>
+                </$list>
+                <$list filter="[all[current]has[kojima-word-count]!field:kojima-word-count[]]" variable="ignoreWordCount">
+                  <span>• 📝 <$text text={{!!kojima-word-count}}/> words</span>
+                </$list>
+              </div>
+
+              <blockquote class="kj-review-quote">
+                "<$text text={{!!kojima-review}}/>"
+              </blockquote>
+
+              <div class="kj-movie-footer">
+                <span><$text text={{!!kojima-score-breakdown}}/></span>
+                <$let sourcesJson={{!!kojima-sources-json}}>
+                  <$list filter="[<sourcesJson>!is[blank]jsonindexes[]]" variable="srcIdx" emptyMessage="<$list filter='[all[current]has[kojima-primary-url]!field:kojima-primary-url[]]'><a href={{!!kojima-primary-url}} target='_blank' rel='noopener noreferrer' class='kj-source-link'>🔗 <$text text={{!!kojima-primary-source}}/> ↗</a></$list>">
+                    <$let
+                      srcLabel={{{ [<sourcesJson>jsonget<srcIdx>,[label]] }}}
+                      srcUrl={{{ [<sourcesJson>jsonget<srcIdx>,[url]] }}}
+                    >
+                      <$list filter="[<srcUrl>!is[blank]]" variable="ignoreHasUrl">
+                        <a href=<<srcUrl>> target="_blank" rel="noopener noreferrer" class="kj-source-link">
+                          🔗 <$text text=<<srcLabel>>/> ↗
+                        </a>
+                      </$list>
+                    </$let>
+                  </$list>
+                </$let>
+                <$list filter="[all[current]has[url]!field:url[]]" variable="ignoreTmdbUrl">
+                  <a href={{!!url}} target="_blank" rel="noopener noreferrer" class="kj-source-link">
+                    TMDB ↗
+                  </a>
+                </$list>
+              </div>
+            </div>
+
+            <!-- SEEN / STATUS TOGGLE -->
+            <div class="kj-movie-actions">
+              <$list filter="[all[current]field:status[Completed]]" variable="ignoreSeen">
+                <$button class="kj-btn kj-btn--sm kj-btn--success" tooltip="Click to move back to Backlog">
+                  ✓ Seen
+                  <$action-setfield status="Backlog" />
+                </$button>
+              </$list>
+              <$list filter="[all[current]!field:status[Completed]]" variable="ignoreUnseen">
+                <$button class="kj-btn kj-btn--sm" tooltip="Mark this movie as Seen (Completed)">
+                  ☐ Mark Seen
+                  <$action-setfield status="Completed" />
+                </$button>
+              </$list>
+              <span class={{{ [[kj-status-pill kj-status-pill--]addsuffix<statusLower>] }}}>
+                Status: <b><$text text={{{ [{!!status}!is[blank]else[Backlog]] }}}/></b>
+              </span>
+            </div>
+
+          </div>
+        </$let>
+      </$list>
+    </div>
+  </$let>
+
+</div>
