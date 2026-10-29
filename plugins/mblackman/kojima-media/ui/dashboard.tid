@@ -35,7 +35,7 @@ type: text/vnd.tiddlywiki
     </div>
 
     <div class="kj-header__actions">
-      <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima" tooltip="Sync from Docker service (http://localhost:8765/api/kojima-recommendations) and enrich via TMDB">
+      <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima" tooltip="Download the latest Kojima recommendations feed (hosted on GitHub Pages by default) and enrich via TMDB">
         🔄 Sync Kojima Feed
       </$button>
       <$list filter="[[$:/plugins/mblackman/media-importer/ui/media-library]is[tiddler]] [[$:/plugins/mblackman/media-importer/ui/media-library]is[shadow]] +[limit[1]]" variable="ignoreLib">

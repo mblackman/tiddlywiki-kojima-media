@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node scripts/dev.js",
     "serve": "npm run seed-demo && TIDDLYWIKI_PLUGIN_PATH=plugins npx tiddlywiki demo --listen port=8080",
-    "seed-demo": "node scripts/seed-demo.js",
+    "generate-feed": "python3 kojima_sync_service.py --sync-static",
+    "seed-demo": "npm run generate-feed && node scripts/seed-demo.js",
     "clean-runtime": "node scripts/clean-runtime.js",
     "build-plugin": "node scripts/build-plugin.js",
     "build-demo": "npm run seed-demo && TIDDLYWIKI_PLUGIN_PATH=plugins npx tiddlywiki demo --output build --build index",

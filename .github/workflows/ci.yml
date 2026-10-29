@@ -1,4 +1,4 @@
-name: CI
+name: CI & Scheduled Recommendations Sync
 
 on:
   push:
@@ -7,6 +7,10 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    # Runs daily at 06:00 UTC to refresh the Kojima movie recommendations feed & demo site
+    - cron: "0 6 * * *"
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -19,6 +23,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -28,13 +37,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Sync & score Kojima recommendations feed
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          KOJIMA_RSS_URLS: ${{ vars.KOJIMA_RSS_URLS || secrets.KOJIMA_RSS_URLS }}
+        run: npm run generate-feed
+
       - name: Run tests
         run: npm test
 
-      - name: Build plugin, demo, and CPL library
+      - name: Build plugin, demo wiki, static API feed, and CPL library
         run: npm run build-all
 
-      - name: Upload plugin artifacts
+      - name: Upload plugin & feed artifacts
         uses: actions/upload-artifact@v4
         with:
           name: kojima-media-plugin
@@ -43,15 +58,16 @@ jobs:
             build/kojima-media-plugin.json
             dist/kojima-media-plugin.json
             build/index.html
+            build/api/kojima-recommendations.json
           if-no-files-found: error
           retention-days: 14
 
   deploy-pages:
     needs: test-and-build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
     environment:
@@ -61,6 +77,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -70,7 +91,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build demo wiki
+      - name: Sync & score Kojima recommendations feed
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          KOJIMA_RSS_URLS: ${{ vars.KOJIMA_RSS_URLS || secrets.KOJIMA_RSS_URLS }}
+        run: npm run generate-feed
+
+      - name: Commit updated seed dataset if new recommendations were scraped
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          if ! git diff --quiet demo/seed-recommendations.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add demo/seed-recommendations.json
+            git commit -m "chore(data): update Kojima movie recommendations feed [skip ci]"
+            git push origin HEAD:main
+          fi
+
+      - name: Build demo wiki & static JSON feed
         run: npm run build-all
 
       - name: Setup Pages

@@ -164,6 +164,52 @@ class TestKojimaSyncService(unittest.TestCase):
             server.server_close()
             kss.KOJIMA_DB_PATH = old_db
 
+    def test_sync_static_files_preserves_existing_and_writes_api_payload(self):
+        seed_out = os.path.join(self.temp_dir.name, "seed-recommendations.json")
+        api_out = os.path.join(self.temp_dir.name, "api", "kojima-recommendations.json")
+
+        # Pre-populate seed file with an extra scraped item to verify stateless CI preservation
+        with open(seed_out, "w", encoding="utf-8") as fh:
+            json.dump(
+                [
+                    {
+                        "title": "Furiosa: A Mad Max Saga",
+                        "year": "2024",
+                        "tmdb_id": "786892",
+                        "director": "George Miller",
+                        "runtime": "148",
+                        "genres": ["Action", "Adventure", "Science Fiction"],
+                        "poster": "https://example.com/furiosa.jpg",
+                        "plot": "Young Furiosa is snatched from the Green Place of Many Mothers.",
+                        "kojima_review": "Watched 'Furiosa: A Mad Max Saga' at IMAX! George Miller is my god of cinema! Masterpiece!",
+                        "kojima_recommended_at": "2024-05-24",
+                        "kojima_sources_json": json.dumps([
+                            {"label": "X (@HIDEO_KOJIMA_EN)", "type": "x_review", "url": "https://x.com/furiosa"}
+                        ]),
+                    }
+                ],
+                fh,
+            )
+
+        payload = kss.sync_static_files(
+            seed_json_path=seed_out,
+            api_json_path=api_out,
+            scrape_rss=False,
+            force_refresh=True,
+            db_path=self.db_path,
+        )
+        self.assertGreaterEqual(payload["count"], 26)
+        self.assertTrue(os.path.exists(seed_out))
+        self.assertTrue(os.path.exists(api_out))
+        self.assertTrue(os.path.exists(api_out[:-5]))  # extensionless alias
+
+        with open(api_out, "r", encoding="utf-8") as fh:
+            saved_api = json.load(fh)
+        self.assertEqual(saved_api["count"], payload["count"])
+        titles = {item["title"] for item in saved_api["items"]}
+        self.assertIn("Furiosa: A Mad Max Saga", titles)
+        self.assertIn("2001: A Space Odyssey", titles)
+
 
 if __name__ == "__main__":
     unittest.main()

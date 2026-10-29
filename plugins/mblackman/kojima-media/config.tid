@@ -6,22 +6,32 @@ type: text/vnd.tiddlywiki
 <div class="kj-settings-panel">
   <h3 class="kj-settings-heading">🎬 Kojima Movie Tracker Settings</h3>
   <p class="kj-settings-desc">
-    Configure the connection to the local Docker sync service (`kojima_sync_service.py`) and TMDB API key used by `media-importer`.
+    Configure the Kojima Recommendations JSON feed URL (defaults to the hosted GitHub Pages feed with zero server setup) and optional TMDB API key used by <code>media-importer</code>.
   </p>
 
   <div class="kj-settings-grid">
     <div class="kj-field-group">
-      <label class="kj-label">Kojima Sync Service Endpoint URL</label>
+      <label class="kj-label">Kojima Recommendations Feed URL</label>
       <$edit-text
         tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url"
         tag="input"
-        default="http://localhost:8765/api/kojima-recommendations"
-        placeholder="http://localhost:8765/api/kojima-recommendations"
+        default="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json"
+        placeholder="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json"
         class="kj-input"
       />
       <span class="kj-field-hint">
-        Default: <code>http://localhost:8765/api/kojima-recommendations</code> (served by <code>docker compose up -d</code>).
+        Default: <code>https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json</code> (hosted on GitHub Pages &amp; updated automatically via scheduled GitHub Actions). You can also point this to any custom JSON feed URL or a local server (<code>http://localhost:8765/api/kojima-recommendations</code>).
       </span>
+      <div class="kj-chip-group">
+        <$button class="kj-chip" tooltip="Use the official GitHub Pages hosted feed (no Docker required)">
+          <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json" />
+          ☁️ Use Hosted GitHub Pages Feed
+        </$button>
+        <$button class="kj-chip" tooltip="Point to a local Python / Docker sync service on port 8765">
+          <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text="http://localhost:8765/api/kojima-recommendations" />
+          🐳 Use Local Server (localhost:8765)
+        </$button>
+      </div>
     </div>
 
     <div class="kj-field-group">
@@ -35,14 +45,14 @@ type: text/vnd.tiddlywiki
         class="kj-input"
       />
       <span class="kj-field-hint">
-        Used by <code>tm-fetch-Movie</code> to fetch full cast, director, runtime, and poster art from <a href="https://www.themoviedb.org/documentation/api" target="_blank" rel="noopener noreferrer">TMDB ↗</a>.
+        Optional: Used by <code>tm-fetch-Movie</code> to fetch full cast, director, runtime, and poster art from <a href="https://www.themoviedb.org/documentation/api" target="_blank" rel="noopener noreferrer">TMDB ↗</a>.
       </span>
     </div>
   </div>
 
   <div class="kj-settings-actions">
     <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima">
-      🔄 Sync from Docker Service
+      🔄 Sync Kojima Feed
     </$button>
     <$link to="Kojima Movie Recommendations" class="kj-btn">
       Open Dashboard →

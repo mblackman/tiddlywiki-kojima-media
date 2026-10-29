@@ -21,6 +21,7 @@ API key is set on the client.
   var ENDPOINT_CONFIG_TIDDLER = "$:/plugins/mblackman/kojima-media/configs/kojima-sync-url";
   var LEGACY_ENDPOINT_TIDDLER = "$:/plugins/mblackman/media-importer/configs/kojima-sync-url";
   var TMDB_KEY_TIDDLER = "$:/plugins/mblackman/media-importer/configs/tmdb-api-key";
+  var DEFAULT_FEED_URL = "https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json";
 
   function mergeTagLists() {
     var seen = Object.create(null);
@@ -214,9 +215,10 @@ API key is set on the client.
       var syncUrl =
         ($tw.wiki.getTiddlerText(ENDPOINT_CONFIG_TIDDLER, "") || "").trim() ||
         ($tw.wiki.getTiddlerText(LEGACY_ENDPOINT_TIDDLER, "") || "").trim() ||
-        "http://localhost:8765/api/kojima-recommendations";
+        DEFAULT_FEED_URL;
 
-      // When accessed over LAN (e.g. http://192.168.x.x:8080), rewrite localhost/127.0.0.1 to the host IP
+      // When a local endpoint is configured and accessed over LAN (e.g. http://192.168.x.x:8080),
+      // rewrite localhost/127.0.0.1 to the host IP
       if (
         typeof window !== "undefined" &&
         window.location &&
@@ -240,7 +242,9 @@ API key is set on the client.
         return;
       }
 
-      $tw.wiki.setText(SYNC_STATE_TIDDLER, "text", null, "Connecting to " + syncUrl + "...");
+      $tw.wiki.setText(SYNC_STATE_TIDDLER, "text", null, "Fetching recommendations from " + syncUrl + "...");
+
+      var sourceLabel = syncUrl.indexOf("github.io") !== -1 ? "GitHub Pages Feed" : "Sync Endpoint";
 
       fetch(syncUrl)
         .then(function(res) {
@@ -249,14 +253,14 @@ API key is set on the client.
         })
         .then(function(payload) {
           var items = payload.items || (Array.isArray(payload) ? payload : []);
-          processKojimaItems(items, "Docker Sync Service");
+          processKojimaItems(items, sourceLabel);
         })
         .catch(function(err) {
           $tw.wiki.setText(
             SYNC_STATE_TIDDLER,
             "text",
             null,
-            "Sync error (" + err.message + ") — ensure kojima-sync service is running at " + syncUrl
+            "Sync error (" + err.message + ") when fetching " + syncUrl
           );
         });
     });

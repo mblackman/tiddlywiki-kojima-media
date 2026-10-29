@@ -49,6 +49,16 @@ function runTests() {
     "Plugin should not bundle seed-recommendations.json"
   );
 
+  // Verify default feed URL points to the hosted GitHub Pages JSON feed
+  const defaultSyncUrl = $tw.wiki
+    .getTiddlerText("$:/plugins/mblackman/kojima-media/configs/kojima-sync-url", "")
+    .trim();
+  assert.strictEqual(
+    defaultSyncUrl,
+    "https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json",
+    "Default sync URL should point to the GitHub Pages JSON feed"
+  );
+
   // 2. Verify MASTER.md CSS compliance on Kojima stylesheets
   const tokensCss = $tw.wiki.renderTiddler(
     "text/plain",

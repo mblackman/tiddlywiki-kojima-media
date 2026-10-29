@@ -138,7 +138,25 @@ function main() {
     JSON.stringify(tiddlers, null, 2),
     "utf8"
   );
-  console.log(`✅ Seeded ${tiddlers.length} Kojima Movie tiddlers into demo/tiddlers/KojimaMovies.json`);
+
+  // 3. Emit static API JSON feeds into build/ for GitHub Pages hosting
+  const buildApiDir = path.join(ROOT_DIR, "build", "api");
+  fs.mkdirSync(buildApiDir, { recursive: true });
+  const apiPayload = JSON.stringify(
+    {
+      generated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"),
+      scoring_version: "v2.1",
+      count: rawItems.length,
+      items: rawItems,
+    },
+    null,
+    2
+  ) + "\n";
+  fs.writeFileSync(path.join(buildApiDir, "kojima-recommendations.json"), apiPayload, "utf8");
+  fs.writeFileSync(path.join(buildApiDir, "kojima-recommendations"), apiPayload, "utf8");
+  fs.writeFileSync(path.join(ROOT_DIR, "build", "kojima-recommendations.json"), apiPayload, "utf8");
+
+  console.log(`✅ Seeded ${tiddlers.length} Kojima Movie tiddlers into demo/tiddlers/KojimaMovies.json & build/api/kojima-recommendations.json`);
 }
 
 if (require.main === module) {

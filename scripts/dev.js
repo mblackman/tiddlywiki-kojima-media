@@ -5,7 +5,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { spawn } = require("child_process");
+const { spawn, execFileSync } = require("child_process");
 const { main: seedDemo } = require("./seed-demo");
 
 const rootDir = path.resolve(__dirname, "..");
@@ -19,6 +19,14 @@ const host = process.env.HOST || "0.0.0.0";
 let tiddlyWikiProcess = null;
 
 function syncDebugWiki() {
+  try {
+    execFileSync("python3", ["kojima_sync_service.py", "--sync-static"], {
+      cwd: rootDir,
+      stdio: "inherit",
+    });
+  } catch (err) {
+    console.warn("[warn] Could not run kojima_sync_service.py --sync-static, using existing demo/seed-recommendations.json");
+  }
   seedDemo();
   fs.rmSync(debugDir, { recursive: true, force: true });
   fs.cpSync(demoDir, debugDir, { recursive: true });

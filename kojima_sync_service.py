@@ -1061,7 +1061,7 @@ def compute_enthusiasm_score(
 
 
 # ---------------------------------------------------------------------------
-# TMDB ID Resolver (for newly scraped X posts without a pre-known tmdb_id)
+# TMDB ID & Metadata Resolver (for newly scraped X posts or missing posters)
 # ---------------------------------------------------------------------------
 def resolve_tmdb_id(title: str, year: Optional[str] = None) -> Optional[str]:
     if not TMDB_API_KEY:
@@ -1079,6 +1079,42 @@ def resolve_tmdb_id(title: str, year: Optional[str] = None) -> Optional[str]:
     except Exception as exc:
         print(f"[warn] TMDB lookup failed for {title}: {exc}")
     return None
+
+
+def fetch_tmdb_metadata(tmdb_id: str) -> Dict[str, Any]:
+    """
+    When TMDB_API_KEY is set, fetches movie details + credits from TMDB v3 API
+    to populate poster, director, runtime, genres, and plot.
+    """
+    if not TMDB_API_KEY or not tmdb_id:
+        return {}
+    url = (
+        f"https://api.themoviedb.org/3/movie/{urllib.parse.quote(str(tmdb_id))}"
+        f"?api_key={TMDB_API_KEY}&append_to_response=credits"
+    )
+    try:
+        with urllib.request.urlopen(url, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        poster_path = data.get("poster_path") or ""
+        poster = f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else ""
+        crew = (data.get("credits") or {}).get("crew") or []
+        directors = [c.get("name", "") for c in crew if c.get("job") == "Director" and c.get("name")]
+        genres = [g.get("name", "") for g in (data.get("genres") or []) if g.get("name")]
+        runtime = str(data.get("runtime") or "")
+        plot = str(data.get("overview") or "")
+        release_date = str(data.get("release_date") or "")
+        year = release_date[:4] if len(release_date) >= 4 else ""
+        return {
+            "poster": poster,
+            "director": ", ".join(directors),
+            "genres": genres,
+            "runtime": runtime,
+            "plot": plot,
+            "year": year,
+        }
+    except Exception as exc:
+        print(f"[warn] TMDB metadata fetch failed for {tmdb_id}: {exc}")
+        return {}
 
 
 # ---------------------------------------------------------------------------
@@ -1282,6 +1318,18 @@ def upsert_recommendation(
             genres_json = json.dumps(genres_list) if isinstance(genres_list, list) else (existing["genres_json"] if existing else "[]")
             poster = str(item.get("poster") or (existing["poster"] if existing else "") or "")
             plot = str(item.get("plot") or (existing["plot"] if existing else "") or "")
+
+            if tmdb_id and TMDB_API_KEY and (not poster or not director or not runtime or not plot):
+                meta = fetch_tmdb_metadata(tmdb_id)
+                if meta:
+                    poster = poster or meta.get("poster", "")
+                    director = director or meta.get("director", "")
+                    runtime = runtime or meta.get("runtime", "")
+                    plot = plot or meta.get("plot", "")
+                    if year == "0000" and meta.get("year"):
+                        year = meta["year"]
+                    if genres_json == "[]" and meta.get("genres"):
+                        genres_json = json.dumps(meta["genres"])
 
             breakdown = compute_enthusiasm_score(title, review_text, sources)
             primary_source = sources[0] if sources else {"label": "Kojima Review", "url": ""}
@@ -1617,6 +1665,109 @@ def build_recommendations_feed(
             conn.close()
 
 
+def sync_static_files(
+    seed_json_path: str = "demo/seed-recommendations.json",
+    api_json_path: str = "build/api/kojima-recommendations.json",
+    scrape_rss: bool = True,
+    force_refresh: bool = True,
+    db_path: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    Serverless / GitHub Pages static generator:
+      1. Loads any existing items from `seed_json_path` so previously scraped RSS items
+         or cached TMDB posters/metadata are preserved across stateless CI runs.
+      2. Upserts `SEED_RECOMMENDATIONS` with the latest scoring engine (`v2.1`).
+      3. Optionally polls `KOJIMA_RSS_URLS` to ingest newly posted Kojima reviews.
+      4. Writes the updated array to `seed_json_path` and the static API payload to
+         `api_json_path` (plus `build/api/kojima-recommendations` for extensionless requests).
+    """
+    init_db(db_path)
+    seed_slugs = {
+        make_slug(str(item["title"]), str(item.get("year") or "0000"))
+        for item in SEED_RECOMMENDATIONS
+    }
+
+    if seed_json_path and os.path.exists(seed_json_path):
+        try:
+            with open(seed_json_path, "r", encoding="utf-8") as fh:
+                existing_items = json.load(fh)
+            if isinstance(existing_items, dict) and "items" in existing_items:
+                existing_items = existing_items["items"]
+            if isinstance(existing_items, list):
+                for prev in existing_items:
+                    title = str(prev.get("title") or "").strip()
+                    if not title:
+                        continue
+                    year = str(prev.get("year") or "0000").strip()
+                    slug = make_slug(title, year)
+                    try:
+                        sources = json.loads(prev.get("kojima_sources_json") or "[]")
+                    except Exception:
+                        sources = prev.get("sources") or []
+                    normalized = {
+                        "title": title,
+                        "year": year,
+                        "tmdb_id": str(prev.get("tmdb_id") or ""),
+                        "director": str(prev.get("director") or ""),
+                        "runtime": str(prev.get("runtime") or ""),
+                        "genres": prev.get("genres") if isinstance(prev.get("genres"), list) else [],
+                        "poster": str(prev.get("poster") or ""),
+                        "plot": str(prev.get("plot") or ""),
+                        "review": str(prev.get("kojima_review") or prev.get("review") or ""),
+                        "recommended_at": str(prev.get("kojima_recommended_at") or prev.get("recommended_at") or ""),
+                        "sources": sources,
+                    }
+                    # Pre-populate DB with existing metadata/extra scraped items
+                    upsert_recommendation(
+                        normalized,
+                        force_rescore=(slug not in seed_slugs and force_refresh),
+                        db_path=db_path,
+                    )
+        except Exception as exc:
+            print(f"[warn] Could not read existing {seed_json_path}: {exc}")
+
+    # Upsert canonical SEED_RECOMMENDATIONS
+    for item in SEED_RECOMMENDATIONS:
+        upsert_recommendation(item, force_rescore=force_refresh, db_path=db_path)
+
+    ingested: List[Dict[str, Any]] = []
+    if scrape_rss and KOJIMA_RSS_URLS:
+        ingested = poll_rss_feeds(db_path=db_path)
+
+    feed = build_recommendations_feed(force_refresh=False, db_path=db_path)
+
+    if seed_json_path:
+        os.makedirs(os.path.dirname(os.path.abspath(seed_json_path)), exist_ok=True)
+        with open(seed_json_path, "w", encoding="utf-8") as fh:
+            json.dump(feed, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
+
+    payload = {
+        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "last_scrape_at": _LAST_SCRAPE_AT,
+        "scoring_version": SCORING_ENGINE_VERSION,
+        "llm_provider": LLM_PROVIDER,
+        "newly_ingested_count": len(ingested),
+        "count": len(feed),
+        "items": feed,
+    }
+
+    if api_json_path:
+        abs_api_path = os.path.abspath(api_json_path)
+        os.makedirs(os.path.dirname(abs_api_path), exist_ok=True)
+        payload_str = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+        with open(abs_api_path, "w", encoding="utf-8") as fh:
+            fh.write(payload_str)
+        # Also write extensionless alias if path ends in .json
+        if abs_api_path.endswith(".json"):
+            no_ext_path = abs_api_path[:-5]
+            if not os.path.isdir(no_ext_path):
+                with open(no_ext_path, "w", encoding="utf-8") as fh:
+                    fh.write(payload_str)
+
+    return payload
+
+
 # ---------------------------------------------------------------------------
 # HTTP Server with CORS for Browser TiddlyWiki Sync (`tm-sync-kojima`)
 # ---------------------------------------------------------------------------
@@ -1728,6 +1879,21 @@ def _background_scraper_loop(interval_seconds: int) -> None:
 
 if __name__ == "__main__":
     import sys
+
+    if "--sync-static" in sys.argv:
+        seed_out = os.environ.get("KOJIMA_SEED_JSON_PATH", "demo/seed-recommendations.json")
+        api_out = os.environ.get("KOJIMA_API_JSON_PATH", "build/api/kojima-recommendations.json")
+        payload = sync_static_files(
+            seed_json_path=seed_out,
+            api_json_path=api_out,
+            scrape_rss=True,
+            force_refresh=True,
+        )
+        print(
+            f"✅ Synced {payload['count']} Kojima recommendations "
+            f"(+{payload['newly_ingested_count']} from RSS) -> {seed_out} & {api_out}"
+        )
+        sys.exit(0)
 
     if "--dump-json" in sys.argv:
         print(json.dumps(build_recommendations_feed(), indent=2))
