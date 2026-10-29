@@ -11,7 +11,7 @@ Features:
   4. Annual "Top Movies of the Year" lists (X / Instagram)
   5. X (@HIDEO_KOJIMA_EN) movie reviews (via RSS/Nitter/Letterboxd feeds + curated seed)
 - Persists recommendations, resolved TMDB IDs, and 5-level enthusiasm ratings in SQLite
-  (`/data/kojima_reviews.db` or `KOJIMA_DB_PATH`) so repeat syncs are fast and deterministic.
+  (`data/kojima_reviews.db` or `KOJIMA_DB_PATH`) so repeat syncs are fast and deterministic.
 - Background RSS/Atom scraper daemon (`KOJIMA_RSS_URLS`, `SCRAPE_INTERVAL_SECONDS`)
   that extracts movie titles from new `@HIDEO_KOJIMA_EN` posts, resolves `tmdb_id`,
   and rates enthusiasm automatically.
@@ -47,11 +47,11 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://host.docker.internal:11434/api/generate")
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
 PORT = int(os.getenv("PORT", "8765"))
 
-DEFAULT_DB_DIR = "/data" if os.path.isdir("/data") and os.access("/data", os.W_OK) else os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DEFAULT_DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 KOJIMA_DB_PATH = os.getenv("KOJIMA_DB_PATH", os.path.join(DEFAULT_DB_DIR, "kojima_reviews.db"))
 DEFAULT_KOJIMA_RSS_URLS = [
     "https://letterboxd.com/kojima_hideo/rss/",

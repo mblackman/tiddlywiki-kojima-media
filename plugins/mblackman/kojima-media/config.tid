@@ -5,7 +5,6 @@ type: text/vnd.tiddlywiki
 
 <$let
   defaultUrl="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json"
-  localUrl="http://localhost:8765/api/kojima-recommendations"
   currentUrl={{{ [[$:/plugins/mblackman/kojima-media/configs/kojima-sync-url]get[text]trim[]!is[blank]else<defaultUrl>] }}}
 >
   <div class="kj-settings-panel">
@@ -33,7 +32,7 @@ type: text/vnd.tiddlywiki
         />
       </label>
       <span class="kj-field-hint">
-        Defaults to the official GitHub Pages feed (updated daily via GitHub Actions). You can also enter a custom feed URL or switch to a local server below.
+        Defaults to the official GitHub Pages feed (updated daily via GitHub Actions). You can also enter a custom feed URL.
       </span>
 
       <div class="kj-chip-group" role="group" aria-label="Feed URL Presets">
@@ -43,13 +42,6 @@ type: text/vnd.tiddlywiki
         >
           <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text=<<defaultUrl>> />
           ☁️ Official GitHub Pages Feed
-        </$button>
-        <$button
-          class={{{ [<currentUrl>match<localUrl>then[kj-chip kj-chip--active]else[kj-chip]] }}}
-          aria-pressed={{{ [<currentUrl>match<localUrl>then[true]else[false]] }}}
-        >
-          <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text=<<localUrl>> />
-          🐳 Local Server (localhost:8765)
         </$button>
       </div>
     </div>

@@ -7,7 +7,7 @@ Companion plugin for [[Media Importer|$:/plugins/mblackman/media-importer]] that
 
 * ''Dashboard'': Open [[Kojima Movie Recommendations]] to browse movies ranked by the 5-level ''Kojima Enthusiasm Rating'' (★★★★★ Canon, ★★★★☆ Loved, ★★★☆☆ Liked, ★★☆☆☆ Noted, ★☆☆☆☆ Dismissed), filter by watch status or level, and toggle movies between `Backlog` and `Completed` (Seen).
 * ''Media Importer Compatible'': Creates canonical `Movie` tiddlers tagged with `Movie` and `Kojima` while preserving existing watch status (`Completed`, `Active`, `Dropped`, `Backlog`), `favorite`, and `rating` across re-syncs.
-* ''Serverless GitHub Pages Feed (Default)'': Connects out of the box to `https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json` (updated on a schedule via GitHub Actions) with zero server setup required, or can be pointed to any custom JSON feed URL or self-hosted Docker sync service (`http://localhost:8765/api/kojima-recommendations`).
+* ''Serverless GitHub Pages Feed (Default)'': Connects out of the box to `https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json` (updated daily via GitHub Actions) with zero server setup required, or can be pointed to any custom JSON feed URL.
 
 
 !! ★ How Enthusiasm Ratings Work
