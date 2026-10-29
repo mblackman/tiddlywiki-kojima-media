@@ -195,10 +195,12 @@ class TestKojimaSyncService(unittest.TestCase):
             seed_json_path=seed_out,
             api_json_path=api_out,
             scrape_rss=False,
-            force_refresh=True,
+            force_refresh=False,
+            enrich=False,
             db_path=self.db_path,
         )
         self.assertGreaterEqual(payload["count"], 26)
+        self.assertTrue(payload["changed"])
         self.assertTrue(os.path.exists(seed_out))
         self.assertTrue(os.path.exists(api_out))
         self.assertTrue(os.path.exists(api_out[:-5]))  # extensionless alias
@@ -209,6 +211,49 @@ class TestKojimaSyncService(unittest.TestCase):
         titles = {item["title"] for item in saved_api["items"]}
         self.assertIn("Furiosa: A Mad Max Saga", titles)
         self.assertIn("2001: A Space Odyssey", titles)
+        self.assertNotIn("content_hash", saved_api["items"][0])
+
+        # Ledger is an object with last_updated + per-item content_hash
+        with open(seed_out, "r", encoding="utf-8") as fh:
+            ledger = json.load(fh)
+        self.assertIsInstance(ledger, dict)
+        self.assertTrue(ledger["last_updated"])
+        self.assertTrue(all(item.get("content_hash") for item in ledger["items"]))
+
+        # Second run with a fresh DB restores from the ledger: no changes, last_updated preserved
+        second_db = os.path.join(self.temp_dir.name, "second.db")
+        second = kss.sync_static_files(
+            seed_json_path=seed_out,
+            api_json_path=api_out,
+            scrape_rss=False,
+            enrich=False,
+            db_path=second_db,
+        )
+        self.assertFalse(second["changed"])
+        self.assertEqual(second["last_updated"], ledger["last_updated"])
+        self.assertEqual(second["count"], payload["count"])
+
+    def test_catalog_loads_without_duplicating_seed(self):
+        catalog = kss.load_catalog()
+        slugs = [kss.make_slug(i["title"], str(i.get("year") or "0000")) for i in catalog]
+        self.assertEqual(len(slugs), len(set(slugs)))
+        self.assertGreater(len(catalog), len(kss.SEED_RECOMMENDATIONS))
+
+    def test_rss_since_filter_skips_old_posts(self):
+        sample_rss = """<?xml version="1.0" encoding="UTF-8"?>
+        <rss version="2.0"><channel>
+          <item><guid>old</guid><title>Saw Nosferatu at the theater.</title>
+            <link>https://x.com/a/1</link><pubDate>Mon, 01 Jan 2024 10:00:00 GMT</pubDate></item>
+          <item><guid>new</guid><title>Saw Megalopolis at the theater.</title>
+            <link>https://x.com/a/2</link><pubDate>Mon, 01 Sep 2025 10:00:00 GMT</pubDate></item>
+        </channel></rss>"""
+        feed_path = os.path.join(self.temp_dir.name, "feed.xml")
+        with open(feed_path, "w", encoding="utf-8") as fh:
+            fh.write(sample_rss)
+        ingested = kss.poll_rss_feeds(
+            feed_urls=["file://" + feed_path], db_path=self.db_path, since="2025-01-01T00:00:00Z"
+        )
+        self.assertEqual([i["title"] for i in ingested], ["Megalopolis"])
 
 
 if __name__ == "__main__":

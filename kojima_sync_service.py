@@ -29,6 +29,7 @@ import math
 import os
 import re
 import sqlite3
+import tempfile
 import threading
 import time
 import urllib.parse
@@ -212,7 +213,7 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
         "director": "George Miller",
         "runtime": "96",
         "genres": ["Adventure", "Action", "Thriller", "Science Fiction"],
-        "poster": "https://image.tmdb.org/t/p/w500/dhVekfpaCW3QavAwGYbaQig37Xc.jpg",
+        "poster": "",
         "plot": "Max Rockatansky returns as the heroic loner who drives the dusty roads of a postapocalyptic Australian Outback in an unending search for gasoline.",
         "review": (
             "The production design, the characters, the action, the violence, the suspense, the "
@@ -382,7 +383,7 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
         "director": "Walter Hill",
         "runtime": "93",
         "genres": ["Action", "Crime", "Music", "Romance", "Thriller"],
-        "poster": "https://image.tmdb.org/t/p/w500/8a3G4jP6tWf1d5s2Z9iP9T8k6s0.jpg",
+        "poster": "",
         "plot": "A mercenary is hired to rescue his ex-girlfriend, a singer who has been kidnapped by a motorcycle gang.",
         "review": (
             "A coming-of-age rock 'n' roll film with action, violence and romance. It's new wave "
@@ -404,7 +405,7 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
         "director": "Dario Argento",
         "runtime": "127",
         "genres": ["Horror", "Mystery", "Thriller"],
-        "poster": "https://image.tmdb.org/t/p/w500/4s1fS6x6X8oZ9q7W3e2r1t5y8u0.jpg",
+        "poster": "",
         "plot": "A jazz pianist and a wisecracking journalist are pulled into a complex web of mystery after the former witnesses the brutal murder of a psychic.",
         "review": (
             "This is the greatest of all Argento's films, and it's my number-one horror film. "
@@ -425,7 +426,7 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
         "director": "Sergio Corbucci",
         "runtime": "91",
         "genres": ["Action", "Western"],
-        "poster": "https://image.tmdb.org/t/p/w500/vs4s2k9x9Z1q8w7e6r5t4y3u2i1.jpg",
+        "poster": "",
         "plot": "A coffin-dragging gunslinger enters a town caught between two ruthless factions: a band of racist Confederates and a gang of Mexican revolutionaries.",
         "review": (
             "I also love Spaghetti Westerns. This is what led to Ocelot, among other things, and "
@@ -469,7 +470,7 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
         "director": "Hiroshi Teshigahara",
         "runtime": "147",
         "genres": ["Drama", "Thriller"],
-        "poster": "https://image.tmdb.org/t/p/w500/fA9o2x9v8c7b6n5m4k3j2h1g0f9.jpg",
+        "poster": "",
         "plot": "An entomologist suffers extreme physical and psychological trauma after being taken captive by the residents of a poor seaside village and made to live with a woman whose life task is shoveling sand.",
         "review": (
             "Selected in the Criterion Closet and analyzed in Kojima's book 'The Creative Gene': while "
@@ -492,7 +493,7 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
         "director": "Masaki Kobayashi",
         "runtime": "183",
         "genres": ["Fantasy", "Horror", "Drama"],
-        "poster": "https://image.tmdb.org/t/p/w500/r3t4y5u6i7o8p9a0s1d2f3g4h5j.jpg",
+        "poster": "",
         "plot": "Taking its title from an archaic Japanese word meaning 'ghost story,' this anthology adapts four folk tales of the supernatural.",
         "review": (
             "Hand-picked in Hideo Kojima's Criterion Closet Picks as an atmospheric, surreal anthology "
@@ -534,7 +535,7 @@ SEED_RECOMMENDATIONS: List[Dict[str, Any]] = [
         "director": "Edward Berger",
         "runtime": "120",
         "genres": ["Drama", "Thriller", "Mystery"],
-        "poster": "https://image.tmdb.org/t/p/w500/m5x8D0bZ3e0v8k5a7n9p2q1w4r6.jpg",
+        "poster": "",
         "plot": "After the unexpected death of the Pope, Cardinal Lawrence is tasked with managing the covert and ancient ritual of electing a new one.",
         "review": (
             "\"These are the two best films I have seen in January and February. Both of them have an "
@@ -1295,6 +1296,13 @@ def upsert_recommendation(
                         (str(cached_tmdb_id), slug),
                     )
                     conn.commit()
+                # Backfill poster/plot discovered after the original scoring run
+                if not existing["poster"] and item.get("poster"):
+                    conn.execute(
+                        "UPDATE recommendations SET poster = ?, plot = CASE WHEN plot = '' THEN ? ELSE plot END WHERE slug = ?",
+                        (str(item["poster"]), str(item.get("plot") or ""), slug),
+                    )
+                    conn.commit()
                 row = conn.execute("SELECT * FROM recommendations WHERE slug = ?", (slug,)).fetchone()
                 return _row_to_feed_dict(row)
 
@@ -1591,15 +1599,18 @@ def ingest_raw_post(
 def poll_rss_feeds(
     feed_urls: Optional[List[str]] = None,
     db_path: Optional[str] = None,
+    since: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """
-    Polls configured X/Nitter/Letterboxd RSS feeds, skips already-scraped GUIDs,
-    and ingests any newly detected Kojima movie reviews into SQLite.
+    Polls configured X/Nitter/Letterboxd RSS feeds, skips already-scraped GUIDs
+    (and posts dated before `since`, an ISO date/datetime), and ingests any newly
+    detected Kojima movie reviews into SQLite.
     """
     global _LAST_SCRAPE_AT
     init_db(db_path)
     urls = feed_urls if feed_urls is not None else KOJIMA_RSS_URLS
     newly_ingested: List[Dict[str, Any]] = []
+    since_date = (since or "")[:10]
 
     for url in urls:
         try:
@@ -1615,6 +1626,8 @@ def poll_rss_feeds(
 
         entries = parse_rss_or_atom_xml(xml_text)
         for entry in entries:
+            if since_date and entry.get("date") and entry["date"] < since_date:
+                continue
             guid = entry["guid"]
             with _DB_LOCK:
                 conn = get_db_connection(db_path)
@@ -1651,7 +1664,7 @@ def build_recommendations_feed(
     db_path: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     init_db(db_path)
-    for item in SEED_RECOMMENDATIONS:
+    for item in load_catalog():
         upsert_recommendation(item, force_rescore=force_refresh, db_path=db_path)
 
     with _DB_LOCK:
@@ -1665,89 +1678,281 @@ def build_recommendations_feed(
             conn.close()
 
 
+CATALOG_PATH = os.environ.get(
+    "KOJIMA_CATALOG_PATH",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "catalog", "kojima-canon.jsonl"),
+)
+WIKIPEDIA_HEADERS = {
+    "User-Agent": "KojimaMovieTracker/1.0 (+https://github.com/mblackman/tiddlywiki-kojima-media)"
+}
+
+
+def load_catalog(catalog_path: Optional[str] = None) -> List[Dict[str, Any]]:
+    """
+    Returns SEED_RECOMMENDATIONS plus every entry in the JSONL catalog
+    (`catalog/kojima-canon.jsonl`) that is not already covered by the seed list.
+    """
+    items: List[Dict[str, Any]] = list(SEED_RECOMMENDATIONS)
+    seen_slugs = {make_slug(str(i["title"]), str(i.get("year") or "0000")) for i in items}
+    seed_titles = {str(i["title"]).strip().lower() for i in items}
+    path = catalog_path or CATALOG_PATH
+    if not path or not os.path.exists(path):
+        return items
+    with open(path, "r", encoding="utf-8") as fh:
+        for line_no, raw in enumerate(fh, 1):
+            line = raw.strip()
+            if not line or line.startswith("#"):
+                continue
+            try:
+                entry = json.loads(line)
+            except json.JSONDecodeError as exc:
+                print(f"[warn] Skipping invalid catalog line {line_no}: {exc}")
+                continue
+            title = str(entry.get("title") or "").strip()
+            if not title:
+                continue
+            slug = make_slug(title, str(entry.get("year") or "0000"))
+            if slug in seen_slugs or title.lower() in seed_titles:
+                continue
+            seen_slugs.add(slug)
+            items.append(entry)
+    return items
+
+
+def fetch_wikipedia_metadata(title: str, year: Optional[str] = None) -> Dict[str, str]:
+    """
+    Keyless poster/plot enrichment via the Wikipedia search + REST summary APIs.
+    Rejects matches whose description is not a film or does not mention the release year.
+    """
+    query = f"{title} {year} film" if year and year != "0000" else f"{title} film"
+    search_url = "https://en.wikipedia.org/w/api.php?" + urllib.parse.urlencode(
+        {"action": "query", "list": "search", "srsearch": query, "srlimit": "1", "format": "json"}
+    )
+    try:
+        req = urllib.request.Request(search_url, headers=WIKIPEDIA_HEADERS)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            results = json.loads(resp.read().decode("utf-8")).get("query", {}).get("search", [])
+        if not results:
+            return {}
+        page = str(results[0]["title"]).replace(" ", "_")
+        summary_url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + urllib.parse.quote(page, safe="")
+        req = urllib.request.Request(summary_url, headers=WIKIPEDIA_HEADERS)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            summary = json.loads(resp.read().decode("utf-8"))
+    except Exception as exc:
+        print(f"[warn] Wikipedia lookup failed for {title}: {exc}")
+        return {}
+
+    description = str(summary.get("description") or "").lower()
+    extract = str(summary.get("extract") or "")
+    if "film" not in description and "movie" not in description:
+        return {}
+    if year and year != "0000" and year not in description and year not in extract:
+        return {}
+    poster = str((summary.get("thumbnail") or {}).get("source") or "").split("?")[0]
+    return {"poster": poster, "plot": extract}
+
+
+def _row_to_ledger_dict(row: sqlite3.Row) -> Dict[str, Any]:
+    entry = _row_to_feed_dict(row)
+    entry["content_hash"] = row["content_hash"]
+    return entry
+
+
+def _ledger_entry_to_item(prev: Dict[str, Any]) -> Dict[str, Any]:
+    try:
+        sources = json.loads(prev.get("kojima_sources_json") or "[]")
+    except Exception:
+        sources = prev.get("sources") or []
+    return {
+        "title": str(prev.get("title") or "").strip(),
+        "year": str(prev.get("year") or "0000").strip(),
+        "tmdb_id": str(prev.get("tmdb_id") or ""),
+        "director": str(prev.get("director") or ""),
+        "runtime": str(prev.get("runtime") or ""),
+        "genres": prev.get("genres") if isinstance(prev.get("genres"), list) else [],
+        "poster": str(prev.get("poster") or ""),
+        "plot": str(prev.get("plot") or ""),
+        "review": str(prev.get("kojima_review") or prev.get("review") or ""),
+        "recommended_at": str(prev.get("kojima_recommended_at") or prev.get("recommended_at") or ""),
+        "sources": sources,
+    }
+
+
+def _restore_ledger_entry(prev: Dict[str, Any], db_path: Optional[str]) -> None:
+    """Inserts a persisted ledger entry verbatim (no re-scoring, no network calls)."""
+    title = str(prev.get("title") or "").strip()
+    if not title:
+        return
+    year = str(prev.get("year") or "0000").strip()
+    genres = prev.get("genres") if isinstance(prev.get("genres"), list) else []
+    with _DB_LOCK:
+        conn = get_db_connection(db_path)
+        try:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO recommendations (
+                    slug, title, year, tmdb_id, director, runtime, genres_json, poster, plot,
+                    review, sources_json, content_hash,
+                    kojima_score, kojima_tier, word_count_pts, sentiment_pts,
+                    prestige_pts, recurrence_pts, is_dismissal, sentiment_summary,
+                    score_breakdown, primary_url, primary_source, recommended_at, llm_provider, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    make_slug(title, year),
+                    title,
+                    year,
+                    str(prev.get("tmdb_id") or ""),
+                    str(prev.get("director") or ""),
+                    str(prev.get("runtime") or ""),
+                    json.dumps(genres),
+                    str(prev.get("poster") or ""),
+                    str(prev.get("plot") or ""),
+                    str(prev.get("kojima_review") or ""),
+                    str(prev.get("kojima_sources_json") or "[]"),
+                    str(prev.get("content_hash") or ""),
+                    int(prev.get("kojima_score") or 0),
+                    str(prev.get("kojima_tier") or ""),
+                    str(prev.get("kojima_is_dismissal") or "no"),
+                    str(prev.get("kojima_sentiment_summary") or ""),
+                    str(prev.get("kojima_score_breakdown") or ""),
+                    str(prev.get("kojima_primary_url") or ""),
+                    str(prev.get("kojima_primary_source") or ""),
+                    str(prev.get("kojima_recommended_at") or ""),
+                    LLM_PROVIDER,
+                    time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                ),
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+
+def load_ledger(seed_json_path: str) -> Dict[str, Any]:
+    """Reads the persisted ledger. Accepts the legacy bare-array format."""
+    if not seed_json_path or not os.path.exists(seed_json_path):
+        return {"last_updated": None, "items": []}
+    try:
+        with open(seed_json_path, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except Exception as exc:
+        print(f"[warn] Could not read ledger {seed_json_path}: {exc}")
+        return {"last_updated": None, "items": []}
+    if isinstance(data, list):
+        return {"last_updated": None, "items": data}
+    return {"last_updated": data.get("last_updated"), "items": data.get("items") or []}
+
+
 def sync_static_files(
     seed_json_path: str = "demo/seed-recommendations.json",
     api_json_path: str = "build/api/kojima-recommendations.json",
     scrape_rss: bool = True,
-    force_refresh: bool = True,
+    force_refresh: bool = False,
+    enrich: bool = True,
     db_path: Optional[str] = None,
+    catalog_path: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
-    Serverless / GitHub Pages static generator:
-      1. Loads any existing items from `seed_json_path` so previously scraped RSS items
-         or cached TMDB posters/metadata are preserved across stateless CI runs.
-      2. Upserts `SEED_RECOMMENDATIONS` with the latest scoring engine (`v2.1`).
-      3. Optionally polls `KOJIMA_RSS_URLS` to ingest newly posted Kojima reviews.
-      4. Writes the updated array to `seed_json_path` and the static API payload to
-         `api_json_path` (plus `build/api/kojima-recommendations` for extensionless requests).
+    Incremental serverless / GitHub Pages generator backed by a Git-persisted ledger:
+      1. Restores every entry from `seed_json_path` verbatim (scores, posters, TMDB metadata),
+         so unchanged movies are never re-scored or re-fetched.
+      2. Upserts the catalog (SEED_RECOMMENDATIONS + catalog/kojima-canon.jsonl); only new or
+         edited entries (content_hash mismatch) are scored. Missing posters are enriched
+         from Wikipedia (keyless) and TMDB (when TMDB_API_KEY is set).
+      3. Polls KOJIMA_RSS_URLS, skipping posts dated before the ledger's `last_updated`.
+      4. Writes the ledger (bumping `last_updated` only when items changed) and the static API payload.
     """
-    init_db(db_path)
-    seed_slugs = {
-        make_slug(str(item["title"]), str(item.get("year") or "0000"))
-        for item in SEED_RECOMMENDATIONS
-    }
+    temp_dir = None
+    if db_path is None:
+        temp_dir = tempfile.TemporaryDirectory()
+        db_path = os.path.join(temp_dir.name, "kojima_static.db")
+    try:
+        init_db(db_path)
+        ledger = load_ledger(seed_json_path)
+        previous_items = ledger["items"]
+        catalog = load_catalog(catalog_path)
+        catalog_slugs = {
+            make_slug(str(i["title"]), str(i.get("year") or "0000")) for i in catalog
+        }
 
-    if seed_json_path and os.path.exists(seed_json_path):
-        try:
-            with open(seed_json_path, "r", encoding="utf-8") as fh:
-                existing_items = json.load(fh)
-            if isinstance(existing_items, dict) and "items" in existing_items:
-                existing_items = existing_items["items"]
-            if isinstance(existing_items, list):
-                for prev in existing_items:
-                    title = str(prev.get("title") or "").strip()
-                    if not title:
-                        continue
-                    year = str(prev.get("year") or "0000").strip()
-                    slug = make_slug(title, year)
-                    try:
-                        sources = json.loads(prev.get("kojima_sources_json") or "[]")
-                    except Exception:
-                        sources = prev.get("sources") or []
-                    normalized = {
-                        "title": title,
-                        "year": year,
-                        "tmdb_id": str(prev.get("tmdb_id") or ""),
-                        "director": str(prev.get("director") or ""),
-                        "runtime": str(prev.get("runtime") or ""),
-                        "genres": prev.get("genres") if isinstance(prev.get("genres"), list) else [],
-                        "poster": str(prev.get("poster") or ""),
-                        "plot": str(prev.get("plot") or ""),
-                        "review": str(prev.get("kojima_review") or prev.get("review") or ""),
-                        "recommended_at": str(prev.get("kojima_recommended_at") or prev.get("recommended_at") or ""),
-                        "sources": sources,
-                    }
-                    # Pre-populate DB with existing metadata/extra scraped items
-                    upsert_recommendation(
-                        normalized,
-                        force_rescore=(slug not in seed_slugs and force_refresh),
-                        db_path=db_path,
-                    )
-        except Exception as exc:
-            print(f"[warn] Could not read existing {seed_json_path}: {exc}")
+        for prev in previous_items:
+            title = str(prev.get("title") or "").strip()
+            if not title:
+                continue
+            slug = make_slug(title, str(prev.get("year") or "0000"))
+            if force_refresh and slug not in catalog_slugs:
+                upsert_recommendation(_ledger_entry_to_item(prev), force_rescore=True, db_path=db_path)
+            else:
+                _restore_ledger_entry(prev, db_path)
 
-    # Upsert canonical SEED_RECOMMENDATIONS
-    for item in SEED_RECOMMENDATIONS:
-        upsert_recommendation(item, force_rescore=force_refresh, db_path=db_path)
+        enriched = 0
+        for raw_item in catalog:
+            item = dict(raw_item)
+            if enrich and not item.get("poster"):
+                slug = make_slug(str(item["title"]), str(item.get("year") or "0000"))
+                conn = get_db_connection(db_path)
+                try:
+                    row = conn.execute(
+                        "SELECT poster FROM recommendations WHERE slug = ?", (slug,)
+                    ).fetchone()
+                finally:
+                    conn.close()
+                if not (row and row["poster"]):
+                    meta = fetch_wikipedia_metadata(str(item["title"]), str(item.get("year") or ""))
+                    if meta.get("poster"):
+                        item["poster"] = meta["poster"]
+                        item["plot"] = item.get("plot") or meta.get("plot", "")
+                        enriched += 1
+                    time.sleep(0.1)
+            upsert_recommendation(item, force_rescore=force_refresh, db_path=db_path)
 
-    ingested: List[Dict[str, Any]] = []
-    if scrape_rss and KOJIMA_RSS_URLS:
-        ingested = poll_rss_feeds(db_path=db_path)
+        ingested: List[Dict[str, Any]] = []
+        if scrape_rss and KOJIMA_RSS_URLS:
+            ingested = poll_rss_feeds(db_path=db_path, since=ledger.get("last_updated"))
 
-    feed = build_recommendations_feed(force_refresh=False, db_path=db_path)
+        with _DB_LOCK:
+            conn = get_db_connection(db_path)
+            try:
+                rows = conn.execute(
+                    "SELECT * FROM recommendations ORDER BY kojima_score DESC, title ASC"
+                ).fetchall()
+                ledger_items = [_row_to_ledger_dict(r) for r in rows]
+            finally:
+                conn.close()
+    finally:
+        if temp_dir is not None:
+            temp_dir.cleanup()
+
+    now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    changed = ledger_items != previous_items
+    last_updated = now_iso if (changed or not ledger.get("last_updated")) else ledger["last_updated"]
 
     if seed_json_path:
         os.makedirs(os.path.dirname(os.path.abspath(seed_json_path)), exist_ok=True)
         with open(seed_json_path, "w", encoding="utf-8") as fh:
-            json.dump(feed, fh, indent=2, ensure_ascii=False)
+            json.dump(
+                {
+                    "last_updated": last_updated,
+                    "scoring_version": SCORING_ENGINE_VERSION,
+                    "count": len(ledger_items),
+                    "items": ledger_items,
+                },
+                fh,
+                indent=2,
+                ensure_ascii=False,
+            )
             fh.write("\n")
 
+    feed = [{k: v for k, v in item.items() if k != "content_hash"} for item in ledger_items]
     payload = {
-        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "last_scrape_at": _LAST_SCRAPE_AT,
+        "generated_at": now_iso,
+        "last_updated": last_updated,
         "scoring_version": SCORING_ENGINE_VERSION,
         "llm_provider": LLM_PROVIDER,
         "newly_ingested_count": len(ingested),
+        "enriched_count": enriched,
+        "changed": changed,
         "count": len(feed),
         "items": feed,
     }
@@ -1758,7 +1963,6 @@ def sync_static_files(
         payload_str = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
         with open(abs_api_path, "w", encoding="utf-8") as fh:
             fh.write(payload_str)
-        # Also write extensionless alias if path ends in .json
         if abs_api_path.endswith(".json"):
             no_ext_path = abs_api_path[:-5]
             if not os.path.isdir(no_ext_path):
@@ -1887,11 +2091,14 @@ if __name__ == "__main__":
             seed_json_path=seed_out,
             api_json_path=api_out,
             scrape_rss=True,
-            force_refresh=True,
+            force_refresh="--force-rescore" in sys.argv,
+            enrich="--no-enrich" not in sys.argv and os.environ.get("KOJIMA_ENRICH", "1") != "0",
         )
         print(
-            f"✅ Synced {payload['count']} Kojima recommendations "
-            f"(+{payload['newly_ingested_count']} from RSS) -> {seed_out} & {api_out}"
+            f"✅ {payload['count']} Kojima recommendations "
+            f"(+{payload['newly_ingested_count']} from RSS, {payload['enriched_count']} posters enriched, "
+            f"{'changed' if payload['changed'] else 'unchanged'}; last_updated={payload['last_updated']}) "
+            f"-> {seed_out} & {api_out}"
         )
         sys.exit(0)
 

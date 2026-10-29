@@ -27,6 +27,23 @@ TiddlyWiki 5 plugin for [`tiddlywiki-media-importer`](https://github.com/mblackm
 
 ---
 
+## Recommendations Catalog & Persistent Ledger
+
+| File | Purpose | Shipped in plugin? |
+| :--- | :--- | :---: |
+| [`catalog/kojima-canon.jsonl`](./catalog/kojima-canon.jsonl) | Hand-curated source list (one JSON object per line): Junker HQ Top 30 + runners-up, 15 films that inspired Metal Gear, Criterion Closet picks, year-end lists (2015–2024), and one-sentence reviews. Add a line to add a movie. | No |
+| [`demo/seed-recommendations.json`](./demo/seed-recommendations.json) | Git-persisted ledger of every scored movie (score, poster, metadata, `content_hash`) plus `last_updated`. Committed by the scheduled workflow only when something changes. | No |
+
+`npm run generate-feed` (`python3 kojima_sync_service.py --sync-static`) is incremental:
+
+- Movies already in the ledger are restored as-is, with no re-scoring and no network calls. Only new or edited catalog entries get scored (a `content_hash` mismatch triggers it; bumping `SCORING_ENGINE_VERSION` re-scores everything).
+- Missing posters and plots come from Wikipedia (no API key needed), or from TMDB when `TMDB_API_KEY` is set.
+- RSS posts dated before the ledger's `last_updated` are skipped.
+- `last_updated` only changes when the item list changes, so unchanged runs produce no commits.
+- Flags: `--force-rescore` (re-score every movie), `--no-enrich` (skip poster lookups).
+
+---
+
 ## Local Demo & Plugin Development
 
 You can generate the recommendations feed, populate the demo site (`demo/tiddlers/KojimaMovies.json` + `build/api/kojima-recommendations.json`), and test everything locally without Docker:

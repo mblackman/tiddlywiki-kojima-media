@@ -18,6 +18,7 @@ RUN groupadd -r kojima && useradd -r -g kojima -d /app kojima \
     && chown -R kojima:kojima /app /data
 
 COPY --chown=kojima:kojima kojima_sync_service.py /app/kojima_sync_service.py
+COPY --chown=kojima:kojima catalog/ /app/catalog/
 
 VOLUME ["/data"]
 

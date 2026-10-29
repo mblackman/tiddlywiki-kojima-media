@@ -88,7 +88,9 @@ function main() {
   }
 
   // 2. Convert seed recommendations into canonical Movie + Kojima tiddlers
-  const rawItems = JSON.parse(fs.readFileSync(SEED_JSON_PATH, "utf8"));
+  const ledger = JSON.parse(fs.readFileSync(SEED_JSON_PATH, "utf8"));
+  const rawItems = Array.isArray(ledger) ? ledger : ledger.items || [];
+  const lastUpdated = Array.isArray(ledger) ? null : ledger.last_updated || null;
   const seenTitles = new Set([
     "2001: A Space Odyssey",
     "High and Low",
@@ -145,9 +147,10 @@ function main() {
   const apiPayload = JSON.stringify(
     {
       generated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"),
-      scoring_version: "v2.1",
+      last_updated: lastUpdated,
+      scoring_version: Array.isArray(ledger) ? "v2.1" : ledger.scoring_version || "v2.1",
       count: rawItems.length,
-      items: rawItems,
+      items: rawItems.map(({ content_hash, ...item }) => item),
     },
     null,
     2
