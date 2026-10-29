@@ -104,6 +104,12 @@ function runTests() {
   assert(kojimaCss.includes("font-variant-numeric: tabular-nums"), "kojima.tid must use tabular-nums");
 
   // 3. Verify `Kojima Movie Recommendations` dashboard renders seeded movies sorted by kojima-score
+  const seenMovies = $tw.wiki.filterTiddlers("[tag[Movie]tag[Kojima]field:status[Completed]]");
+  assert.strictEqual(
+    seenMovies.length,
+    0,
+    `All demo movies should default to Backlog (0 Completed), found: ${seenMovies.join(", ")}`
+  );
   const dashboardHtml = $tw.wiki.renderTiddler(
     "text/html",
     "Kojima Movie Recommendations"

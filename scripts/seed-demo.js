@@ -90,18 +90,10 @@ function main(options = {}) {
   const ledger = JSON.parse(fs.readFileSync(SEED_JSON_PATH, "utf8"));
   const rawItems = Array.isArray(ledger) ? ledger : ledger.items || [];
   const lastUpdated = Array.isArray(ledger) ? null : ledger.last_updated || null;
-  const seenTitles = new Set([
-    "2001: A Space Odyssey",
-    "High and Low",
-    "Taxi Driver",
-    "Mad Max 2",
-    "Blade Runner",
-  ]);
 
   const tiddlers = rawItems.map((item) => {
     const year = String(item.year || "0000");
     const finalTitle = `${item.title} (${year})`;
-    const status = seenTitles.has(item.title) ? "Completed" : "Backlog";
     return {
       title: finalTitle,
       englishTitle: item.title,
@@ -115,7 +107,7 @@ function main(options = {}) {
       onlineRating: item.kojima_is_dismissal === "yes" ? "2.4" : "4.3",
       image: item.poster || "",
       "cover-storage": item.poster ? "external-uri" : "",
-      status: status,
+      status: "Backlog",
       tags: "[[$:/tags/media-importer/Media]] Movie Kojima",
       "media-type": "Movie",
       plot: item.plot || "",
