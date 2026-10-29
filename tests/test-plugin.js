@@ -228,7 +228,21 @@ function runTests() {
   );
   $tw.wiki.setText("$:/state/kojima-dashboard/sort", "text", null, "score-desc");
 
-  console.log("✅ All 7 TiddlyWiki Kojima Movie Tracker test suites passed!");
+  // 8. Verify search input remains outside reactive searchToken scope so typing does not blur focus
+  const dashboardWikitext = $tw.wiki.getTiddlerText("Kojima Movie Recommendations", "");
+  const searchEditIdx = dashboardWikitext.indexOf('$edit-text\n            tiddler="$:/temp/kojima-dashboard/search"');
+  const searchTokenIdx = dashboardWikitext.indexOf("searchToken={{{ [[$:/temp/kojima-dashboard/search]");
+  assert(
+    searchEditIdx !== -1 && searchTokenIdx !== -1 && searchEditIdx < searchTokenIdx,
+    "Search <$edit-text> must be declared before/outside the <$let searchToken=...> block so typing does not recreate the input DOM element and lose focus"
+  );
+  $tw.wiki.setText("$:/temp/kojima-dashboard/search", "text", null, "Kubrick");
+  const searchedHtml = $tw.wiki.renderTiddler("text/html", "Kojima Movie Recommendations");
+  assert(searchedHtml.includes("2001: A Space Odyssey (1968)"), "Searching for Kubrick should show 2001: A Space Odyssey");
+  assert(!searchedHtml.includes("Taxi Driver (1976)"), "Searching for Kubrick should filter out Taxi Driver");
+  $tw.wiki.deleteTiddler("$:/temp/kojima-dashboard/search");
+
+  console.log("✅ All 8 TiddlyWiki Kojima Movie Tracker test suites passed!");
 }
 
 runTests();

@@ -79,7 +79,6 @@ type: text/vnd.tiddlywiki
     statusFilter={{{ [[$:/state/kojima-dashboard/status]get[text]else[All]] }}}
     tierFilter={{{ [[$:/state/kojima-dashboard/level]get[text]else[All]] }}}
     tierPrefix={{{ [<tierFilter>match[All]then[]else<tierFilter>] }}}
-    searchToken={{{ [[$:/temp/kojima-dashboard/search]get[text]trim[]!is[blank]else[ ]] }}}
     sortMode={{{ [[$:/state/kojima-dashboard/sort]get[text]else[score-desc]] }}}
     sortSubfilter={{{ [<sortMode>match[score-asc]then<sort-score-asc>] :else[<sortMode>match[recommended-desc]then<sort-rec-desc>] :else[<sortMode>match[recommended-asc]then<sort-rec-asc>] :else[<sortMode>match[year-desc]then<sort-year-desc>] :else[<sortMode>match[year-asc]then<sort-year-asc>] :else[<sortMode>match[words-desc]then<sort-words-desc>] :else[<sortMode>match[runtime-asc]then<sort-runtime-asc>] :else[<sortMode>match[runtime-desc]then<sort-runtime-desc>] :else[<sortMode>match[title-asc]then<sort-title-asc>] :else[<sortMode>match[director-asc]then<sort-director-asc>] :else[<sort-score-desc>] }}}
   >
@@ -129,11 +128,14 @@ type: text/vnd.tiddlywiki
       </div>
     </div>
     <!-- RANKED MOVIE LIST -->
-    <div class="kj-movie-list">
-      <$list
-        filter="[tag[Movie]tag[Kojima]search:title,director,kojima-review:literal,caseinsensitive<searchToken>] :filter[<statusFilter>match[All]then{!!status}else<statusFilter>match{!!status}] :filter[{!!kojima-tier}prefix<tierPrefix>] +[subfilter<sortSubfilter>]"
-        emptyMessage="<div class='kj-empty-state'><div>No Kojima movie recommendations match the active filters.</div><div>Click <b>🔄 Sync Kojima Feed</b> above to sync recommendations from your Kojima Sync service.</div></div>"
-      >
+    <$let
+      searchToken={{{ [[$:/temp/kojima-dashboard/search]get[text]trim[]!is[blank]else[ ]] }}}
+    >
+      <div class="kj-movie-list">
+        <$list
+          filter="[tag[Movie]tag[Kojima]search:title,director,kojima-review:literal,caseinsensitive<searchToken>] :filter[<statusFilter>match[All]then{!!status}else<statusFilter>match{!!status}] :filter[{!!kojima-tier}prefix<tierPrefix>] +[subfilter<sortSubfilter>]"
+          emptyMessage="<div class='kj-empty-state'><div>No Kojima movie recommendations match the active filters.</div><div>Click <b>🔄 Sync Kojima Feed</b> above to sync recommendations from your Kojima Sync service.</div></div>"
+        >
         <$let
           isDismissal={{{ [{!!kojima-is-dismissal}match[yes]then[yes]else[no]] }}}
           isCompleted={{{ [{!!status}match[Completed]then[yes]else[no]] }}}
@@ -222,6 +224,7 @@ type: text/vnd.tiddlywiki
           </div>
         </$let>
       </$list>
-    </div>
+      </div>
+    </$let>
   </$let>
 </div>
