@@ -30,7 +30,7 @@ type: text/vnd.tiddlywiki
         <h2 class="kj-header__title">Hideo Kojima Movie Recommendations</h2>
       </div>
       <p class="kj-header__subtitle">
-        Ranked by 0–100 Multi-Factor Enthusiasm Score • Synced via GitHub Pages or Custom JSON Feed
+        A curated list of movie recommendations from Hideo Kojima.
       </p>
     </div>
 
