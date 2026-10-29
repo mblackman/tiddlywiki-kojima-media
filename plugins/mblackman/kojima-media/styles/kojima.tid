@@ -355,17 +355,6 @@ a.kj-btn--primary:hover,
   }
 }
 
-.kj-checkbox-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: var(--suite-text-xs, 0.75rem);
-  font-weight: 600;
-  color: var(--suite-fg-secondary);
-  cursor: pointer;
-  user-select: none;
-}
-
 /* --- Ranked Movie Cards List --- */
 .kj-movie-list {
   display: flex;

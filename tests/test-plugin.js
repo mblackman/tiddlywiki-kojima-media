@@ -49,6 +49,26 @@ function runTests() {
     "Plugin should not bundle seed-recommendations.json"
   );
 
+  // Verify official media-importer plugin is bundled without demo Books, Manga, or Logs
+  const mediaImporterPlugin = $tw.wiki.getTiddler("$:/plugins/mblackman/media-importer");
+  assert(mediaImporterPlugin, "Official $:/plugins/mblackman/media-importer plugin should be loaded");
+  const demoBooksOrManga = $tw.wiki.filterTiddlers(
+    "[tag[$:/tags/media-importer/Media]!field:media-type[Movie]] [tag[$:/tags/media-importer/Log]]"
+  );
+  assert.strictEqual(
+    demoBooksOrManga.length,
+    0,
+    `Demo wiki should not import demo Books, Manga, or Logs from media-importer, found: ${demoBooksOrManga.join(", ")}`
+  );
+
+  // Verify clean DefaultTiddlers on the demo page
+  const defaultTiddlers = $tw.wiki.getTiddlerText("$:/DefaultTiddlers", "").trim();
+  assert.strictEqual(
+    defaultTiddlers,
+    "[[Kojima Movie Recommendations]] [[$:/plugins/mblackman/kojima-media]]",
+    "DefaultTiddlers should show Kojima Movie Recommendations and the plugin tiddler below it"
+  );
+
   // Verify default feed URL points to the hosted GitHub Pages JSON feed
   const defaultSyncUrl = $tw.wiki
     .getTiddlerText("$:/plugins/mblackman/kojima-media/configs/kojima-sync-url", "")
@@ -94,12 +114,16 @@ function runTests() {
   assert(dashboardHtml.includes("Madame Web (2024)"), "Dashboard should render Madame Web (2024) when dismissals are shown");
   assert(dashboardHtml.includes("S-Tier: Essential Kojima DNA"), "Dashboard should render S-Tier badge");
 
-  // 4. Verify hiding 1-sentence dismissals via `$:/state/kojima-dashboard/dismissals`
-  $tw.wiki.setText("$:/state/kojima-dashboard/dismissals", "text", null, "hide");
+  // 4. Verify dashboard does not render a Hide 1-Sentence Dismissals checkbox and filters by tier instead
+  assert(
+    !dashboardHtml.includes("Hide 1-Sentence Dismissals"),
+    "Dashboard should not render the Hide 1-Sentence Dismissals checkbox"
+  );
+  $tw.wiki.setText("$:/state/kojima-dashboard/tier", "text", null, "S-Tier");
   const filteredHtml = $tw.wiki.renderTiddler("text/html", "Kojima Movie Recommendations");
-  assert(!filteredHtml.includes("Madame Web (2024)"), "Madame Web (2024) should be hidden when dismissals filter is hide");
+  assert(!filteredHtml.includes("Madame Web (2024)"), "Madame Web (2024) should be hidden when tier filter is S-Tier");
   assert(filteredHtml.includes("2001: A Space Odyssey (1968)"), "S-Tier movies should remain visible");
-  $tw.wiki.setText("$:/state/kojima-dashboard/dismissals", "text", null, "show");
+  $tw.wiki.setText("$:/state/kojima-dashboard/tier", "text", null, "All");
 
   // 5. Verify `tm-sync-kojima` preserves existing watch status (`Completed`) and `favorite`
   $tw.wiki.addTiddler(

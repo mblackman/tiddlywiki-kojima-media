@@ -1,42 +1,24 @@
 #!/usr/bin/env node
 /**
- * Seeds `demo/tiddlers/KojimaMovies.json` from `plugins/mblackman/kojima-media/data/seed-recommendations.json`
- * and copies the latest built `media-importer.json` plugin bundle if available so the demo wiki
- * has both `media-importer` and `kojima-media` pre-populated for immediate inspection.
+ * Seeds `demo/tiddlers/KojimaMovies.json` from `demo/seed-recommendations.json`
+ * and bundles the official GitHub Release of `media-importer.json`
+ * (`https://github.com/mblackman/tiddlywiki-media-importer/releases/latest/download/media-importer.json`)
+ * without importing demo Books, Manga, or Logs.
  */
 
 const fs = require("fs");
 const path = require("path");
+const { execFileSync } = require("child_process");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const SEED_JSON_PATH = path.join(ROOT_DIR, "demo", "seed-recommendations.json");
 const DEMO_TIDDLERS_DIR = path.join(ROOT_DIR, "demo", "tiddlers");
-const MEDIA_IMPORTER_DIST = path.resolve(
-  ROOT_DIR,
-  "..",
-  "tiddlywiki-media-importer",
-  "dist",
-  "media-importer.json"
+const MEDIA_IMPORTER_BUNDLE_PATH = path.join(
+  DEMO_TIDDLERS_DIR,
+  "$__plugins_mblackman_media-importer.json"
 );
-const MEDIA_IMPORTER_SYSTEM_DIR = path.resolve(
-  ROOT_DIR,
-  "..",
-  "tiddlywiki-media-importer",
-  "wiki",
-  "tiddlers",
-  "system"
-);
-const SAMPLE_MEDIA_FILES = [
-  "Books.json",
-  "Manga.json",
-  "Logs.json",
-  "EnableLibraryToolbar.tid",
-  "Media Picker.tid",
-  "Dated Media Picker.tid",
-  "Media Summary.tid",
-  "Date Media Summary.tid",
-  "$__media-log_2026-01-01.tid",
-];
+const MEDIA_IMPORTER_RELEASE_URL =
+  "https://github.com/mblackman/tiddlywiki-media-importer/releases/latest/download/media-importer.json";
 
 function formatBracketList(items) {
   if (!items) return "";
@@ -55,7 +37,6 @@ const ALLOWED_DEMO_FILES = new Set([
   "$__SiteSubtitle.tid",
   "$__plugins_mblackman_media-importer.json",
   "KojimaMovies.json",
-  ...SAMPLE_MEDIA_FILES,
 ]);
 
 function cleanRuntimeTiddlers() {
@@ -67,25 +48,43 @@ function cleanRuntimeTiddlers() {
   }
 }
 
-function main() {
+function syncOfficialMediaImporterRelease({ forceDownload = false } = {}) {
+  if (!forceDownload && fs.existsSync(MEDIA_IMPORTER_BUNDLE_PATH)) {
+    return;
+  }
+  try {
+    const raw = execFileSync(
+      "curl",
+      ["-fsSL", "--max-time", "15", MEDIA_IMPORTER_RELEASE_URL],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }
+    );
+    const parsed = JSON.parse(raw);
+    const pluginObj = Array.isArray(parsed) ? parsed[0] : parsed;
+    if (pluginObj && pluginObj.title === "$:/plugins/mblackman/media-importer") {
+      fs.writeFileSync(
+        MEDIA_IMPORTER_BUNDLE_PATH,
+        JSON.stringify(pluginObj, null, 4) + "\n",
+        "utf8"
+      );
+      console.log(
+        `📦 Bundled official release of $:/plugins/mblackman/media-importer (v${pluginObj.version || "latest"})`
+      );
+    }
+  } catch (err) {
+    if (!fs.existsSync(MEDIA_IMPORTER_BUNDLE_PATH)) {
+      throw new Error(
+        `Failed to download official media-importer release from ${MEDIA_IMPORTER_RELEASE_URL}: ${err.message}`
+      );
+    }
+  }
+}
+
+function main(options = {}) {
   fs.mkdirSync(DEMO_TIDDLERS_DIR, { recursive: true });
   cleanRuntimeTiddlers();
 
-  // 1. Copy media-importer plugin bundle and sample library items if present in parent/sibling repo
-  if (fs.existsSync(MEDIA_IMPORTER_DIST)) {
-    fs.copyFileSync(
-      MEDIA_IMPORTER_DIST,
-      path.join(DEMO_TIDDLERS_DIR, "$__plugins_mblackman_media-importer.json")
-    );
-  }
-  if (fs.existsSync(MEDIA_IMPORTER_SYSTEM_DIR)) {
-    for (const sampleFile of SAMPLE_MEDIA_FILES) {
-      const srcPath = path.join(MEDIA_IMPORTER_SYSTEM_DIR, sampleFile);
-      if (fs.existsSync(srcPath)) {
-        fs.copyFileSync(srcPath, path.join(DEMO_TIDDLERS_DIR, sampleFile));
-      }
-    }
-  }
+  // 1. Ensure official release of media-importer plugin is bundled (no demo media)
+  syncOfficialMediaImporterRelease(options);
 
   // 2. Convert seed recommendations into canonical Movie + Kojima tiddlers
   const ledger = JSON.parse(fs.readFileSync(SEED_JSON_PATH, "utf8"));
@@ -163,7 +162,7 @@ function main() {
 }
 
 if (require.main === module) {
-  main();
+  main({ forceDownload: true });
 }
 
 module.exports = { main };

@@ -84,8 +84,6 @@ type: text/vnd.tiddlywiki
     tierFilter={{{ [[$:/state/kojima-dashboard/tier]get[text]else[All]] }}}
     tierPrefix={{{ [<tierFilter>match[All]then[]else<tierFilter>] }}}
     searchToken={{{ [[$:/temp/kojima-dashboard/search]get[text]trim[]!is[blank]else[ ]] }}}
-    dismissalFilter={{{ [[$:/state/kojima-dashboard/dismissals]get[text]else[show]] }}}
-    excludedDismissal={{{ [<dismissalFilter>match[hide]then[yes]else[__none__]] }}}
     sortMode={{{ [[$:/state/kojima-dashboard/sort]get[text]else[score-desc]] }}}
     sortSubfilter={{{ [<sortMode>match[score-asc]then<sort-score-asc>] :else[<sortMode>match[recommended-desc]then<sort-rec-desc>] :else[<sortMode>match[recommended-asc]then<sort-rec-asc>] :else[<sortMode>match[year-desc]then<sort-year-desc>] :else[<sortMode>match[year-asc]then<sort-year-asc>] :else[<sortMode>match[words-desc]then<sort-words-desc>] :else[<sortMode>match[runtime-asc]then<sort-runtime-asc>] :else[<sortMode>match[runtime-desc]then<sort-runtime-desc>] :else[<sortMode>match[title-asc]then<sort-title-asc>] :else[<sortMode>match[director-asc]then<sort-director-asc>] :else[<sort-score-desc>] }}}
   >
@@ -135,19 +133,13 @@ type: text/vnd.tiddlywiki
           <option value="C-Tier">C-Tier (25–54)</option>
           <option value="D-Tier">D-Tier (Dismissals)</option>
         </$select>
-
-        <label class="kj-checkbox-label">
-          <$checkbox tiddler="$:/state/kojima-dashboard/dismissals" field="text" checked="hide" unchecked="show" default="show">
-            <span>Hide 1-Sentence Dismissals</span>
-          </$checkbox>
-        </label>
       </div>
     </div>
 
     <!-- RANKED MOVIE LIST -->
     <div class="kj-movie-list">
       <$list
-        filter="[tag[Movie]tag[Kojima]search:title,director,kojima-review:literal,caseinsensitive<searchToken>] :filter[<statusFilter>match[All]then{!!status}else<statusFilter>match{!!status}] :filter[{!!kojima-tier}prefix<tierPrefix>] :filter[{!!kojima-is-dismissal}!match<excludedDismissal>] +[subfilter<sortSubfilter>]"
+        filter="[tag[Movie]tag[Kojima]search:title,director,kojima-review:literal,caseinsensitive<searchToken>] :filter[<statusFilter>match[All]then{!!status}else<statusFilter>match{!!status}] :filter[{!!kojima-tier}prefix<tierPrefix>] +[subfilter<sortSubfilter>]"
         emptyMessage="<div class='kj-empty-state'><div>No Kojima movie recommendations match the active filters.</div><div>Click <b>🔄 Sync Kojima Feed</b> above to sync recommendations from your Kojima Sync service.</div></div>"
       >
         <$let
