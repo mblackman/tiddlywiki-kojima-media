@@ -1,0 +1,34 @@
+# Standalone Docker Compose example for Kojima Movie Sync Service
+# Usage:
+#   docker compose -f docker-compose.example.yml up -d
+#   curl http://localhost:8765/health
+
+services:
+  kojima-movie-sync:
+    image: ghcr.io/mblackman/tiddlywiki-kojima-media:latest
+    container_name: kojima-movie-sync
+    ports:
+      - "8765:8765"
+    volumes:
+      - kojima_data:/data
+    environment:
+      - PORT=8765
+      - KOJIMA_DB_PATH=/data/kojima_reviews.db
+      # Optional: TMDB API Key to auto-resolve TMDB IDs for newly scraped X posts
+      - TMDB_API_KEY=${TMDB_API_KEY:-}
+      # Optional: Comma-separated RSS/Atom feed URLs (e.g. Nitter / RSSHub / Letterboxd)
+      - KOJIMA_RSS_URLS=${KOJIMA_RSS_URLS:-}
+      # Background RSS poll interval in seconds (0 = disable background polling)
+      - SCRAPE_INTERVAL_SECONDS=${SCRAPE_INTERVAL_SECONDS:-3600}
+      # Enthusiasm Sentiment Engine: "heuristic" (default, zero-config), "gemini", "openai", or "ollama"
+      - LLM_PROVIDER=${LLM_PROVIDER:-heuristic}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434/api/generate}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.1}
+    restart: unless-stopped
+
+volumes:
+  kojima_data:

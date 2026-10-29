@@ -1,0 +1,16 @@
+.git
+.github
+node_modules
+build
+dist
+debug
+demo
+plugins
+scripts
+tests
+data
+*.db
+*.log
+*.md
+package*.json
+.DS_Store
