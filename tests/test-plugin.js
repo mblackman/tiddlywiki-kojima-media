@@ -59,6 +59,15 @@ function runTests() {
     "Default sync URL should point to the GitHub Pages JSON feed"
   );
 
+  // Verify settings panel renders concisely without any TMDB API Key field
+  const configHtml = $tw.wiki.renderTiddler(
+    "text/html",
+    "$:/plugins/mblackman/kojima-media/config"
+  );
+  assert(configHtml.includes("Recommendations Feed URL"), "Settings panel should render Feed URL label");
+  assert(configHtml.includes("Official GitHub Pages Feed"), "Settings panel should render GitHub Pages preset chip");
+  assert(!configHtml.includes("TMDB API Key"), "Settings panel should not ask for a TMDB API Key");
+
   // 2. Verify MASTER.md CSS compliance on Kojima stylesheets
   const tokensCss = $tw.wiki.renderTiddler(
     "text/plain",

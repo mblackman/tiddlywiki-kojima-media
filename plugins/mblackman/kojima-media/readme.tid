@@ -6,5 +6,5 @@ type: text/vnd.tiddlywiki
 Companion plugin for [[Media Importer|$:/plugins/mblackman/media-importer]] that imports, scores, and tracks movies recommended or reviewed by **Hideo Kojima**.
 
 * **Dashboard**: Open [[Kojima Movie Recommendations]] to browse movies ranked by the 0–100 **Multi-Factor Kojima Enthusiasm Score**, filter by watch status or tier, hide his infamous 1-sentence `"I watched it"` dismissals, and toggle movies between `Backlog` and `Completed` (Seen).
-* **Base Tiddler Delegation**: Delegates canonical `Movie` tiddler creation to `media-importer`'s `tm-fetch-Movie` (`TmdbMovieConfig`) while merging `Movie Kojima` tags and `kojima-*` metadata fields and preserving existing watch status.
+* **Media Importer Compatible**: Creates canonical `Movie` tiddlers tagged with `Movie` and `Kojima` while preserving existing watch status (`Completed`, `Active`, `Dropped`, `Backlog`), `favorite`, and `rating` across re-syncs.
 * **Serverless GitHub Pages Feed (Default)**: Connects out of the box to `https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json` (updated on a schedule via GitHub Actions) with zero server setup required, or can be pointed to any custom JSON feed URL or self-hosted Docker sync service (`http://localhost:8765/api/kojima-recommendations`).

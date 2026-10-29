@@ -4,10 +4,8 @@ type: application/javascript
 module-type: startup
 
 Kojima Movie Tracker Startup Module.
-Registers `tm-sync-kojima` (Docker HTTP sync).
-Delegates canonical Movie tiddler creation to `tiddlywiki-media-importer` (`tm-fetch-Movie`)
-when a TMDB API key is configured, and provides a direct enrichment fallback when no TMDB
-API key is set on the client.
+Registers `tm-sync-kojima` to import Hideo Kojima movie recommendations from the
+configured JSON feed URL (GitHub Pages by default) while preserving existing watch status.
 \*/
 (function() {
   "use strict";
@@ -20,7 +18,6 @@ API key is set on the client.
   var SYNC_STATE_TIDDLER = "$:/state/kojima-sync/status";
   var ENDPOINT_CONFIG_TIDDLER = "$:/plugins/mblackman/kojima-media/configs/kojima-sync-url";
   var LEGACY_ENDPOINT_TIDDLER = "$:/plugins/mblackman/media-importer/configs/kojima-sync-url";
-  var TMDB_KEY_TIDDLER = "$:/plugins/mblackman/media-importer/configs/tmdb-api-key";
   var DEFAULT_FEED_URL = "https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json";
 
   function mergeTagLists() {
@@ -118,88 +115,18 @@ API key is set on the client.
   }
 
   /**
-   * Imports an array of enriched Kojima recommendation items.
-   * If a TMDB API key is configured and `fetch` is available in the browser, delegates
-   * base tiddler creation to `tm-fetch-Movie` (`TmdbMovieConfig`). Otherwise applies
-   * direct enrichment from the sync service payload.
+   * Imports an array of enriched Kojima recommendation items directly from the feed payload.
    */
   function processKojimaItems(items, sourceLabel) {
-    var apiKey = ($tw.wiki.getTiddlerText(TMDB_KEY_TIDDLER, "") || "").trim();
-    var canDelegateToTmdb = Boolean(apiKey && typeof fetch === "function" && $tw.browser);
-
-    if (!canDelegateToTmdb) {
-      for (var i = 0; i < items.length; i++) {
-        upsertKojimaMovieDirectly(items[i]);
-      }
-      $tw.wiki.setText(
-        SYNC_STATE_TIDDLER,
-        "text",
-        null,
-        "Synced " + items.length + " Kojima movies from " + sourceLabel
-      );
-      return;
+    for (var i = 0; i < items.length; i++) {
+      upsertKojimaMovieDirectly(items[i]);
     }
-
-    var index = 0;
-    function processNext() {
-      if (index >= items.length) {
-        $tw.wiki.setText(
-          SYNC_STATE_TIDDLER,
-          "text",
-          null,
-          "Synced " + items.length + " Kojima movies via TMDB (" + new Date().toLocaleTimeString() + ")"
-        );
-        return;
-      }
-
-      var item = items[index++];
-      if (!item.tmdb_id) {
-        upsertKojimaMovieDirectly(item);
-        processNext();
-        return;
-      }
-
-      $tw.wiki.setText(
-        SYNC_STATE_TIDDLER,
-        "text",
-        null,
-        "Syncing " + index + " / " + items.length + ": " + (item.title || item.tmdb_id) + "..."
-      );
-
-      var tempTitle = "$:/temp/kojima/draft/" + item.tmdb_id;
-      $tw.wiki.addTiddler(
-        new $tw.Tiddler({
-          title: tempTitle,
-          draft_id: String(item.tmdb_id),
-          draft_title: item.title,
-          draft_year: String(item.year || "0000"),
-          extra_tags: "Movie Kojima",
-          silent: "yes",
-          cleanup_draft: "yes",
-          "kojima-score": String(item.kojima_score != null ? item.kojima_score : 0),
-          "kojima-tier": item.kojima_tier || "",
-          "kojima-review": item.kojima_review || "",
-          "kojima-word-count": String(item.kojima_word_count || 0),
-          "kojima-is-dismissal": item.kojima_is_dismissal || "no",
-          "kojima-sentiment-summary": item.kojima_sentiment_summary || "",
-          "kojima-score-breakdown": item.kojima_score_breakdown || "",
-          "kojima-primary-url": item.kojima_primary_url || "",
-          "kojima-primary-source": item.kojima_primary_source || "",
-          "kojima-recommended-at": item.kojima_recommended_at || "",
-          "kojima-sources-json": item.kojima_sources_json || "[]"
-        })
-      );
-
-      $tw.rootWidget.dispatchEvent({
-        type: "tm-fetch-Movie",
-        param: tempTitle,
-        paramObject: { silent: "yes", cleanupDraft: "yes", extraTags: "Movie Kojima" }
-      });
-
-      setTimeout(processNext, 200);
-    }
-
-    processNext();
+    $tw.wiki.setText(
+      SYNC_STATE_TIDDLER,
+      "text",
+      null,
+      "Synced " + items.length + " Kojima movies from " + sourceLabel
+    );
   }
 
   exports.startup = function() {

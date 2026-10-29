@@ -3,59 +3,69 @@ tags: $:/tags/ControlPanel/SettingsTab
 caption: Kojima Movie Tracker
 type: text/vnd.tiddlywiki
 
-<div class="kj-settings-panel">
-  <h3 class="kj-settings-heading">🎬 Kojima Movie Tracker Settings</h3>
-  <p class="kj-settings-desc">
-    Configure the Kojima Recommendations JSON feed URL (defaults to the hosted GitHub Pages feed with zero server setup) and optional TMDB API key used by <code>media-importer</code>.
-  </p>
+<$let
+  defaultUrl="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json"
+  localUrl="http://localhost:8765/api/kojima-recommendations"
+  currentUrl={{{ [[$:/plugins/mblackman/kojima-media/configs/kojima-sync-url]get[text]trim[]!is[blank]else<defaultUrl>] }}}
+>
+  <div class="kj-settings-panel">
+    <div class="kj-settings-header">
+      <h3 class="kj-settings-heading">🎬 Kojima Movie Tracker</h3>
+      <p class="kj-settings-desc">
+        Downloads Hideo Kojima's movie recommendations and 0–100 enthusiasm scores from a JSON feed while preserving your watch status (<code>Completed</code>, <code>Backlog</code>, <code>Active</code>, <code>Dropped</code>).
+      </p>
+    </div>
 
-  <div class="kj-settings-grid">
     <div class="kj-field-group">
-      <label class="kj-label">Kojima Recommendations Feed URL</label>
-      <$edit-text
-        tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url"
-        tag="input"
-        default="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json"
-        placeholder="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json"
-        class="kj-input"
-      />
+      <label class="kj-label-stack">
+        <span class="kj-label">Recommendations Feed URL</span>
+        <$edit-text
+          tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url"
+          tag="input"
+          type="url"
+          inputmode="url"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          default=<<defaultUrl>>
+          placeholder=<<defaultUrl>>
+          class="kj-input"
+        />
+      </label>
       <span class="kj-field-hint">
-        Default: <code>https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json</code> (hosted on GitHub Pages &amp; updated automatically via scheduled GitHub Actions). You can also point this to any custom JSON feed URL or a local server (<code>http://localhost:8765/api/kojima-recommendations</code>).
+        Defaults to the official GitHub Pages feed (updated daily via GitHub Actions). You can also enter a custom feed URL or switch to a local server below.
       </span>
-      <div class="kj-chip-group">
-        <$button class="kj-chip" tooltip="Use the official GitHub Pages hosted feed (no Docker required)">
-          <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text="https://mblackman.github.io/tiddlywiki-kojima-media/api/kojima-recommendations.json" />
-          ☁️ Use Hosted GitHub Pages Feed
+
+      <div class="kj-chip-group" role="group" aria-label="Feed URL Presets">
+        <$button
+          class={{{ [<currentUrl>match<defaultUrl>then[kj-chip kj-chip--active]else[kj-chip]] }}}
+          aria-pressed={{{ [<currentUrl>match<defaultUrl>then[true]else[false]] }}}
+        >
+          <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text=<<defaultUrl>> />
+          ☁️ Official GitHub Pages Feed
         </$button>
-        <$button class="kj-chip" tooltip="Point to a local Python / Docker sync service on port 8765">
-          <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text="http://localhost:8765/api/kojima-recommendations" />
-          🐳 Use Local Server (localhost:8765)
+        <$button
+          class={{{ [<currentUrl>match<localUrl>then[kj-chip kj-chip--active]else[kj-chip]] }}}
+          aria-pressed={{{ [<currentUrl>match<localUrl>then[true]else[false]] }}}
+        >
+          <$action-setfield $tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url" text=<<localUrl>> />
+          🐳 Local Server (localhost:8765)
         </$button>
       </div>
     </div>
 
-    <div class="kj-field-group">
-      <label class="kj-label">TMDB API Key (Shared with Media Importer)</label>
-      <$edit-text
-        tiddler="$:/plugins/mblackman/media-importer/configs/tmdb-api-key"
-        tag="input"
-        type="password"
-        default=""
-        placeholder="Enter TMDB v3 API Key"
-        class="kj-input"
-      />
-      <span class="kj-field-hint">
-        Optional: Used by <code>tm-fetch-Movie</code> to fetch full cast, director, runtime, and poster art from <a href="https://www.themoviedb.org/documentation/api" target="_blank" rel="noopener noreferrer">TMDB ↗</a>.
-      </span>
+    <div class="kj-settings-actions">
+      <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima">
+        🔄 Sync Kojima Feed
+      </$button>
+      <$link to="Kojima Movie Recommendations" class="kj-btn">
+        Open Dashboard →
+      </$link>
+      <$list filter="[[$:/state/kojima-sync/status]has[text]!field:text[]]" variable="ignoreSyncStatus">
+        <span class="kj-sync-status" role="status" aria-live="polite">
+          {{$:/state/kojima-sync/status}}
+        </span>
+      </$list>
     </div>
   </div>
-
-  <div class="kj-settings-actions">
-    <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima">
-      🔄 Sync Kojima Feed
-    </$button>
-    <$link to="Kojima Movie Recommendations" class="kj-btn">
-      Open Dashboard →
-    </$link>
-  </div>
-</div>
+</$let>

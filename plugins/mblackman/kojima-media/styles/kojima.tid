@@ -636,6 +636,13 @@ a.kj-btn--primary:hover,
   flex-direction: column;
   gap: var(--suite-space-4, 1rem);
   font-family: var(--suite-font-sans);
+  max-inline-size: var(--suite-width-reading, 840px);
+}
+
+.kj-settings-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--suite-space-1, 0.25rem);
 }
 
 .kj-settings-heading {
@@ -648,15 +655,21 @@ a.kj-btn--primary:hover,
   margin: 0;
   font-size: var(--suite-text-sm, 0.84rem);
   color: var(--suite-fg-secondary);
-}
-
-.kj-settings-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: var(--suite-space-4, 1rem);
+  line-height: var(--suite-leading-normal, 1.5);
+  text-wrap: pretty;
 }
 
 .kj-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--suite-space-2, 0.5rem);
+  padding: var(--suite-card-padding-md, 0.875rem 1rem);
+  background: var(--suite-surface-subtle);
+  border: 1px solid var(--suite-border-subtle);
+  border-radius: var(--suite-radius-md, 10px);
+}
+
+.kj-label-stack {
   display: flex;
   flex-direction: column;
   gap: var(--suite-space-1, 0.25rem);
@@ -673,11 +686,13 @@ a.kj-btn--primary:hover,
 .kj-field-hint {
   font-size: var(--suite-text-xs, 0.75rem);
   color: var(--suite-fg-muted);
+  line-height: var(--suite-leading-normal, 1.5);
 }
 
 .kj-settings-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--suite-space-2, 0.5rem);
 }
 
