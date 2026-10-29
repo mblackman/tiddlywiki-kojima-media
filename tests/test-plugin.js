@@ -21,6 +21,10 @@ function bootWiki() {
   const $tw = TiddlyWiki();
   $tw.boot.argv = [path.join(ROOT_DIR, "demo")];
   $tw.boot.boot();
+  if ($tw.syncadaptor) {
+    $tw.syncadaptor.saveTiddler = (_tiddler, cb) => cb && cb(null);
+    $tw.syncadaptor.deleteTiddler = (_title, cb) => cb && cb(null);
+  }
   if ($tw.syncer) {
     $tw.syncer.isDirty = () => false;
     $tw.syncer.syncFromServer = () => {};
@@ -32,13 +36,17 @@ function bootWiki() {
 function runTests() {
   const $tw = bootWiki();
 
-  // 1. Verify plugin & stylesheet tiddlers are registered
+  // 1. Verify plugin & stylesheet tiddlers are registered, and no seed data is bundled in the plugin
   const pluginTiddlers = $tw.wiki.filterTiddlers(
     "[all[tiddlers+shadows]prefix[$:/plugins/mblackman/kojima-media]]"
   );
   assert(
     pluginTiddlers.length >= 6,
     `Expected at least 6 plugin shadow tiddlers, found ${pluginTiddlers.length}`
+  );
+  assert(
+    !pluginTiddlers.includes("$:/plugins/mblackman/kojima-media/data/seed-recommendations.json"),
+    "Plugin should not bundle seed-recommendations.json"
   );
 
   // 2. Verify MASTER.md CSS compliance on Kojima stylesheets
@@ -74,7 +82,7 @@ function runTests() {
   assert(filteredHtml.includes("2001: A Space Odyssey (1968)"), "S-Tier movies should remain visible");
   $tw.wiki.setText("$:/state/kojima-dashboard/dismissals", "text", null, "show");
 
-  // 5. Verify `tm-sync-kojima-seed` preserves existing watch status (`Completed`)
+  // 5. Verify `tm-sync-kojima` preserves existing watch status (`Completed`) and `favorite`
   $tw.wiki.addTiddler(
     new $tw.Tiddler($tw.wiki.getTiddler("Conclave (2024)"), {
       title: "Conclave (2024)",
@@ -82,7 +90,20 @@ function runTests() {
       favorite: "yes",
     })
   );
-  $tw.rootWidget.dispatchEvent({ type: "tm-sync-kojima-seed" });
+  $tw.rootWidget.dispatchEvent({
+    type: "tm-sync-kojima",
+    paramObject: {
+      items: [
+        {
+          title: "Conclave",
+          year: 2024,
+          tmdb_id: 974576,
+          kojima_score: 81,
+          kojima_tier: "A-Tier: Highly Recommended",
+        },
+      ],
+    },
+  });
   const conclaveAfterSync = $tw.wiki.getTiddler("Conclave (2024)");
   assert.strictEqual(
     conclaveAfterSync.fields.status,

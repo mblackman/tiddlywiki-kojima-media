@@ -4,10 +4,10 @@ type: application/javascript
 module-type: startup
 
 Kojima Movie Tracker Startup Module.
-Registers `tm-sync-kojima` (Docker HTTP sync) and `tm-sync-kojima-seed` (offline curated seed).
+Registers `tm-sync-kojima` (Docker HTTP sync).
 Delegates canonical Movie tiddler creation to `tiddlywiki-media-importer` (`tm-fetch-Movie`)
-when a TMDB API key is configured, and provides a direct enrichment fallback when offline or
-when no TMDB API key is set.
+when a TMDB API key is configured, and provides a direct enrichment fallback when no TMDB
+API key is set on the client.
 \*/
 (function() {
   "use strict";
@@ -18,9 +18,9 @@ when no TMDB API key is set.
   exports.synchronous = true;
 
   var SYNC_STATE_TIDDLER = "$:/state/kojima-sync/status";
-  var ENDPOINT_CONFIG_TIDDLER = "$:/plugins/mblackman/media-importer/configs/kojima-sync-url";
+  var ENDPOINT_CONFIG_TIDDLER = "$:/plugins/mblackman/kojima-media/configs/kojima-sync-url";
+  var LEGACY_ENDPOINT_TIDDLER = "$:/plugins/mblackman/media-importer/configs/kojima-sync-url";
   var TMDB_KEY_TIDDLER = "$:/plugins/mblackman/media-importer/configs/tmdb-api-key";
-  var SEED_DATA_TIDDLER = "$:/plugins/mblackman/kojima-media/data/seed-recommendations.json";
 
   function mergeTagLists() {
     var seen = Object.create(null);
@@ -53,8 +53,8 @@ when no TMDB API key is set.
 
   /**
    * Direct enrichment fallback: Creates or updates the canonical Movie + Kojima tiddler
-   * when no TMDB API key is configured (or in headless/offline environments),
-   * while preserving existing user status (`Completed`, `Active`, `Dropped`), `favorite`, and `rating`.
+   * when no TMDB API key is configured on the client, while preserving existing user
+   * status (`Completed`, `Active`, `Dropped`), `favorite`, and `rating`.
    */
   function upsertKojimaMovieDirectly(item) {
     var year = String(item.year || "0000");
@@ -120,7 +120,7 @@ when no TMDB API key is set.
    * Imports an array of enriched Kojima recommendation items.
    * If a TMDB API key is configured and `fetch` is available in the browser, delegates
    * base tiddler creation to `tm-fetch-Movie` (`TmdbMovieConfig`). Otherwise applies
-   * direct enrichment so offline/seed syncs work immediately.
+   * direct enrichment from the sync service payload.
    */
   function processKojimaItems(items, sourceLabel) {
     var apiKey = ($tw.wiki.getTiddlerText(TMDB_KEY_TIDDLER, "") || "").trim();
@@ -202,35 +202,18 @@ when no TMDB API key is set.
   }
 
   exports.startup = function() {
-    // 1. Offline / Bundled Seed Sync (`tm-sync-kojima-seed`)
-    $tw.rootWidget.addEventListener("tm-sync-kojima-seed", function() {
-      var rawSeed = $tw.wiki.getTiddlerText(SEED_DATA_TIDDLER, "[]");
-      var items = [];
-      try {
-        var parsed = JSON.parse(rawSeed);
-        items = Array.isArray(parsed) ? parsed : (parsed.items || []);
-      } catch (err) {
-        $tw.wiki.setText(SYNC_STATE_TIDDLER, "text", null, "Error parsing bundled seed JSON");
-        return;
-      }
-      for (var i = 0; i < items.length; i++) {
-        upsertKojimaMovieDirectly(items[i]);
-      }
-      $tw.wiki.setText(
-        SYNC_STATE_TIDDLER,
-        "text",
-        null,
-        "Loaded " + items.length + " curated Kojima movies"
-      );
-    });
-
-    // 2. Docker HTTP Sync (`tm-sync-kojima`) — only register if not already registered by media-importer
     if ($tw._kojimaSyncRegistered) return;
     $tw._kojimaSyncRegistered = true;
 
-    $tw.rootWidget.addEventListener("tm-sync-kojima", function() {
+    $tw.rootWidget.addEventListener("tm-sync-kojima", function(event) {
+      if (event && event.paramObject && Array.isArray(event.paramObject.items)) {
+        processKojimaItems(event.paramObject.items, "Direct Payload");
+        return;
+      }
+
       var syncUrl =
         ($tw.wiki.getTiddlerText(ENDPOINT_CONFIG_TIDDLER, "") || "").trim() ||
+        ($tw.wiki.getTiddlerText(LEGACY_ENDPOINT_TIDDLER, "") || "").trim() ||
         "http://localhost:8765/api/kojima-recommendations";
 
       // When accessed over LAN (e.g. http://192.168.x.x:8080), rewrite localhost/127.0.0.1 to the host IP
@@ -248,7 +231,12 @@ when no TMDB API key is set.
       }
 
       if (typeof fetch !== "function") {
-        $tw.rootWidget.dispatchEvent({ type: "tm-sync-kojima-seed" });
+        $tw.wiki.setText(
+          SYNC_STATE_TIDDLER,
+          "text",
+          null,
+          "Sync requires browser fetch support to connect to " + syncUrl
+        );
         return;
       }
 
@@ -264,25 +252,12 @@ when no TMDB API key is set.
           processKojimaItems(items, "Docker Sync Service");
         })
         .catch(function(err) {
-          // Graceful fallback to bundled seed if Docker container is not reachable
-          var rawSeed = $tw.wiki.getTiddlerText(SEED_DATA_TIDDLER, "");
-          if (rawSeed) {
-            try {
-              var seedItems = JSON.parse(rawSeed);
-              var list = Array.isArray(seedItems) ? seedItems : (seedItems.items || []);
-              for (var i = 0; i < list.length; i++) {
-                upsertKojimaMovieDirectly(list[i]);
-              }
-              $tw.wiki.setText(
-                SYNC_STATE_TIDDLER,
-                "text",
-                null,
-                "Docker offline (" + err.message + ") — synced " + list.length + " bundled Kojima movies"
-              );
-              return;
-            } catch (_ignore) {}
-          }
-          $tw.wiki.setText(SYNC_STATE_TIDDLER, "text", null, "Error: " + err.message);
+          $tw.wiki.setText(
+            SYNC_STATE_TIDDLER,
+            "text",
+            null,
+            "Sync error (" + err.message + ") — ensure kojima-sync service is running at " + syncUrl
+          );
         });
     });
   };

@@ -38,9 +38,6 @@ type: text/vnd.tiddlywiki
       <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima" tooltip="Sync from Docker service (http://localhost:8765/api/kojima-recommendations) and enrich via TMDB">
         🔄 Sync Kojima Feed
       </$button>
-      <$button class="kj-btn" message="tm-sync-kojima-seed" tooltip="Load or refresh the 25 curated Kojima movie recommendations immediately">
-        ⚡ Load Curated Seed
-      </$button>
       <$list filter="[[$:/plugins/mblackman/media-importer/ui/media-library]is[tiddler]] [[$:/plugins/mblackman/media-importer/ui/media-library]is[shadow]] +[limit[1]]" variable="ignoreLib">
         <$link to="$:/plugins/mblackman/media-importer/ui/media-library" class="kj-btn">
           Media Library →
@@ -151,7 +148,7 @@ type: text/vnd.tiddlywiki
     <div class="kj-movie-list">
       <$list
         filter="[tag[Movie]tag[Kojima]search:title,director,kojima-review:literal,caseinsensitive<searchToken>] :filter[<statusFilter>match[All]then{!!status}else<statusFilter>match{!!status}] :filter[{!!kojima-tier}prefix<tierPrefix>] :filter[{!!kojima-is-dismissal}!match<excludedDismissal>] +[subfilter<sortSubfilter>]"
-        emptyMessage="<div class='kj-empty-state'><div>No Kojima movie recommendations match the active filters.</div><div>Click <b>🔄 Sync Kojima Feed</b> or <b>⚡ Load Curated Seed</b> above to populate your tracker.</div></div>"
+        emptyMessage="<div class='kj-empty-state'><div>No Kojima movie recommendations match the active filters.</div><div>Click <b>🔄 Sync Kojima Feed</b> above to sync recommendations from your Kojima Sync service.</div></div>"
       >
         <$let
           isDismissal={{{ [{!!kojima-is-dismissal}match[yes]then[yes]else[no]] }}}

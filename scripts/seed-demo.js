@@ -9,14 +9,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
-const SEED_JSON_PATH = path.join(
-  ROOT_DIR,
-  "plugins",
-  "mblackman",
-  "kojima-media",
-  "data",
-  "seed-recommendations.json"
-);
+const SEED_JSON_PATH = path.join(ROOT_DIR, "demo", "seed-recommendations.json");
 const DEMO_TIDDLERS_DIR = path.join(ROOT_DIR, "demo", "tiddlers");
 const MEDIA_IMPORTER_DIST = path.resolve(
   ROOT_DIR,

@@ -1,4 +1,4 @@
-title: $:/plugins/mblackman/media-importer/configs/kojima-sync-url
+title: $:/plugins/mblackman/kojima-media/configs/kojima-sync-url
 type: text/vnd.tiddlywiki
 
 http://localhost:8765/api/kojima-recommendations

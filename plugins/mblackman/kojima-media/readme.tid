@@ -7,4 +7,4 @@ Companion plugin for [[Media Importer|$:/plugins/mblackman/media-importer]] that
 
 * **Dashboard**: Open [[Kojima Movie Recommendations]] to browse movies ranked by the 0–100 **Multi-Factor Kojima Enthusiasm Score**, filter by watch status or tier, hide his infamous 1-sentence `"I watched it"` dismissals, and toggle movies between `Backlog` and `Completed` (Seen).
 * **Base Tiddler Delegation**: Delegates canonical `Movie` tiddler creation to `media-importer`'s `tm-fetch-Movie` (`TmdbMovieConfig`) while merging `Movie Kojima` tags and `kojima-*` metadata fields and preserving existing watch status.
-* **Docker Sync & Scraper Service**: Connects to `http://localhost:8765/api/kojima-recommendations` (with SQLite caching and background X/RSS feed polling) or loads the 25-movie curated seed offline via `tm-sync-kojima-seed`.
+* **Docker Sync & Scraper Service**: Connects to `http://localhost:8765/api/kojima-recommendations` (`ghcr.io/mblackman/tiddlywiki-kojima-media:latest`) with SQLite caching and background X/RSS feed polling via `tm-sync-kojima`.

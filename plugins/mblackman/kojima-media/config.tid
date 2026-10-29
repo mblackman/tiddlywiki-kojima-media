@@ -13,7 +13,7 @@ type: text/vnd.tiddlywiki
     <div class="kj-field-group">
       <label class="kj-label">Kojima Sync Service Endpoint URL</label>
       <$edit-text
-        tiddler="$:/plugins/mblackman/media-importer/configs/kojima-sync-url"
+        tiddler="$:/plugins/mblackman/kojima-media/configs/kojima-sync-url"
         tag="input"
         default="http://localhost:8765/api/kojima-recommendations"
         placeholder="http://localhost:8765/api/kojima-recommendations"
@@ -43,9 +43,6 @@ type: text/vnd.tiddlywiki
   <div class="kj-settings-actions">
     <$button class="kj-btn kj-btn--primary" message="tm-sync-kojima">
       🔄 Sync from Docker Service
-    </$button>
-    <$button class="kj-btn" message="tm-sync-kojima-seed">
-      ⚡ Load Curated Seed (25 Movies)
     </$button>
     <$link to="Kojima Movie Recommendations" class="kj-btn">
       Open Dashboard →

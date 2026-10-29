@@ -15,7 +15,7 @@ TiddlyWiki 5 plugin and self-hosted Docker sync service for [`tiddlywiki-media-i
   3. **Curated Prestige Bonus ($P$: `0–25 pts`)** — Weights GQ Top 4 (`25`), Rotten Tomatoes Top 5 (`25`), MGS Core DNA (`23`), Junker HQ Top 30 (`21`), Criterion Closet (`20`), Year-End Top Lists (`19`), and X Reviews (`10–14`).
   4. **Cross-Source & Canon Recurrence ($R$: `0–10 pts`)** — Rewards films cited across multiple independent interviews, essays, and lists.
 - **Standalone & `media-importer` Compatible**:
-  - Works out of the box with 25 bundled Kojima Movie tiddlers (`tm-sync-kojima-seed`) or syncs live from the Docker container (`tm-sync-kojima`).
+  - Syncs directly from the Docker sync service (`tm-sync-kojima`) and delegates canonical `Movie` tiddler creation to `media-importer` when a TMDB API key is configured.
   - Preserves your existing watch status (`Completed`, `Active`, `Dropped`, `Backlog`), `favorite`, and `rating` across re-syncs.
 - **11 Dashboard Sort Modes**:
   - Sort by **Enthusiasm Score**, **Date Recommended (`kojima-recommended-at`)**, **Release Year**, **Review Depth (Word Count)**, **Runtime**, **Title**, or **Director**.
