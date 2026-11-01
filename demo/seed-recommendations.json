@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-10-31T11:34:25Z",
+  "last_updated": "2026-11-01T12:31:56Z",
   "scoring_version": "v3.0",
-  "count": 243,
+  "count": 244,
   "seen_guids": [
     "news-article::https://news.google.com/rss/articles/CBMibkFVX3lxTFBWcjh4LWRVcVduTVhhZGNnenFVN2doYlhueWFuT0o4akhvODJwRmVmTVlVYmtRd2hUYm1rbmtMYUlLaDhMaDZTU1hnME9fUzhhRXVKMS1pcFhEU1kzTTh0cDcxTkFZNDRiVmZ4Q293?oc=5",
     "news-article::https://news.google.com/rss/articles/CBMiqAFBVV95cUxOV0ZsTXRjTWtBZWFOemRBb2tCbktaOWYxN3BMazluOWNUQ3o0eGMtRmxOUTRBV0J6NndDMkFRNnpwY0N2bFVndHZNVFNHb3Y5enlvM2dwSmxaZUphZktMdDNnblM5Ql9VWjFmcmIxMV9nVlVhdUNoY0RzbEYyZVROaUQwcWVqSjZ4TVJyM3ZvZUktWFl0OFliNE5fQXhQUjV3OVdkTEFXUVE?oc=5",
@@ -213,7 +213,14 @@
     "letterboxd-review-1144911009",
     "letterboxd-review-1152802149",
     "letterboxd-review-1159159616",
-    "letterboxd-review-1157479496"
+    "letterboxd-review-1157479496",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6ae7313967f44b2d959be9ccd42721e2&url=https%3a%2f%2fin.ign.com%2fresident-evil-2026%2f274254%2fhideo-kojima-reviews-zach-creggers-resident-evil-calls-it-a-film-about-the-experience-of-playing-the&c=16391475597712955946&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6ae7313967f44b2d959be9ccd42721e2&url=https%3a%2f%2fwww.msn.com%2fen-us%2fnews%2fother%2fhideo-kojima-praises-zach-creggers-resident-evil-movie-for-capturing-the-feel-of-the-games%2far-AA2eddyh&c=11159712688213892728&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6ae7313967f44b2d959be9ccd42721e2&url=https%3a%2f%2fwww.msn.com%2fen-us%2fnews%2fother%2fhideo-kojima-reviews-zach-creggers-resident-evil%2far-AA2e4vU1&c=15798090173108317776&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6ae7313967f44b2d959be9ccd42721e2&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-resident-evil-194251263.html&c=15488416906198986186&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6ae7313967f44b2d959be9ccd42721e2&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-gives-tom-cruise-093924758.html&c=1756770837928666238&mkt=en-us",
+    "news-article::https://news.google.com/rss/articles/CBMinwFBVV95cUxOU3o0UjhrM0ZycUpyUXlwbW1Pd2oyUUF0Umx4LU5TNkRYRmtMZ0pvVWhHRU1YX3J5Zzk0WTBDUDZpaTdwd1V3aHRpbHhZLXRYMUxtRnZuRGpQQzJacVQxbHFxalZWdXZmX3ZZVUh1bTVPUUFaVXJ0dlVaanlhWDBWbGZhNHZOWjBoWk5kX0dCNmh1VFE2REhHTEg0X2JUdDA?oc=5",
+    "letterboxd-review-1144896286"
   ],
   "poster_checked_slugs": [
     "12-angry-men::1957",
@@ -1912,13 +1919,13 @@
       "kojima_review": "I watched “Avatar: Fire and Ash” in 3D IMAX. People often say, “God is in the details,” but truly seeing that philosophy carried through in the act of creation is not an easy thing to do. This film shows absolutely no compromise, right down to the finest details, in the construction of the Avatar “universe.” It was magnificent. For the past 40 years, I’ve been weaving entertainment and art alongside the evolution of cutting-edge digital technology. I’m a creator on the “digital side.” DEATH STRANDING was also shot and produced using technologies developed for Avatar. Lately, films shot entirely in analog, without CG or VFX, have been increasingly praised. Even movies shot on film are celebrated, while digital works are sometimes dismissed with comments like, “Anyone can make it easily if it’s digital.” But that is a serious misunderstanding. CG works are also created by people. Countless actors, artists, and programmers pour their thoughts and passion into them, breathing life into the work. Today, this film gave me renewed “pride” and “courage” as we look toward the future. It made me feel positive again about continuing to pursue “new things” using digital technology. Thank you, James Cameron. And I was also happy to see Kevin Dorman on the screen. He did so many performances for us on the set of DEATH STRANDING too. 🙏🙇🏻🫶😍",
       "kojima_word_count": 224,
       "kojima_is_dismissal": "no",
-      "kojima_sentiment_summary": "Kojima used superlatives like 'magnificent,' expressed renewed 'pride' and 'courage' for his own work, thanked James Cameron, and used strong positive emojis.",
-      "kojima_score_breakdown": "Loved (4/5) - Kojima used superlatives like 'magnificent,' expressed renewed 'pride' and 'courage' for his own work, thanked James Cameron, and used strong positive emojis.",
-      "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2002686998205895032",
-      "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
+      "kojima_sentiment_summary": "He uses superlatives like \"magnificent,\" expresses deep personal inspiration, and thanks the creator, indicating profound admiration.",
+      "kojima_score_breakdown": "Loved (4/5) - He uses superlatives like \"magnificent,\" expresses deep personal inspiration, and thanks the creator, indicating profound admiration.",
+      "kojima_primary_url": "https://geektyrant.com/news/hideo-kojima-lists-his-favorite-movies-and-shows-of-2025-and-they-include-kpop-demon-hunters-and-pluribus",
+      "kojima_primary_source": "2025/2026 Review & Favorites Roundup",
       "kojima_recommended_at": "2025-12-21",
-      "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2002686998205895032\", \"date\": \"2025-12-21\"}, {\"label\": \"2025/2026 Review & Favorites Roundup\", \"type\": \"x_review\", \"url\": \"https://geektyrant.com/news/hideo-kojima-lists-his-favorite-movies-and-shows-of-2025-and-they-include-kpop-demon-hunters-and-pluribus\"}]",
-      "content_hash": "acb550eb650a81bc3e0ff674a898792b210e9ca261fd94025f02962a7c361016"
+      "kojima_sources_json": "[{\"label\": \"2025/2026 Review & Favorites Roundup\", \"type\": \"x_review\", \"url\": \"https://geektyrant.com/news/hideo-kojima-lists-his-favorite-movies-and-shows-of-2025-and-they-include-kpop-demon-hunters-and-pluribus\"}, {\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2002686998205895032\", \"date\": \"2025-12-21\"}]",
+      "content_hash": "6949e0c671f9da9fb18d111448c013de51cd3126c2e7a4ef25b7e03bbadb678a"
     },
     {
       "title": "Backrooms",
@@ -2353,16 +2360,16 @@
       "plot": "Contact is a 1997 American science fiction drama film co-produced and directed by Robert Zemeckis, based on the 1985 novel by Carl Sagan. It stars Jodie Foster as Dr. Eleanor \"Ellie\" Arroway, a SETI scientist who finds evidence of extraterrestrial life and is chosen to make first contact. Matthew McConaughey, James Woods, Tom Skerritt, William Fichtner, John Hurt, Angela Bassett, Rob Lowe, Jake Busey, and David Morse co-star. It features the Very Large Array in New Mexico, the Arecibo Observatory in Puerto Rico, the Mir space station, and the Space Coast surrounding Cape Canaveral.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Last night, rewatching “Interstellar” made me want to rewatch “Contact” (1997) again. So tonight, I’m watching this beloved film. We’re a generation deeply influenced by Carl Sagan and the SETI program. I’ve returned to this movie many times over the years. A father and daughter, a journey into the unknown, wormholes, relativity, Lynda Obst, Kip Thorne. “Interstellar” and this film feel like twins.",
+      "kojima_review": "Last night, rewatching 'Interstellar' made me want to rewatch 'Contact' (1997) again. So tonight, I'm watching this beloved film. We're a generation deeply influenced by Carl Sagan and the SETI program. I've returned to this movie many times over the years. A father and daughter, a journey into the unknown, wormholes, relativity, Lynda Obst, Kip Thorne. 'Interstellar' and this film feel like twins.",
       "kojima_word_count": 63,
       "kojima_is_dismissal": "no",
-      "kojima_sentiment_summary": "He calls 'Contact' a 'beloved film' and mentions returning to it 'many times over the years,' showing deep and lasting affection.",
-      "kojima_score_breakdown": "Loved (4/5) - He calls 'Contact' a 'beloved film' and mentions returning to it 'many times over the years,' showing deep and lasting affection.",
+      "kojima_sentiment_summary": "He explicitly calls 'Contact' a 'beloved film' and states he has 'returned to this movie many times over the years'.",
+      "kojima_score_breakdown": "Loved (4/5) - He explicitly calls 'Contact' a 'beloved film' and states he has 'returned to this movie many times over the years'.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2008301030216478985",
       "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
       "kojima_recommended_at": "2026-01-05",
       "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008301030216478985\", \"date\": \"2026-01-05\"}]",
-      "content_hash": "16cfb2f1fa523c4ddf84de5422fad81e3995d512d5393681b3d8813ae63e6aa4"
+      "content_hash": "4b56c48d39fb0949159f6774f977906eb5b92a9030d7243ae83afbc15a72ffb1"
     },
     {
       "title": "Crime 101",
@@ -2397,16 +2404,16 @@
       "plot": "Cuckoo is a 2024 horror film written and directed by Tilman Singer, and starring Hunter Schafer, Jan Bluthardt, Marton Csokas, Jessica Henwick, and Dan Stevens. A co-production between Germany and the United States, the film follows a teenager (Schafer) who moves to the German Alps to live with her father (Csokas) but becomes disturbed by strange occurrences as her father's boss (Stevens) embroils her family in a sinister plot.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "I’d been waiting a long time for the Japanese theatrical release of “Cuckoo” (2024), the horror film starring Hunter Schafer, but it suddenly came straight onto Amazon Prime. So I watched it under its Japanese title, “Kakkō.” The film seems to play on both the slang meaning and the biology of cuckoos, echoing the idea of “cuckoo’s nest.” As this is director Tilman Singer’s second feature, and with NEON, it was never going to be straightforward. It turned out to be a very strange film. I went in completely blind, and it felt fresh in the same way those unfamiliar Italian or Spanish horror films I secretly watched on late-night TV as a kid. There were moments I genuinely found scary too. It’s an off-beat horror that mixes a wide range of elements and themes. And since one of my favorites, Jessica Henwick makes a brief appearance, I enjoyed it all the more.",
+      "kojima_review": "I'd been waiting a long time for the Japanese theatrical release of 'Cuckoo' (2024), the horror film starring Hunter Schafer, but it suddenly came straight onto Amazon Prime. So I watched it under its Japanese title, 'Kakkō.' The film seems to play on both the slang meaning and the biology of cuckoos, echoing the idea of 'cuckoo's nest.' As this is director Tilman Singer's second feature, and with NEON, it was never going to be straightforward. It turned out to be a very strange film. I went in completely blind, and it felt fresh in the same way those unfamiliar Italian or Spanish horror films I secretly watched on late-night TV as a kid. There were moments I genuinely found scary too. It's an off-beat horror that mixes a wide range of elements and themes. And since one of my favorites, Jessica Henwick makes a brief appearance, I enjoyed it all the more.",
       "kojima_word_count": 153,
       "kojima_is_dismissal": "no",
-      "kojima_sentiment_summary": "He strongly connected with the film's originality, calling it fresh and comparing it to formative horror experiences from his childhood, and genuinely found it scary.",
-      "kojima_score_breakdown": "Loved (4/5) - He strongly connected with the film's originality, calling it fresh and comparing it to formative horror experiences from his childhood, and genuinely found it scary.",
+      "kojima_sentiment_summary": "He found the film fresh and genuinely scary, comparing it to beloved childhood horror experiences and enjoying it \"all the more.\"",
+      "kojima_score_breakdown": "Loved (4/5) - He found the film fresh and genuinely scary, comparing it to beloved childhood horror experiences and enjoying it \"all the more.\"",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2009808578446872965",
       "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
       "kojima_recommended_at": "2026-01-09",
       "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2009808578446872965\", \"date\": \"2026-01-09\"}]",
-      "content_hash": "2df5785c134f3bfd6a564b2810ec91ddb415301eaa3140dda65847ed92ea507c"
+      "content_hash": "ecd8d0cb7bbea2218b6618cf2e355c7cfdebdbc0d25cc1383b1225b129027d8c"
     },
     {
       "title": "Dangal",
@@ -2485,16 +2492,16 @@
       "plot": "Gabby's Dollhouse: The Movie is a 2025 American musical fantasy comedy film based on the Netflix series Gabby's Dollhouse, which was created by Traci Paige Johnson and Jennifer Twomey, both of whom serve as executive producers. Produced by DreamWorks Animation, the live-action animated film was directed by Ryan Crego from a screenplay by the writing teams of Mike Lew and Rehana Lew Mirza, and Adam Wilson and Melanie Wilson LaBracio, based on a story conceived by Crego. Combining live-action and animation, it stars Laila Lockhart Kraner, who reprises her role from the series with Jason Mantzoukas, Gloria Estefan, and Kristen Wiig joining the cast. The film takes place between the eleventh and twelfth seasons of the series, It follows Gabby as she goes on a road trip with her grandmother to the urban wonderland of Cat Francisco and embarks on an adventure to save her dollhouse and the Gabby Cats from a cat lady.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "I watched Dollhouse on the plane. Wow, it was terrifying. This might be a new masterpiece of Japanese horror. The introduction, structure, and script are all excellent. With no one to rely on, in the end, the characters have no choice but to resolve things themselves. Everything is meticulously planned and thought out until the very end. It doesn’t rely on jump scares, but instead uses a slow-burning tension to confront fear. It really nails the key elements of horror.",
+      "kojima_review": "I watched Dollhouse on the plane. Wow, it was terrifying. This might be a new masterpiece of Japanese horror. The introduction, structure, and script are all excellent. With no one to rely on, in the end, the characters have no choice but to resolve things themselves. Everything is meticulously planned and thought out until the very end. It doesn't rely on jump scares, but instead uses a slow-burning tension to confront fear. It really nails the key elements of horror.",
       "kojima_word_count": 80,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2008430549199974752",
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
-      "kojima_recommended_at": "2025-10-10",
+      "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008430549199974752\", \"date\": \"2026-01-06\"}, {\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/1976725926915588371\", \"date\": \"2025-10-10\"}]",
-      "content_hash": "1e39df93f0aa8f3967e8883d45471c5e443c7961311c6ea4e483d6f25e35f0c4"
+      "content_hash": "2da49297092e35231ecd7ea352e3d71acd2830c48561e300b6f2961fcb78ef87"
     },
     {
       "title": "Dune: Part Two",
@@ -2956,8 +2963,8 @@
       "plot": "A world-renowned K-Pop girl group balances their lives in the spotlight with their secret identities as badass demon hunters.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "I casually started watching “KPop Demon Hunters,” got completely hooked, and ended up crying my eyes out by the end. It was so, so good 🥺🫶",
-      "kojima_word_count": 26,
+      "kojima_review": "\"I casually started watching 'KPop Demon Hunters,' got completely hooked, and ended up crying my eyes out by the end. It was so, so good.\"",
+      "kojima_word_count": 25,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2965,7 +2972,7 @@
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
       "kojima_recommended_at": "2025-12-21",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://www.instagram.com/p/DTKMr5rkvfH/?hl=en\"}, {\"label\": \"GeekTyrant 2025 Favorites Report\", \"type\": \"annual_top_list\", \"url\": \"https://geektyrant.com/news/hideo-kojima-lists-his-favorite-movies-and-shows-of-2025-and-they-include-kpop-demon-hunters-and-pluribus\"}, {\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2002893488103498144\", \"date\": \"2025-12-21\"}]",
-      "content_hash": "64b2d7b01ea5790d6dddfa0b9975ba7d3981e02b0a35b00349233040bb465c09"
+      "content_hash": "ade145f870456cdf1700b7dd1a87f90a3c85dd0d7a4be2bcbd80c82430c8f4e4"
     },
     {
       "title": "Killing",
@@ -3029,9 +3036,9 @@
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2008430549199974752",
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
-      "kojima_recommended_at": "2025-12-23",
+      "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008430549199974752\", \"date\": \"2026-01-06\"}, {\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2003403186368029161\", \"date\": \"2025-12-23\"}]",
-      "content_hash": "c9b692828db36dc03d11a92c9e1e4872fea25ae2e57288dc8aee388dadc649b2"
+      "content_hash": "e7eda240761709ba3c1b10e6f4771c3c71822961b4936ba4f68b5a86b3c5774d"
     },
     {
       "title": "La Chimera",
@@ -4027,9 +4034,9 @@
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2008430549199974752",
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
-      "kojima_recommended_at": "2025-12-24",
+      "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008430549199974752\", \"date\": \"2026-01-06\"}, {\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2003807083104440436\", \"date\": \"2025-12-24\"}]",
-      "content_hash": "762d810ad505edd56b1d7b51feac925a07a2c2ae91e20063f0d15a9af4909ce2"
+      "content_hash": "58a5dc07d0eb26de766d6a023ef3d7287806c21e6fe1aab8da62d34684d14eab"
     },
     {
       "title": "Teki Cometh",
@@ -4181,9 +4188,9 @@
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446",
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
-      "kojima_recommended_at": "2025-04-23",
+      "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446\", \"date\": \"2026-01-06\"}, {\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/1915071084850016347\", \"date\": \"2025-04-23\"}]",
-      "content_hash": "7258bca90382c2ab2b388962e6a59603fb787872678ffc2bab2c360f04ac4aac"
+      "content_hash": "d2a343d6bae0c5f7ba06f067109620f8b9ce96cd07452bfdfaf796aa58afdc39"
     },
     {
       "title": "The Guilty",
@@ -4511,9 +4518,9 @@
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446",
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
-      "kojima_recommended_at": "2025-12-25",
+      "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446\", \"date\": \"2026-01-06\"}, {\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2004158443721294330\", \"date\": \"2025-12-25\"}]",
-      "content_hash": "5dbbc945818a5529ab3b448fa3f209ec90564ee507b389e497b3cc93c6900faf"
+      "content_hash": "efac078bfefdcef4007da649ce4ef3e9690abbc69d471d7f6782a84aefffdf37"
     },
     {
       "title": "The Shape of Water",
@@ -4900,16 +4907,16 @@
       "plot": "A.I. Artificial Intelligence is a 2001 American science fiction drama film written and directed by Steven Spielberg. The screenplay by Spielberg is based on a screen story by Ian Watson adapting the 1969 short story \"Supertoys Last All Summer Long\" by Brian Aldiss. Set in a futuristic society, the film stars Haley Joel Osment as David, a childlike android uniquely programmed with the ability to love. Jude Law, Frances O'Connor, Brendan Gleeson and William Hurt star in supporting roles.",
       "kojima_score": 3,
       "kojima_tier": "Liked",
-      "kojima_review": "Tonight, I’m rewatching Steven Spielberg’s “A.I.” (2001) for the first time in 25 years. Hard to believe it was released the same year as MGS2.",
+      "kojima_review": "Tonight, I'm rewatching Steven Spielberg's 'A.I.' (2001) for the first time in 25 years. Hard to believe it was released the same year as MGS2.",
       "kojima_word_count": 25,
       "kojima_is_dismissal": "no",
-      "kojima_sentiment_summary": "He is rewatching the movie for the first time in 25 years, indicating a deliberate choice to revisit it.",
-      "kojima_score_breakdown": "Liked (3/5) - He is rewatching the movie for the first time in 25 years, indicating a deliberate choice to revisit it.",
+      "kojima_sentiment_summary": "He explicitly states he is rewatching the movie for the first time in 25 years, indicating a deliberate choice to revisit it.",
+      "kojima_score_breakdown": "Liked (3/5) - He explicitly states he is rewatching the movie for the first time in 25 years, indicating a deliberate choice to revisit it.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2007111395771572588",
       "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
       "kojima_recommended_at": "2026-01-02",
       "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2007111395771572588\", \"date\": \"2026-01-02\"}]",
-      "content_hash": "1cbfb23f0158c7450e3d7b9e96be3b6521a5b3230c83dd3cedb11571aae118af"
+      "content_hash": "906d8b1f6c4ab9132472ffc9d9a7cce4014d3c7d6f81bd945c3acb3c08b97637"
     },
     {
       "title": "Akira",
@@ -4922,16 +4929,16 @@
       "plot": "Akira is a 1988 Japanese animated cyberpunk action thriller film directed by Katsuhiro Otomo, produced by Ryōhei Suzuki and Shunzō Katō, and written by Otomo and Izo Hashimoto, based on Otomo's 1982 manga Akira. Set in a dystopian 2019, it follows Shōtarō Kaneda, the leader of a biker gang whose childhood friend, Tetsuo Shima, acquires powerful telekinetic abilities after colliding with a child esper in a motorcycle accident, eventually threatening an entire military complex in the sprawling futuristic metropolis of Neo-Tokyo.",
       "kojima_score": 3,
       "kojima_tier": "Liked",
-      "kojima_review": "I was going to read a book, but found out that the uncut version of “AKIRA” is on TV tonight, so I decided to watch that—even though I have the 4K UHD.",
+      "kojima_review": "I was going to read a book, but found out that the uncut version of 'AKIRA' is on TV tonight, so I decided to watch that—even though I have the 4K UHD.",
       "kojima_word_count": 32,
       "kojima_is_dismissal": "no",
-      "kojima_sentiment_summary": "He changed his plans to rewatch the film and owns its premium 4K UHD edition, indicating strong appreciation.",
-      "kojima_score_breakdown": "Liked (3/5) - He changed his plans to rewatch the film and owns its premium 4K UHD edition, indicating strong appreciation.",
+      "kojima_sentiment_summary": "He chose to rewatch the film despite already owning the premium 4K UHD edition, indicating strong enjoyment.",
+      "kojima_score_breakdown": "Liked (3/5) - He chose to rewatch the film despite already owning the premium 4K UHD edition, indicating strong enjoyment.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2007452940244791344",
       "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
       "kojima_recommended_at": "2026-01-03",
       "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2007452940244791344\", \"date\": \"2026-01-03\"}]",
-      "content_hash": "8c096d4667447ae79a6a44dd842e02d47372cbff02149b93fbf4349c2142613b"
+      "content_hash": "8159326e251669e2c3c0ba2ece3df4a7324352dae9056c4726f45340485ad567"
     },
     {
       "title": "Ballerina",
@@ -5076,16 +5083,16 @@
       "plot": "Memories is a 1995 Japanese animated science fiction anthology film with Katsuhiro Otomo as executive producer, and based on three of his manga short stories. The film is composed of three shorts: Magnetic Rose , directed by Studio 4°C co-founder Kōji Morimoto and written by Satoshi Kon; Stink Bomb , directed by Tensai Okamura and written by Otomo, and Cannon Fodder , written and directed by Otomo himself.",
       "kojima_score": 3,
       "kojima_tier": "Liked",
-      "kojima_review": "Tonight, I’ll rewatch Katsuhiro Otomo’s “MEMORIES” in 4K ultra HD🌹",
+      "kojima_review": "Tonight, I'll rewatch Katsuhiro Otomo's 'MEMORIES' in 4K ultra HD.",
       "kojima_word_count": 10,
       "kojima_is_dismissal": "no",
-      "kojima_sentiment_summary": "Kojima's decision to rewatch the movie, especially in 4K Ultra HD, indicates a positive appreciation for it.",
-      "kojima_score_breakdown": "Liked (3/5) - Kojima's decision to rewatch the movie, especially in 4K Ultra HD, indicates a positive appreciation for it.",
+      "kojima_sentiment_summary": "He is choosing to rewatch the movie and specifically mentions watching it in a premium 4K Ultra HD format.",
+      "kojima_score_breakdown": "Liked (3/5) - He is choosing to rewatch the movie and specifically mentions watching it in a premium 4K Ultra HD format.",
       "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2011459845988519954",
       "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
       "kojima_recommended_at": "2026-01-14",
       "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2011459845988519954\", \"date\": \"2026-01-14\"}]",
-      "content_hash": "869fe7ad09997e6cae538121d446f016f9efd2f9a4ff64601f393e6d8d1ccb68"
+      "content_hash": "74586814d0febcf2f55501ef2d44f6248457442b7fd493e2d74e459fba901d37"
     },
     {
       "title": "Predestination",
@@ -5240,6 +5247,28 @@
       "kojima_recommended_at": "2025-11-05",
       "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/1986256984220533068\", \"date\": \"2025-11-05\"}]",
       "content_hash": "7411027f3b54b70ac52e1ca125d37f357650c8fe859e0955b8c127c6f9b0e0d2"
+    },
+    {
+      "title": "The Accountant²",
+      "year": "2025",
+      "tmdb_id": "870028",
+      "director": "",
+      "runtime": "",
+      "genres": [],
+      "poster": "https://a.ltrbxd.com/resized/film-poster/7/8/2/0/0/6/782006-the-accountant-2-0-600-0-900-crop.jpg",
+      "plot": "",
+      "kojima_score": 3,
+      "kojima_tier": "Liked",
+      "kojima_review": "On the flight out, I watched “The Accountant 2 (2025).” It portrays Ben Affleck and Jon Bernthal as brothers bound by a unique fate. As a buddy film, it was refreshingly original. Not only the premise, but also the action and attention to detail were great. The music was done by one of my favorites: Bryce Dessner. On my return flight, I found the first film, “The Accountant (2016)” and watched that too. It was interesting to see their childhood depicted. The worldbuilding (like Ben Affleck’s character setting) and Anna Kendrick’s comedic tone felt mismatched (perhaps intentionally miscast?), but that actually created contrast and added depth. I think I prefer the first film. I’m looking forward to the next one.",
+      "kojima_word_count": 120,
+      "kojima_is_dismissal": "no",
+      "kojima_sentiment_summary": "He called 'The Accountant 2' refreshingly original and great, then watched the first film and expressed anticipation for the next installment in the series.",
+      "kojima_score_breakdown": "Liked (3/5) - He called 'The Accountant 2' refreshingly original and great, then watched the first film and expressed anticipation for the next installment in the series.",
+      "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/1986256984220533068",
+      "kojima_primary_source": "X (@HIDEO_KOJIMA_EN)",
+      "kojima_recommended_at": "2025-11-05",
+      "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/1986256984220533068\", \"date\": \"2025-11-05\"}]",
+      "content_hash": "0e0485cde0572bff624cd909e6b612db0ff2e5e017f69964e070211df0df5e41"
     },
     {
       "title": "The Housemaid",
