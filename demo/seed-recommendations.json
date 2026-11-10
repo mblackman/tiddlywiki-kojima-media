@@ -275,7 +275,10 @@
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6af1decc0d524d66ac5e9364bebab986&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-2026-most-130858004.html&c=6101619654760740053&mkt=en-us",
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6af1decc0d524d66ac5e9364bebab986&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fhideo-kojima-officially-reviews-dc-s-clayface-movie%2far-AA2gyU8Q&c=10696728817330119135&mkt=en-us",
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6af1decc0d524d66ac5e9364bebab986&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fclayface-gets-a-coveted-long-hideo-kojima-review-i-enjoyed-the-film%2far-AA2gAtov&c=17501838389682069864&mkt=en-us",
-    "news-article::https://news.google.com/rss/articles/CBMihwFBVV95cUxPRzJHZE1TZ0d0MTZmQzRrenpFTmo5SXVOSU1DMDNxeWYwLWthSWZGc1pWNEd2dFRzVHBYaXVadGE2REZxbzhneFBVUnpPdEYxZEhPUUp0NFdJbWRWMmFtV196V0duNGRLbkloVlZzNnNSa2ZqaHlHRS15cVFHZFdEWmlybDMzRWs?oc=5"
+    "news-article::https://news.google.com/rss/articles/CBMihwFBVV95cUxPRzJHZE1TZ0d0MTZmQzRrenpFTmo5SXVOSU1DMDNxeWYwLWthSWZGc1pWNEd2dFRzVHBYaXVadGE2REZxbzhneFBVUnpPdEYxZEhPUUp0NFdJbWRWMmFtV196V0duNGRLbkloVlZzNnNSa2ZqaHlHRS15cVFHZFdEWmlybDMzRWs?oc=5",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6af325625b9641ebbf9cb4712be5d430&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fhideo-kojima-officially-reviews-dc-s-clayface-movie%2far-AA2gyU8Q&c=10696728817330119135&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6af325625b9641ebbf9cb4712be5d430&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-2026-most-130858004.html&c=6101619654760740053&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6af325625b9641ebbf9cb4712be5d430&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fclayface-gets-a-coveted-long-hideo-kojima-review-i-enjoyed-the-film%2far-AA2gAtov&c=17501838389682069864&mkt=en-us"
   ],
   "poster_checked_slugs": [
     "12-angry-men::1957",
