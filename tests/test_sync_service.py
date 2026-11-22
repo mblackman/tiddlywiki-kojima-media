@@ -594,6 +594,11 @@ class TestKojimaSyncService(unittest.TestCase):
                 <img alt="Supergirl" />
               </div>
             </li>
+            <li class="poster-container">
+              <div class="film-poster" data-film-name="The Odyssey" data-film-release-year="2026" data-film-slug="the-odyssey-2026">
+                <img alt="The Odyssey" />
+              </div>
+            </li>
           </ul>
         </body></html>"""
         list_html_path = os.path.join(self.temp_dir.name, "list_2026.html")
@@ -628,12 +633,179 @@ class TestKojimaSyncService(unittest.TestCase):
                 catalog_path=catalog_file,
             )
 
-        self.assertEqual(payload["count"], 1)
-        item = payload["items"][0]
-        self.assertEqual(item["title"], "Supergirl")
-        self.assertEqual(item["kojima_score"], 4)
-        self.assertEqual(item["kojima_tier"], "Loved")
-        self.assertIn("coming-of-age story", item["kojima_review"])
+        self.assertEqual(payload["count"], 2)
+        by_title = {item["title"]: item for item in payload["items"]}
+        supergirl = by_title["Supergirl"]
+        self.assertEqual(supergirl["kojima_score"], 4)
+        self.assertEqual(supergirl["kojima_tier"], "Loved")
+        self.assertEqual(supergirl["kojima_recommended_at"], "2026-06-20")
+        self.assertIn("coming-of-age story", supergirl["kojima_review"])
+        odyssey = by_title["The Odyssey"]
+        self.assertEqual(odyssey["kojima_score"], 4)
+        self.assertEqual(odyssey["kojima_recommended_at"], "2026-12-20")
+
+    def test_reconcile_lists_preserves_existing_dates_primary_source_and_is_idempotent(self):
+        seed_out = os.path.join(self.temp_dir.name, "seed-recommendations.json")
+        api_out = os.path.join(self.temp_dir.name, "api", "kojima-recommendations.json")
+        catalog_file = os.path.join(self.temp_dir.name, "empty-catalog.jsonl")
+        with open(catalog_file, "w", encoding="utf-8") as fh:
+            fh.write("")
+
+        with open(seed_out, "w", encoding="utf-8") as fh:
+            json.dump(
+                {
+                    "last_updated": "2026-08-01T00:00:00Z",
+                    "items": [
+                        {
+                            "title": "2001: A Space Odyssey",
+                            "year": "1968",
+                            "tmdb_id": "62",
+                            "director": "Stanley Kubrick",
+                            "runtime": "149",
+                            "genres": ["Science Fiction"],
+                            "poster": "https://example.com/2001.jpg",
+                            "plot": "Monolith.",
+                            "kojima_score": 5,
+                            "kojima_tier": "Canon",
+                            "kojima_review": "More than a film; it's an experience.",
+                            "kojima_word_count": 7,
+                            "kojima_is_dismissal": "no",
+                            "kojima_sentiment_summary": "All-time Top 4 (GQ).",
+                            "kojima_score_breakdown": "Canon (5/5) - All-time Top 4 (GQ).",
+                            "kojima_primary_url": "https://www.slashfilm.com/1882898/hideo-kojima-favorite-movies/",
+                            "kojima_primary_source": "GQ All-Time Top 4",
+                            "kojima_recommended_at": "2025-05-14",
+                            "kojima_sources_json": json.dumps(
+                                [
+                                    {
+                                        "label": "GQ All-Time Top 4",
+                                        "type": "gq_top_4",
+                                        "url": "https://www.slashfilm.com/1882898/hideo-kojima-favorite-movies/",
+                                    }
+                                ]
+                            ),
+                            "content_hash": "old-hash-2001",
+                        },
+                        {
+                            "title": "Conclave",
+                            "year": "2024",
+                            "tmdb_id": "974576",
+                            "director": "Edward Berger",
+                            "runtime": "120",
+                            "genres": ["Drama"],
+                            "poster": "https://example.com/conclave.jpg",
+                            "plot": "Papal conclave.",
+                            "kojima_score": 4,
+                            "kojima_tier": "Loved",
+                            "kojima_review": "Top movies I watched in 2025.",
+                            "kojima_word_count": 6,
+                            "kojima_is_dismissal": "no",
+                            "kojima_sentiment_summary": "Annual Top List.",
+                            "kojima_score_breakdown": "Loved (4/5) - Annual Top List.",
+                            "kojima_primary_url": "https://x.com/HIDEO_KOJIMA_EN/status/2008415276846641511",
+                            "kojima_primary_source": "Top Films of 2025 (X / Instagram)",
+                            "kojima_recommended_at": "2026-01-06",
+                            "kojima_sources_json": json.dumps(
+                                [
+                                    {
+                                        "label": "Top Films of 2025 (X / Instagram)",
+                                        "type": "annual_top_list",
+                                        "url": "https://x.com/HIDEO_KOJIMA_EN/status/2008415276846641511",
+                                        "date": "2026-01-06",
+                                    }
+                                ]
+                            ),
+                            "content_hash": "old-hash-conclave",
+                        },
+                    ],
+                },
+                fh,
+            )
+
+        fav_html = """<!DOCTYPE html>
+        <html><head><title>The Favorite Films of Hideo Kojima</title></head>
+        <body>
+          <ul class="poster-list">
+            <li class="poster-container">
+              <div class="film-poster" data-film-name="2001: A Space Odyssey" data-film-release-year="1968" data-film-slug="2001-a-space-odyssey"></div>
+            </li>
+          </ul>
+        </body></html>"""
+        fav_html_path = os.path.join(self.temp_dir.name, "fav_list.html")
+        with open(fav_html_path, "w", encoding="utf-8") as fh:
+            fh.write(fav_html)
+
+        annual_html = """<!DOCTYPE html>
+        <html><head><title>Best Movies 2025 by Hideo Kojima</title></head>
+        <body>
+          <ul class="poster-list">
+            <li class="poster-container">
+              <div class="film-poster" data-film-name="Conclave" data-film-release-year="2024" data-film-slug="conclave"></div>
+            </li>
+          </ul>
+        </body></html>"""
+        annual_html_path = os.path.join(self.temp_dir.name, "annual_list.html")
+        with open(annual_html_path, "w", encoding="utf-8") as fh:
+            fh.write(annual_html)
+
+        lb_rss = f"""<?xml version="1.0" encoding="utf-8"?>
+        <rss version="2.0" xmlns:letterboxd="https://letterboxd.com">
+          <channel>
+            <item>
+              <title>Conclave, 2024</title>
+              <link>https://letterboxd.com/kojima_hideo/film/conclave/</link>
+              <guid isPermaLink="false">letterboxd-review-999999</guid>
+              <pubDate>Tue, 06 Jan 2026 12:00:00 +0000</pubDate>
+              <letterboxd:filmTitle>Conclave</letterboxd:filmTitle>
+              <letterboxd:filmYear>2024</letterboxd:filmYear>
+              <description><![CDATA[<p>Watched Conclave. https://x.com/HIDEO_KOJIMA_EN/status/2008415276846641511</p>]]></description>
+            </item>
+            <item>
+              <title>The Favorite Films of 'Metal Gear Solid' Creator Hideo Kojima</title>
+              <link>file://{fav_html_path}</link>
+              <guid isPermaLink="false">letterboxd-list-fav</guid>
+              <pubDate>Sat, 20 Jan 2024 12:00:00 +0000</pubDate>
+            </item>
+            <item>
+              <title>Best Movies 2025 by Hideo Kojima</title>
+              <link>file://{annual_html_path}</link>
+              <guid isPermaLink="false">letterboxd-list-2025</guid>
+              <pubDate>Wed, 07 Jan 2026 12:00:00 +0000</pubDate>
+            </item>
+          </channel>
+        </rss>"""
+        rss_path = os.path.join(self.temp_dir.name, "lb_rss_reconcile.xml")
+        with open(rss_path, "w", encoding="utf-8") as fh:
+            fh.write(lb_rss)
+
+        with mock.patch.object(kss, "SEED_RECOMMENDATIONS", []), mock.patch.object(
+            kss, "KOJIMA_RSS_URLS", ["file://" + rss_path]
+        ):
+            first = kss.sync_static_files(
+                seed_json_path=seed_out,
+                api_json_path=api_out,
+                scrape_rss=True,
+                reconcile_lists=True,
+                enrich=False,
+                catalog_path=catalog_file,
+            )
+            self.assertEqual(first["newly_ingested_count"], 0)
+            by_title = {item["title"]: item for item in first["items"]}
+            self.assertEqual(by_title["2001: A Space Odyssey"]["kojima_recommended_at"], "2025-05-14")
+            self.assertEqual(by_title["2001: A Space Odyssey"]["kojima_primary_source"], "GQ All-Time Top 4")
+            self.assertEqual(by_title["Conclave"]["kojima_recommended_at"], "2026-01-06")
+            self.assertEqual(by_title["Conclave"]["kojima_primary_source"], "Top Films of 2025 (X / Instagram)")
+
+            second = kss.sync_static_files(
+                seed_json_path=seed_out,
+                api_json_path=api_out,
+                scrape_rss=True,
+                reconcile_lists=True,
+                enrich=False,
+                catalog_path=catalog_file,
+            )
+            self.assertEqual(second["newly_ingested_count"], 0)
+            self.assertFalse(second["changed"])
 
 
 if __name__ == "__main__":

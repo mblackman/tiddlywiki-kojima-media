@@ -1261,7 +1261,7 @@ def _merge_sources(
 ) -> List[Dict[str, str]]:
     combined: List[Dict[str, str]] = []
     seen_keys = set()
-    for src in list(incoming_sources) + list(existing_sources):
+    for src in list(existing_sources) + list(incoming_sources):
         if not isinstance(src, dict):
             continue
         url = str(src.get("url") or "").strip().rstrip("/")
@@ -1289,7 +1289,8 @@ def upsert_recommendation(
     year = str(item.get("year") or "0000").strip()
     incoming_tmdb_id = str(item.get("tmdb_id") or "").strip()
     slug = make_slug(title, year)
-    review_text = str(item.get("review") or "").strip()
+    incoming_review = str(item.get("review") or "").strip()
+    review_text = incoming_review
     sources: List[Dict[str, str]] = list(item.get("sources") or [])
     recommended_at = _infer_recommended_at(title, item, sources)
     sources_json = json.dumps(sources, sort_keys=True)
@@ -1336,7 +1337,10 @@ def upsert_recommendation(
                     elif not review_text:
                         review_text = old_review
 
-                if existing["recommended_at"] and not item.get("recommended_at") and not item.get("kojima_recommended_at"):
+                if existing["recommended_at"] and (
+                    (not item.get("recommended_at") and not item.get("kojima_recommended_at"))
+                    or _is_generic_list_blurb(incoming_review)
+                ):
                     recommended_at = str(existing["recommended_at"])
                 else:
                     recommended_at = _infer_recommended_at(title, item, sources)
@@ -2311,7 +2315,6 @@ def reconcile_recent_lists(
                         "title": film["title"],
                         "year": film["year"],
                         "review": f"Named to {label}.",
-                        "recommended_at": list_date,
                         "sources": [
                             {
                                 "label": label,
@@ -2448,12 +2451,6 @@ def sync_static_files(
                         "SELECT title, tmdb_id, primary_url, sources_json FROM recommendations"
                     ).fetchall()
                     now_str = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-                    for saved_guid in seen_guids_list:
-                        if saved_guid:
-                            conn.execute(
-                                "INSERT OR IGNORE INTO scrape_log (guid, feed_url, raw_text, extracted_title, tmdb_id, scraped_at) VALUES (?, '', '', '', '', ?)",
-                                (saved_guid, now_str),
-                            )
                     for erow in existing_rows:
                         urls_to_mark = set()
                         if erow["primary_url"]:
@@ -2479,6 +2476,13 @@ def sync_static_files(
                                     "INSERT OR IGNORE INTO scrape_log (guid, feed_url, raw_text, extracted_title, tmdb_id, scraped_at) VALUES (?, ?, '', ?, ?, ?)",
                                     (f"x-status::{xm.group('id')}", u, erow["title"], erow["tmdb_id"], now_str),
                                 )
+                    for saved_guid in seen_guids_list:
+                        if saved_guid:
+                            feed_u = saved_guid if saved_guid.startswith(("http://", "https://")) else ""
+                            conn.execute(
+                                "INSERT OR IGNORE INTO scrape_log (guid, feed_url, raw_text, extracted_title, tmdb_id, scraped_at) VALUES (?, ?, '', '', '', ?)",
+                                (saved_guid, feed_u, now_str),
+                            )
                     conn.commit()
                 finally:
                     conn.close()
