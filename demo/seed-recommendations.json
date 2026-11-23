@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-22T18:02:28Z",
+  "last_updated": "2026-11-23T17:06:44Z",
   "scoring_version": "v3.0",
   "count": 278,
   "seen_guids": [
@@ -353,7 +353,35 @@
     "news-article::https://news.google.com/rss/articles/CBMimwFBVV95cUxOU1J6UFVkWWljXzNpU09yU2ktOVM4WWNVSDlNVmZSUFVuQWk2eVF1TkhjVEt4MmRIUkNuRGJRVUZyQlNQRWp3dS1TNFgtdF9hdkU3TDBUTUprcEk1MnBHbnZ0amRZUDBJZTZCMjhPR3hVUzJrUkhURE1iQzlqYTFodUdDZUh3UWdHYl82blpRamxwWUs4RHpUeV9PUdIBoAFBVV95cUxNeTU3TkFMd09CbVFfMmd1Qy1DNFFnd2R3R2dBUTdEaGNkWlUySVdVRG5hcm9CQ1VYSUVBaVd3QXhCM1c3ZG5sdXM2NTBoOEpIQUkxSjdqSEt0cGNaWEdJX1VRZFNETnlHdE1VT1hfYlVLQUVRdVAtTWo3QzlEdjBEQmRPb0hwOElGOUxwR2UxaHV3SjlxX1RDd09nWV9yYUpG?oc=5",
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b032e2a2c2d4749a6de8404926fe6ec&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-resident-evil-194251263.html&c=15488416906198986186&mkt=en-us",
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b032e2a2c2d4749a6de8404926fe6ec&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fhideo-kojima-reviews-zach-cregger-s-resident-evil%2far-AA2e4vU1&c=8445704819004306233&mkt=en-us",
-    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b032e2a2c2d4749a6de8404926fe6ec&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fclayface-gets-a-coveted-long-hideo-kojima-review-i-enjoyed-the-film%2far-AA2gAtov&c=17501838389682069864&mkt=en-us"
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b032e2a2c2d4749a6de8404926fe6ec&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fclayface-gets-a-coveted-long-hideo-kojima-review-i-enjoyed-the-film%2far-AA2gAtov&c=17501838389682069864&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0472a34c3240b887a3bfc9917fc8f4&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fclayface-gets-a-coveted-long-hideo-kojima-review-i-enjoyed-the-film%2far-AA2gAtov&c=17501838389682069864&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0472a34c3240b887a3bfc9917fc8f4&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-resident-evil-194251263.html&c=15488416906198986186&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0472a34c3240b887a3bfc9917fc8f4&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fhideo-kojima-reviews-zach-cregger-s-resident-evil%2far-AA2e4vU1&c=8445704819004306233&mkt=en-us",
+    "news-article::https://news.google.com/rss/articles/CBMiswFBVV95cUxOYTJpNmRGazRFa3JORUtFSDVzUVo4dXBBdzBzX1RwWUFCSldqQzNXNWp6YjlhV09qcEhKcE9hWXNjTTZOdFRtc0IxWFhIRWlYVmxyYW01Q2hIeTF2czJ1YmRnRXdzVnhKcFBZNWxIUWlnX3BpT2lxX1l2elZiVTduUzhBS1hfa0ZrTnpyM19jeGd5U0hNalRKYU1vQ095bUg1Ti1idHFTZ29zelhzR21KMFpMdw?oc=5",
+    "news-article::https://news.google.com/rss/articles/CBMiakFVX3lxTE5vQWNCZ2xubDV0WFRaVE5uMC02alM2bmlxOGRUb04tTHVkRWFfRHZSV3J1ZlpXbkx0QVFMOHp1ZGYyclBuTVZ3Z3hZb0c4akZNZGNZYkZ1NXhpd2diQ3dMSkNFNVpac01LNEE?oc=5",
+    "news-article::https://news.google.com/rss/articles/CBMigwFBVV95cUxPdlAxTU82NUZqQW1DR2huUF9kUExCc3pYN2RjTm1Wc0U1WElUOUNIZElEOXZBSEE1MzE1aWstUVVuQTJMdkhPa29WN3BhYVRYZnRYZG4ybllNTXFZY3hNZ0lwSjJIalFHb1NneWFGYjhwZHM2WG9iWjJ1WUJxRU91SGN4WQ?oc=5",
+    "https://letterboxd.com/kojima_hideo/list/the-favorite-films-of-metal-gear-solid-creator/",
+    "https://letterboxd.com/kojima_hideo/list/the-favorite-films-of-metal-gear-solid-creator",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2022-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2022-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/kojimas-essays-for-rolling-stone",
+    "https://letterboxd.com/kojima_hideo/list/kojimas-essays-for-rolling-stone/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2017-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2017-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/",
+    "https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima"
   ],
   "poster_checked_slugs": [
     "12-angry-men::1957",
@@ -1891,8 +1919,8 @@
       "plot": "A Prayer Before Dawn is a 2017 biographical prison drama film directed by Jean-Stéphane Sauvaire and written by Jonathan Hirschbein and Nick Saltrese. The film stars Joe Cole and is based on the book A Prayer Before Dawn: My Nightmare in Thailand's Prisons by Billy Moore.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -1900,7 +1928,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "894bd4ddec9bca677c876bca3e83fda09983896dd88ab58b43d82bd4e6e0a4bf"
+      "content_hash": "a16ae660d361f5ddcb80992233eccbbc0c734d3fba595539b406feb844edfd08"
     },
     {
       "title": "A Shot in the Dark",
@@ -1935,8 +1963,8 @@
       "plot": "Aftersun is a 2022 independent semi-autobiographical coming-of-age drama film written and directed by Charlotte Wells in her feature directorial debut. Starring Paul Mescal, Frankie Corio, and Celia Rowlson-Hall, the film is loosely based on Wells' childhood and follows an 11-year-old Scottish girl on holiday with her father at a Turkish resort on the eve of his 31st birthday.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -1944,7 +1972,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "15999f7918f43f136a1ed8e124606900127c3683da7de8de33a229c0a8da87d1"
+      "content_hash": "b35048669cc06e6617c96b4914ea953d8f020cd4930d5ffebe7e76763df03b30"
     },
     {
       "title": "Air",
@@ -1957,8 +1985,8 @@
       "plot": "Air is a 2023 American biographical sports comedy-drama film directed by Ben Affleck and written by Alex Convery. It is based on true events about the origin of Air Jordan, a basketball shoeline, of which a Nike employee seeks to strike a business deal with rookie player Michael Jordan. The film stars Matt Damon, Affleck, Jason Bateman, Chris Messina, Matthew Maher, Marlon Wayans, Jay Mohr, Julius Tennon, Chris Tucker, and Viola Davis.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -1966,7 +1994,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "af3bc2c180b249ed19e508ba450783eca0bd02f99434b052c89ab983cc9099d7"
+      "content_hash": "e112290ee29fa620bc4a94aa0771e498f14a0ac138f89b5c3689e187d16c617f"
     },
     {
       "title": "Alien",
@@ -2045,8 +2073,8 @@
       "plot": "All of Us Strangers is a 2023 British romantic fantasy film written and directed by Andrew Haigh, and based on the 1987 novel Strangers by Taichi Yamada. It stars Andrew Scott, Paul Mescal, Jamie Bell, and Claire Foy. The second feature adaptation of the novel, after the Japanese film The Discarnates (1988), the film follows a lonely screenwriter who develops an intimate relationship with his mysterious neighbour while revisiting memories from the past.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2054,7 +2082,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "40ee0e176633b4cbd4cd994c28e993905c686ca3eea0e73d452473f5b4bb0b94"
+      "content_hash": "a2302ab07483ad3b3d4f09bfe5c1a88bc9f5a3653866d391e1c29a07a2dcfaa5"
     },
     {
       "title": "All the Long Nights",
@@ -2111,8 +2139,8 @@
       "plot": "An Elephant Sitting Still is a 2018 Chinese drama film written, directed and edited by Hu Bo. The first and only feature film by the novelist-turned-director Hu, who died by suicide soon after finishing his film on 12 October 2017 at the age of 29, it is based on a story with the same title from his 2017 novel Huge Crack, about four people who travel to a northern Chinese city to see the eponymous elephant. It made its world premiere in the Forum section of the 68th Berlin International Film Festival. The film has won acclaim from established directors such as Béla Tarr, Wang Bing, Ang Lee, and Gus Van Sant.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2120,7 +2148,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "d10dc022ea3bdb6ec3c8540eb5ed81a26a574b84b7b6f6a3c74ae5a5dac0694b"
+      "content_hash": "e56081c436f7be2966d339c4ad2986c7692b921cb0823ff9b7da7b097f88992f"
     },
     {
       "title": "Anatomy of a Fall",
@@ -2133,8 +2161,8 @@
       "plot": "Anatomy of a Fall is a 2023 French legal drama film directed by Justine Triet from a screenplay she co-wrote with Arthur Harari. It stars Sandra Hüller as a writer trying to prove her innocence in her husband's death. Appearing in supporting roles are Swann Arlaud, Milo Machado-Graner, Antoine Reinartz, Samuel Theis, Jehnny Beth, Saadia Bentaïeb, Camille Rutherford, Anne Rotger, and Sophie Fillières.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2142,7 +2170,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "2da52aa291b86aca5ed6c4fc972e8627476aa5f560a86ee9398f411db1c01d12"
+      "content_hash": "5ccbea04de7f7180b5ef5902d3697eb5d278cbb63f82dfad15de37fb67cfcf49"
     },
     {
       "title": "Annihilation",
@@ -2155,8 +2183,8 @@
       "plot": "Annihilation is a 2018 cosmic horror film written and directed by Alex Garland, loosely based on the 2014 novel by Jeff VanderMeer. It stars Natalie Portman, Jennifer Jason Leigh, Gina Rodriguez, Tessa Thompson, Tuva Novotny, and Oscar Isaac. The story follows a group of scientists who enter the Shimmer, a mysterious quarantined zone of mutating plants and animals caused by an alien presence. The movie is a co-production between the United Kingdom and the United States.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2164,7 +2192,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "21271bfdb3d7e03b08d482e1f04bdec522935ebca881b559d09419ece6a838c4"
+      "content_hash": "a9c0fef7dfcc808ab458f2df8def9aa511c51b765db448bd4804f955c0a37180"
     },
     {
       "title": "Avatar: Fire and Ash",
@@ -2247,8 +2275,8 @@
       "plot": "Bad Genius, known in Thai as Chalard Games Goeng (ฉลาดเกมส์โกง), is a 2017 Thai heist thriller film produced by Jor Kwang Films and distributed by GDH 559. Directed by Nattawut Poonpiriya and co-written by Nattawut, Tanida Hantaweewatana, and Vasudhorn Piyaromna, it stars Chutimon Chuengcharoensukying in her feature film debut as Lynn, a straight-A student who devises an exams-cheating scheme which eventually rises to international levels.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2256,7 +2284,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "85ed1e76e458fb1b68b928aea7debcc65c6a69e8b89e301483fa8966d10d1f6f"
+      "content_hash": "0426c94a3581559851c48c520094caefb4226f94659b6b007bc93140e5f18f64"
     },
     {
       "title": "Bad Lands",
@@ -2335,8 +2363,8 @@
       "plot": "Blade Runner 2049 is a 2017 American science fiction thriller film directed by Denis Villeneuve from a screenplay by Hampton Fancher and Michael Green, based on a story by Fancher. A sequel to Blade Runner (1982), the film stars Ryan Gosling and Harrison Ford, with Ana de Armas, Sylvia Hoeks, Robin Wright, Mackenzie Davis, Dave Bautista, and Jared Leto in supporting roles. Ford and Edward James Olmos reprise their roles from the previous film as Rick Deckard and Gaff, respectively. Gosling plays K, a \"blade runner\" who uncovers a secret that threatens to destabilize society and the course of civilization.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2017 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top 5 Films of 2017 list.",
+      "kojima_word_count": 10,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2344,7 +2372,7 @@
       "kojima_primary_source": "Top 5 Films of 2017 (X)",
       "kojima_recommended_at": "2017-12-31",
       "kojima_sources_json": "[{\"label\": \"Top 5 Films of 2017 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2017-12-31\"}, {\"label\": \"Best Movies 2017 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2017-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "8b5c4c678122b9d44aa5b8f8e6166847c92ebbc785157c0d6428523bc5ab7347"
+      "content_hash": "e8d45aaf76a03c9bc1214789ba51f5259a7b8bc5dce246ebfa17dcb5c26d7628"
     },
     {
       "title": "Border",
@@ -2357,8 +2385,8 @@
       "plot": "Border is a 2018 Swedish fantasy film directed by Ali Abbasi with a screenplay by Abbasi, Isabella Eklöf and John Ajvide Lindqvist based on the short story of the same name by Lindqvist from his anthology Let the Old Dreams Die. It won the Un Certain Regard award at the 2018 Cannes Film Festival, and was selected as the Swedish entry for the Best Foreign Language Film at the 91st Academy Awards but was not nominated. However, it was nominated for Best Makeup and Hairstyling.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2366,7 +2394,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "37dbdac288caab8ae87b683544409864d4f3221e32976b320fcb2600ffc10431"
+      "content_hash": "b34f13cdfef854c3df77aab83268b833fe94ea891e42eb82fbfa3da347df43b6"
     },
     {
       "title": "Brigsby Bear",
@@ -2379,8 +2407,8 @@
       "plot": "Brigsby Bear is a 2017 American comedy-drama film directed by Dave McCary in his feature directorial debut, written by Kevin Costello and Kyle Mooney, and starring Mooney, Claire Danes, Mark Hamill, Greg Kinnear, Andy Samberg, Matt Walsh, and Michaela Watkins. It tells the story of a man abducted as a baby and raised in isolation in a bunker where he obsessed over a children's television program centered on a character named Brigsby Bear; after being rescued by the authorities and realizing that the show had been made for him only by one of his captors, his fascination leads him to finish the storyline himself.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2388,7 +2416,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "f8a0e51cf7e757216cacacab537b2685c5a7861466fedba7b35090af761b8525"
+      "content_hash": "6e50af3d64d7f88bb8d30531a815e5d8975e81b69a13eece5c8d5432bf690eae"
     },
     {
       "title": "Butch Cassidy and the Sundance Kid",
@@ -2423,8 +2451,8 @@
       "plot": "Call Me by Your Name is a 2017 romantic drama film directed by Luca Guadagnino. Its screenplay, by James Ivory, who also co-produced, is based on the 2007 novel by André Aciman. The film is the final installment in Guadagnino's thematic \"Desire\" trilogy, after I Am Love (2009) and A Bigger Splash (2015). Set in northern Italy in 1983, Call Me by Your Name chronicles the romantic relationship between 17-year-old Elio Perlman and Oliver, a 24-year-old graduate-student assistant to Elio's father Samuel, an archaeology professor. The film also stars Amira Casar, Esther Garrel, and Victoire Du Bois.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2432,7 +2460,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "93a0824519b9716ced9719ca39e5ccdb377e82a4190e4ac077df41f30f024a66"
+      "content_hash": "ca48e0f85abfbe159139d3716cd19cb72242778472b65c992f60e85eb267ca17"
     },
     {
       "title": "Capernaum",
@@ -2445,8 +2473,8 @@
       "plot": "Capernaum is a 2018 Lebanese drama film directed by Nadine Labaki and produced by Khaled Mouzanar. The screenplay was written by Labaki, Jihad Hojaily and Michelle Keserwany from a story by Labaki, Hojaily, Keserwany, Georges Khabbaz and Khaled Mouzanar. The film stars Syrian refugee child actor Zain Al Rafeea as Zain El Hajj, a 12-year-old living in the slums of Beirut. Capernaum is told in flashback format, focusing on Zain's life, including his encounter with an Ethiopian immigrant Rahil and her infant son Yonas, and leading up to his attempt to sue his parents for child neglect.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2454,7 +2482,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "91787c08ad88af2dd636a82f70d90c6615fa52a266e752e7e0c3c84d97299bd3"
+      "content_hash": "b145b854bc4e67a9e63fae7a092d7ebb54460f81ff03aed4c22aade27ed77feb"
     },
     {
       "title": "Captain America: Civil War",
@@ -2467,8 +2495,8 @@
       "plot": "Captain America: Civil War is a 2016 American superhero film based on the Marvel Comics character Captain America. Produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures, it is the sequel to Captain America: The First Avenger (2011) and Captain America: The Winter Soldier (2014), and the 13th film in the Marvel Cinematic Universe (MCU). The film was directed by Anthony and Joe Russo from a screenplay by the writing team of Christopher Markus and Stephen McFeely, and stars Chris Evans as Steve Rogers / Captain America alongside an ensemble cast including Robert Downey Jr., Scarlett Johansson, Sebastian Stan, Anthony Mackie, Don Cheadle, Jeremy Renner, Chadwick Boseman, Paul Bettany, Elizabeth Olsen, Paul Rudd, Emily VanCamp, Marisa Tomei, Tom Holland, Frank Grillo, Martin Freeman, William Hurt, and Daniel Brühl. In Captain America: Civil War, disagreement over international oversight of the Avengers fractures the team into two opposing factions—one led by Steve Rogers and the other by Tony Stark (Downey).",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2476,7 +2504,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "df8eef839b132b27ef87a457282fa4a99d3789f00832680262d143616d35e9c5"
+      "content_hash": "98e75d88db66657cce090392996173023101763a88d576c7c02f5e42f433596e"
     },
     {
       "title": "Cartel Land",
@@ -2489,8 +2517,8 @@
       "plot": "Cartel Land is a 2015 American documentary film directed by Matthew Heineman about the Mexican drug war, especially vigilante groups fighting Mexican drug cartels. The film focuses on Tim \"Nailer\" Foley, the leader of Arizona Border Recon, and Dr. José Mireles, a Michoacán-based physician who leads the Autodefensas. The film was nominated for the Academy Award for Best Documentary Feature in 2016.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2498,7 +2526,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "e65eb8a7ea6a234287f58296fd65b2123f0053d6970d99799014d76d1fc7f019"
+      "content_hash": "ace2defa870615e66f357a5b34c4c0bd6ddb3ea8d67bd4e8d6349fad2180b6c0"
     },
     {
       "title": "Casablanca",
@@ -2555,8 +2583,8 @@
       "plot": "City of Ghosts is a 2017 Arabic-language American documentary film about the Syrian media activist group Raqqa Is Being Slaughtered Silently as they face the realities of life undercover, on the run, and in exile after their homeland is taken over by ISIS in 2014. The film was directed by Oscar-nominated and Emmy Award-winning filmmaker Matthew Heineman.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2564,7 +2592,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "86daaed930da106cdf998809cb7dca3db2f549474de4b54a94ef344e527ce3c4"
+      "content_hash": "bd807cc01027d3b803005909a60a6722f8b981bdc212dde705c42bd01a05fec0"
     },
     {
       "title": "Close",
@@ -2577,8 +2605,8 @@
       "plot": "Close is a 2022 coming-of-age drama film directed by Lukas Dhont, co-written by Dhont and Angelo Tijssens, reteaming after their first feature film Girl (2018). Starring Eden Dambrine, Gustav De Waele, Émilie Dequenne and Léa Drucker, it follows two teenage boys whose close friendship is thrown into disarray when their schoolmates notice their intimacy, causing a rift between them.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2586,7 +2614,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "21f46096a36d38a3f628f02a2302b9eabc2b07d807b7736b9c5ee2eeb2bc80ed"
+      "content_hash": "bc92e2903fa223141d6cc480f9cf399da4b5d446cf907e03dfdf8c207487ea71"
     },
     {
       "title": "Coco",
@@ -2599,8 +2627,8 @@
       "plot": "Coco is a 2017 American animated musical fantasy film directed by Lee Unkrich, and written by Adrian Molina and Matthew Aldrich. Produced by Pixar Animation Studios for Walt Disney Pictures, the film stars the voices of Anthony Gonzalez, Gael García Bernal, Benjamin Bratt, Alanna Ubach, Renée Victor, Ana Ofelia Murguía and Edward James Olmos. It follows a 12-year-old boy in Mexico named Miguel (Gonzalez) who is accidentally transported to the Land of the Dead, where he seeks the help of his deceased musician great-great-grandfather to return him to his family and reverse their ban on music.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2608,7 +2636,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "9056465dab59ee95f9d2372536f73ed63e4dca5eb37730a933b75838f4b93f12"
+      "content_hash": "a0dea9956a19f699f2e14daf9081df822660ae0ea02c466da078123c5fade5c0"
     },
     {
       "title": "Cold War",
@@ -2621,8 +2649,8 @@
       "plot": "Cold War is a 2018 historical romantic drama film directed by Paweł Pawlikowski, who co-wrote the screenplay with Janusz Głowacki and Piotr Borkowski. It is an international co-production by producers in Poland, France and the United Kingdom. Set in Poland and France during the Cold War from the late 1940s until the 1960s, the story follows a musical director who discovers a young singer, exploring their subsequent love story over the years. The film, which was loosely inspired by the lives of Pawlikowski's parents, also features Borys Szyc, Agata Kulesza, Cédric Kahn and Jeanne Balibar in supporting roles.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2630,7 +2658,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "9c3e0e2f1d141cc7b5ba7b0ffc79c2f70de52f7be9ed3a7b9410fb18f92a7a2c"
+      "content_hash": "b46c11494c74e133011cabbe679ebaeb3eeaa1d06ae7ba987cc8593425db5aeb"
     },
     {
       "title": "Conclave",
@@ -2757,8 +2785,8 @@
       "plot": "Dangal is a 2016 Indian Hindi-language biographical sports drama film directed by Nitesh Tiwari and produced by Aamir Khan, Kiran Rao, and Siddharth Roy Kapur under Aamir Khan Productions and The Walt Disney Company India. The film stars Khan as Mahavir Singh Phogat, a pehlwani amateur wrestler who trains his daughters Geeta Phogat and Babita Kumari to become India's first world-class female wrestlers. Fatima Sana Shaikh and Sanya Malhotra portray the adult versions of the two Phogat sisters, Zaira Wasim and Suhani Bhatnagar their younger versions, Sakshi Tanwar their mother, and Aparshakti Khurana adult version of their cousin, Ritvik Sahore his younger version, all of them except Shaikh, Tanwar and Sahore in their film debuts.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2766,7 +2794,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "156205e2029646a4d676f7b5a7faf9875409150e14077fe36b223b0c3c368155"
+      "content_hash": "f6ba7456ebfb0ee3b416a3285a16d4070e20d42ff92d66a4b804365915cb86ea"
     },
     {
       "title": "Deadpool",
@@ -2779,8 +2807,8 @@
       "plot": "Deadpool is a 2016 American superhero film based on the Marvel Comics character Wade Wilson / Deadpool. Directed by Tim Miller, in his feature directorial debut, and written by Rhett Reese and Paul Wernick, it is a spin-off of the X-Men film series and its overall eighth installment. Ryan Reynolds stars as the titular character, alongside Morena Baccarin, Ed Skrein, T.J. Miller, Gina Carano, and Brianna Hildebrand. In the film, Wade Wilson hunts the man responsible for giving him mutant abilities and a scarred physical appearance, becoming the antihero Deadpool.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2788,7 +2816,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "dd437c17ed761d5384f4e650149dd924d574b2a9f3a8a870edc415696bb4bcd5"
+      "content_hash": "8c7d9d38cbe7233bfcbfa560fade8a928e8dbfded1c329c2e148424711fdea86"
     },
     {
       "title": "Digger",
@@ -2911,8 +2939,8 @@
       "plot": "Ex Machina is a 2014 science fiction film, written and directed by Alex Garland in his directorial debut. It stars Domhnall Gleeson, Alicia Vikander, and Oscar Isaac. It follows a programmer who is invited by his CEO to administer the Turing test to an intelligent female humanoid robot.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2920,10 +2948,10 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "ed6cc8e9619999585457bc4e01ebb73b20fbace8b98cf281da5b6fe16ec6914b"
+      "content_hash": "895d134ae47cea87735f82758b03b5788d884d90cf617c04ed66e70c643573f5"
     },
     {
-      "title": "FAKE",
+      "title": "Fake",
       "year": "2016",
       "tmdb_id": "",
       "director": "Tatsuya Mori",
@@ -2933,8 +2961,8 @@
       "plot": "",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2942,7 +2970,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "d9fc6203dc01aa4712e9d234d843546f4f04fe6af00285eb18476f747e99c784"
+      "content_hash": "66e430d19b03eb1f1853a3c5cdc539dbac4f83c5c79e537e7d8ba3fd990abaa0"
     },
     {
       "title": "Final Destination Bloodlines",
@@ -2977,8 +3005,8 @@
       "plot": "Fires on the Plain  is a 2014 Japanese war film written, produced, directed, edited, co-photographed by and starring Shinya Tsukamoto. The film is based on the 1951 anti-war novel Fires on the Plain, which was a semi-autobiographical work loosely based on author Shōhei Ōoka's experience in World War II. The novel was previously adapted in the 1959 film Fires on the Plain by Kon Ichikawa. The film premiered at the 71st Venice International Film Festival in 2014, and was released to the wider Japanese box office on 25 July 2015.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -2986,7 +3014,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "0257268f2baa8397525c30bacc54f651763784986784657e771346471580eeb3"
+      "content_hash": "ebcdc48efd78156fd5386b23fd594a2c37948a669e865f899f2ecb74bb72d1d4"
     },
     {
       "title": "Flow",
@@ -3157,8 +3185,8 @@
       "plot": "",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3166,7 +3194,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "9fc6c6e7812cd3d14bd5c8a4040193ce59ef359e34516f8d1f92f407d96b7d74"
+      "content_hash": "99b98ee6b155c79059623328848f881c8e8c1f7af5a8c5763f63a9e75e66e42f"
     },
     {
       "title": "Guillermo del Toro's Pinocchio",
@@ -3245,8 +3273,8 @@
       "plot": "Hereditary is a 2018 American supernatural psychological horror film written and directed by Ari Aster in his feature directorial debut. Starring Toni Collette, Alex Wolff, Milly Shapiro, Ann Dowd, and Gabriel Byrne, the film follows Annie Graham (Collette), a grieving miniature artist who uncovers disturbing secrets about her recently deceased mother. She is subsequently tormented by sinister paranormal occurrences, along with her husband Steve (Byrne) and their children, Peter (Wolff) and Charlie (Shapiro).",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3254,7 +3282,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "97e434dc283c1ce5584c0f5f952c3305b07723fd2d099fcf5cf5fb78a57fc5bf"
+      "content_hash": "2089e1b6ae1d2a6b8e605d31ec878b5304f3eaf5ce68f7754a9e22cefb543968"
     },
     {
       "title": "Heretic",
@@ -3267,8 +3295,8 @@
       "plot": "Heretic is a 2024 American psychological horror film written and directed by Scott Beck and Bryan Woods. It follows two young Mormon missionaries who visit the home of an eccentric man after he expresses interest in Mormonism, only for his true intentions to quickly become clear.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2025 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Foreign Theatrical Releases of 2025 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3276,7 +3304,7 @@
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
       "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446\", \"date\": \"2026-01-06\"}, {\"label\": \"Best Movies 2025 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/\", \"date\": \"2026-01-07\"}]",
-      "content_hash": "af82c3249cbd384bb7cdcd6d01c0cfa16c8a0253825bbbc9e0705a37f7554481"
+      "content_hash": "839731ed37c6b70264e7bd9b4f155438f27ab1415e801e4dbfbcdfa5f8fbb2a7"
     },
     {
       "title": "Hit Man",
@@ -3289,8 +3317,8 @@
       "plot": "Hit Man is a 2023 American romantic crime comedy film produced and directed by Richard Linklater, who co-wrote the screenplay with Glen Powell. The film stars Powell, Adria Arjona, Austin Amelio, Retta, and Sanjay Rao. It follows an undercover New Orleans police contractor who poses as a reliable hitman as he tries to save a woman in need. The basic premise was based on the true story of a college professor who worked for the Houston police in the late 1980s and 1990s as a fake hitman, as described in a 2001 magazine article by Skip Hollandsworth.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3298,7 +3326,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "eb6609362638315d6368857c4aed83e048b57e25d4ba83a3af7ffce909e9af86"
+      "content_hash": "9e783a75712bd01e1a10891666e890c66171c27364a4a959155e90fb2db8ffe6"
     },
     {
       "title": "In the Fade",
@@ -3311,8 +3339,8 @@
       "plot": "In the Fade is a 2017 German neo-noir drama thriller film, written and directed by Fatih Akin. It stars Diane Kruger as a German woman whose Turkish-Kurdish husband and son are killed in a terrorist attack perpetrated by neo-Nazis. It was selected to compete for the Palme d'Or in the main competition section at the 2017 Cannes Film Festival, where Kruger won the Best Actress award. It was selected as the German entry for the Best Foreign Language Film at the 90th Academy Awards, making the December shortlist, but it was ultimately not nominated. It did, however, win the Golden Globe Award for Best Foreign Language Film.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3320,7 +3348,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "865efe0e1f096cdf5852ca73714f148689128673f3ac1cc37b4de69762de5290"
+      "content_hash": "e30feb333068f22fc7dec8b2883061599c31d5db54e5483bd88f6d537999661b"
     },
     {
       "title": "Jason and the Argonauts",
@@ -3355,8 +3383,8 @@
       "plot": "Joker is a 2019 American psychological thriller film directed by Todd Phillips from a screenplay he co-wrote with Scott Silver. Based on DC Comics characters, it stars Joaquin Phoenix and provides an alternative origin story for the Joker. The film follows Arthur Fleck, a mentally ill party clown and aspiring stand-up comedian whose descent into moral nihilism inspires a violent countercultural revolution against the wealthy in a decaying Gotham City. Robert De Niro, Zazie Beetz, and Frances Conroy appear in supporting roles.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3364,7 +3392,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "f90c4d7c62c5842f79841eaba1c337186671955de18006af9f4a9ebfe26990fa"
+      "content_hash": "6793d49b92b77df3bb50e46ec10e0c63029ac8f7b3ea01eaa33652a67ec0b67e"
     },
     {
       "title": "Juror #2",
@@ -3377,8 +3405,8 @@
       "plot": "Juror #2 is a 2024 American legal thriller film co-produced and directed by Clint Eastwood and written by Jonathan Abrams. The film stars Nicholas Hoult, Toni Collette, J. K. Simmons, and Kiefer Sutherland. In the film, a man serving on the jury of a high-profile murder trial realizes that he may be responsible for the victim's death.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3386,7 +3414,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "e134b2ad52692f33731e252362b9537013ac72d36d929a6dec363b285a812b2c"
+      "content_hash": "b9b0bffd00f7e80ba9974c726eb930ee86da0ecb3dbcee19d468e4fe52060605"
     },
     {
       "title": "KPop Demon Hunters",
@@ -3426,8 +3454,8 @@
       "plot": "Killing  is a 2018 Japanese drama film directed by Shinya Tsukamoto. It was selected to be screened in the main competition section of the 75th Venice International Film Festival.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3435,7 +3463,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "05d705acbbf66f2340b9be9dcfef509fee68cf22de6a2ac53d85400b6cc61a98"
+      "content_hash": "b01e3b4d49fa8a6db773b7e31c4ab42398b2b3edbb96e91976170c8aaf6c8d34"
     },
     {
       "title": "Kingsman: The Secret Service",
@@ -3448,8 +3476,8 @@
       "plot": "Kingsman: The Secret Service is a 2014 spy action comedy film directed by Matthew Vaughn from a screenplay by Vaughn and Jane Goldman. Based on The Secret Service comic series, it is the first instalment in the Kingsman franchise and stars Colin Firth, Samuel L. Jackson, Mark Strong, Taron Egerton and Michael Caine. In the film, Gary \"Eggsy\" Unwin (Egerton) is recruited by Harry Hart (Firth) into Kingsman, a secret spy organisation, while they pursue the eco-terrorist Richmond Valentine (Jackson).",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3457,7 +3485,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "57155d276884a842a83f8438066d7196386b4a25cbff6f8821d2a664f6d681e0"
+      "content_hash": "ca0f1783154e9270851827890f7db1b84a7cded004620d61ed161bcc1ab59549"
     },
     {
       "title": "Kokuho",
@@ -3514,8 +3542,8 @@
       "plot": "La chimera is a 2023 comedy-drama film written and directed by Alice Rohrwacher. It is set in Italy in the 1980s in a small town on the Tyrrhenian Sea and stars Josh O'Connor as a British archaeologist-turned-grave robber with a gift for divining the locations of Etruscan tombs. Isabella Rossellini, Alba Rohrwacher, Carol Duarte, and Vincenzo Nemolato appear in supporting roles.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3523,7 +3551,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "17f189b219f7c79e86344d1afdfb142c0f00087b66241c5e3549195834aee48b"
+      "content_hash": "a82bca27f21ec51344bd4fec9c1577ffc9cc43d430d5fbf1298e7d1b2eea1f7f"
     },
     {
       "title": "La La Land",
@@ -3580,8 +3608,8 @@
       "plot": "Locke is a 2013 psychological drama road film written and directed by Steven Knight. It stars Tom Hardy in the title role as he drives while conducting a series of phone conversations with characters voiced by Olivia Colman, Ruth Wilson, Andrew Scott, Ben Daniels, Tom Holland and Bill Milner.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3589,7 +3617,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "fda9151e4964aea692c360d305ea0a7e9622cf13ef85152059cef7857580fa9c"
+      "content_hash": "5fe08348b7708fb0e7eb799252b14321ff6836641fc70041e0285c0505500d3c"
     },
     {
       "title": "Logan",
@@ -3602,8 +3630,8 @@
       "plot": "Logan is a 2017 American superhero film starring Hugh Jackman as the titular character. Based on the Marvel Comics character Wolverine, the film was directed by James Mangold, who co-wrote the screenplay with Michael Green and Scott Frank from a story by Mangold. It is the tenth installment in the X-Men film series, and the third Wolverine solo film following X-Men Origins: Wolverine (2009) and The Wolverine (2013). A spin-off/sequel to X-Men: Days of Future Past (2014). The film takes inspiration from the \"Old Man Logan\" comics storyline by Mark Millar and Steve McNiven and follows an aged Wolverine and an extremely ill Charles Xavier who must defend a young mutant named Laura from the Reavers led by Donald Pierce and Zander Rice. The film also stars Patrick Stewart, Richard E. Grant, Boyd Holbrook, and Stephen Merchant, with Dafne Keen making her film debut as Laura.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2017 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top 5 Films of 2017 list.",
+      "kojima_word_count": 10,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3611,7 +3639,7 @@
       "kojima_primary_source": "Top 5 Films of 2017 (X)",
       "kojima_recommended_at": "2017-12-31",
       "kojima_sources_json": "[{\"label\": \"Top 5 Films of 2017 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2017-12-31\"}, {\"label\": \"Kojima's Essays for Rolling Stone\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/kojimas-essays-for-rolling-stone/\", \"date\": \"2023-12-12\"}, {\"label\": \"Best Movies 2017 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2017-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "3ad338a94a092e45b7d7e69526058c8ce6e5c3de013fbf28aa1b5a637c51ddec"
+      "content_hash": "b559dd379f1053b94b85fde69ea37692b188613b9a538b173241455d4c22848f"
     },
     {
       "title": "Look Back",
@@ -3672,8 +3700,8 @@
       "plot": "Ma' Rosa is a 2016 Filipino drama film directed by Brillante Mendoza and written by Troy Espiritu. Starring Jaclyn Jose in the title role, the story follows a woman who was arrested with her husband for selling illegal drugs, while their children decided to bail them out of incompetent cops.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2017 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top 5 Films of 2017 list.",
+      "kojima_word_count": 10,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3681,7 +3709,7 @@
       "kojima_primary_source": "Top 5 Films of 2017 (X)",
       "kojima_recommended_at": "2017-12-31",
       "kojima_sources_json": "[{\"label\": \"Top 5 Films of 2017 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2017-12-31\"}, {\"label\": \"Best Movies 2017 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2017-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "c9554a754ddb035d25f278611c365409fba2dbb3973e9c19861a70e18226a2df"
+      "content_hash": "d1e10f03967ca7602bfacb5d80e9856438396f3d67accf62a0e92295c0a1754c"
     },
     {
       "title": "Mad Max: Fury Road",
@@ -3694,8 +3722,8 @@
       "plot": "Mad Max: Fury Road is a 2015 Australian post-apocalyptic action film co-written, co-produced and directed by George Miller, who collaborated with Brendan McCarthy and Nico Lathouris on the screenplay. The fourth instalment in the Mad Max franchise, it was produced by Village Roadshow Pictures and Kennedy Miller Mitchell, and distributed by Roadshow Entertainment in Australia and by Warner Bros. Pictures internationally. The film stars Tom Hardy and Charlize Theron, with Nicholas Hoult, Hugh Keays-Byrne, Josh Helman, Nathan Jones, Rosie Huntington-Whiteley, Riley Keough, Zoë Kravitz, Abbey Lee, and Courtney Eaton. Set in a post-apocalyptic desert wasteland where petrol and water are scarce commodities, it follows Max Rockatansky (Hardy), who joins forces with Imperator Furiosa (Theron) against warlord Immortan Joe (Keays-Byrne) and his army, leading to a lengthy road battle.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3703,7 +3731,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Kojima's Essays for Rolling Stone\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/kojimas-essays-for-rolling-stone/\", \"date\": \"2023-12-12\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "ddb535a236448ff928bc525646dceae4876f787362a8b78d9e83907736fec200"
+      "content_hash": "56b05b5e421bc7c9a22d4be7c523c4577704eccff277a56143e9c43614a82040"
     },
     {
       "title": "Magical Girl",
@@ -3716,8 +3744,8 @@
       "plot": "Magical Girl is a 2014 neo-noir film written and directed by Carlos Vermut, and starring Bárbara Lennie, Luis Bermejo and José Sacristán. The plot tracks the events triggered by the decision of a father (Bermejo) to fulfill the secret wish of his dying 12-year-old otaku daughter (Pollán).",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3725,7 +3753,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "01992e7780d1802ba5d12d937c9de7b31ec2a2c67800812c639f7ed2934e667b"
+      "content_hash": "68033135a0d52270fe4e4101c7efa9b1ff992040ff84fed16abf23557fd2e935"
     },
     {
       "title": "Mandy",
@@ -3738,8 +3766,8 @@
       "plot": "Mandy is a 2018 surrealist action horror film directed by Panos Cosmatos, from a screenplay he co-wrote with Aaron Stewart-Ahn, and based on a story by Cosmatos. A co-production between Belgium and the United States, it stars Nicolas Cage, Andrea Riseborough, Linus Roache, Ned Dennehy, Olwen Fouéré, Richard Brake, and Bill Duke. The film follows Red Miller (Cage), a lumberjack seeking vengeance against cult leader Jeremiah Sand (Roache), as well as his devout followers, for the murder of the eponymous character and Red's girlfriend, Mandy Bloom (Riseborough).",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3747,7 +3775,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "85d635b4ff93923518b16a2c92e1cf246822cbaf28b7854f608d7efbc6713f4f"
+      "content_hash": "a7961d7943b219d12b7c6613684921ac30c35e1fc90d808432515697b17b53b8"
     },
     {
       "title": "Marriage Story",
@@ -3760,8 +3788,8 @@
       "plot": "Marriage Story is a 2019 dramedy film written and directed by Noah Baumbach, who also produced the film with David Heyman. It stars Scarlett Johansson and Adam Driver as a couple going through a bi-coastal divorce complicated by custody issues surrounding their son. Laura Dern, Alan Alda, Ray Liotta, Julie Hagerty, and Merritt Wever appear in supporting roles.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3769,10 +3797,10 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "89831008c2a40fff684b56b7a8f03380212a2547ee0be884cecccc8b3cc5eed3"
+      "content_hash": "d70e4bfaaeb110a90e9a7265eb8bd4c1b19856abf1142b5092e717b3621f02e7"
     },
     {
-      "title": "Mission: Impossible – Fallout",
+      "title": "Mission: Impossible - Fallout",
       "year": "2018",
       "tmdb_id": "",
       "director": "Christopher McQuarrie",
@@ -3782,8 +3810,8 @@
       "plot": "Mission: Impossible – Fallout is a 2018 American action spy film written and directed by Christopher McQuarrie. It is the sequel to Mission: Impossible – Rogue Nation (2015) and the sixth installment in the Mission: Impossible film series. The ensemble cast includes Tom Cruise, Henry Cavill, Ving Rhames, Simon Pegg, Rebecca Ferguson, Sean Harris, Angela Bassett, Vanessa Kirby, Michelle Monaghan, and Alec Baldwin. Set two years after the events of Rogue Nation, Fallout follows Impossible Missions Force agent Ethan Hunt (Cruise) and his team in their efforts to prevent a nuclear attack by terrorist Solomon Lane (Harris) and the mysterious extremist John Lark.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3791,7 +3819,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "dfb9088da135e20730514cfea36a771f3b978c931c66cd08a3bde8e93117a1cc"
+      "content_hash": "957aec0f76e29cc7c643c98c295dfb557fcc649b482a5a3ad8f1f3e45ee49868"
     },
     {
       "title": "Mission: Impossible – The Final Reckoning",
@@ -3814,6 +3842,28 @@
       "kojima_recommended_at": "2025-05-25",
       "kojima_sources_json": "[{\"label\": \"X (@HIDEO_KOJIMA_EN)\", \"type\": \"x_review\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/1926519350934061308\", \"date\": \"2025-05-25\"}]",
       "content_hash": "3310bc6d1f93c7b340fef4b341c71cf974c7e02075907b27d025b58e37492215"
+    },
+    {
+      "title": "Mother!",
+      "year": "2017",
+      "tmdb_id": "",
+      "director": "Darren Aronofsky",
+      "runtime": "",
+      "genres": [],
+      "poster": "https://upload.wikimedia.org/wikipedia/en/9/94/Mother%212017.jpg",
+      "plot": "Mother! is a 2017 American psychological horror film written and directed by Darren Aronofsky. It stars Jennifer Lawrence, Javier Bardem, Ed Harris, Michelle Pfeiffer, Domhnall Gleeson, Brian Gleeson, and Kristen Wiig. Its plot follows a young woman whose tranquil life with her husband at their country home is disrupted by the arrival of a mysterious couple, leading to a series of increasingly chaotic and destructive events.",
+      "kojima_score": 4,
+      "kojima_tier": "Loved",
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
+      "kojima_is_dismissal": "no",
+      "kojima_sentiment_summary": "Year-end top list selection.",
+      "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
+      "kojima_primary_url": "",
+      "kojima_primary_source": "Favorite Films of 2018 (X)",
+      "kojima_recommended_at": "2018-12-31",
+      "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
+      "content_hash": "ccfadd2a1f5f73a46fafdf48473ffd9de2a41aeb21f8645a3ff5a4694f239834"
     },
     {
       "title": "My Sunshine",
@@ -3848,8 +3898,8 @@
       "plot": "Nightcrawler is a 2014 American satirical psychological thriller film written and directed by Dan Gilroy in his directorial debut. It stars Jake Gyllenhaal as an unhinged stringer who seeks out violent and morbid events late at night in Los Angeles so he can film them and sell the exclusive footage to a local television news station. The supporting cast includes Rene Russo, Riz Ahmed, and Bill Paxton.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3857,7 +3907,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "98fbcea322e0bd0addd4d9e99da3ba95d573a56667c7a8d05d281c5b749feb86"
+      "content_hash": "f9da2182d6b226d75806adc81265848d5e1222ec688dec0d6b892939b1790ece"
     },
     {
       "title": "Nikita",
@@ -3936,8 +3986,8 @@
       "plot": "One Cut of the Dead  is a 2017 Japanese independent satirical zombie comedy film written and directed by Shin'ichirō Ueda. Based primarily on the stage play Ghost in the Box! by Ryoichi Wada, it follows a film crew who are tasked with making One Cut of the Dead, a zombie horror film for live television that must be shot in a single take; the film initially depicts One Cut of the Dead as a film within the film, then goes back in time to show the origins and production of the project from the perspective of the cast and crew.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3945,7 +3995,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "1c2bea3f9cd0174e5a830356dc626125e97c6a59c1d5f4aa06b55c7f3b3569dc"
+      "content_hash": "d6c1dd89a73b8b70827c717466663aa8019ee7389dcd9e6e131e91048569cff3"
     },
     {
       "title": "One Million Years B.C.",
@@ -3980,8 +4030,8 @@
       "plot": "Paddington 2 is a 2017 live-action animated comedy film directed by Paul King from a screenplay written by King and Simon Farnaby. Based on the stories of Paddington Bear created by Michael Bond, it is the sequel to Paddington (2014) and the second installment in the Paddington film series. It is a British-French-Luxembourgish co-production and stars Ben Whishaw as the voice of Paddington, with Hugh Bonneville, Sally Hawkins, Brendan Gleeson, Julie Walters, Jim Broadbent, Peter Capaldi and Hugh Grant in live-action roles. The film follows Paddington as he is framed and imprisoned for a burglary he did not commit. To free him, the Brown family must find the real culprit and prove his innocence.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -3989,7 +4039,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "831ce7d60ce1f533b08b5b525728d28045fddf15a16626fb9ea6f4eb10de217e"
+      "content_hash": "68ca128047f078bf4897fb1e9b5a531476b43848caa24b6d16185caf0ae9f3b2"
     },
     {
       "title": "Papillon",
@@ -4024,8 +4074,8 @@
       "plot": "Parasite (Korean: 기생충) is a 2019 South Korean black comedy thriller film directed by Bong Joon Ho, who co-wrote the screenplay with Han Jin-won. It stars Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong, Choi Woo-shik, Park So-dam, Jang Hye-jin, Park Myung-hoon, and Lee Jung-eun. The film follows a poor family who infiltrate the home and life of a wealthy family.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4033,7 +4083,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "fb4e7a5eccc9ec60878c7233225d95ecd8a96d04f53dd83d83b1cf10778ec0ba"
+      "content_hash": "23e9b93e081bb64119e5d635fd8b104a7e45e14e40c8751759a58e81d153b6aa"
     },
     {
       "title": "Past Lives",
@@ -4046,8 +4096,8 @@
       "plot": "Past Lives is a 2023 romantic drama film written and directed by Celine Song in her feature directorial debut. Starring Greta Lee, Teo Yoo, and John Magaro, it follows two childhood friends over the course of 24 years while they contemplate the nature of their relationship as they grow apart, living different lives. The plot is semi-autobiographical and inspired by real events from Song's life.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4055,7 +4105,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "4b63cc238b8be155ba6d3c7c90c1ab3a60df83d910752becb0e6eb49f71aa1d0"
+      "content_hash": "2543160b5c3264284892a477769f4ff382b34512654816291e9750f29d3166f9"
     },
     {
       "title": "Paterson",
@@ -4068,8 +4118,8 @@
       "plot": "Paterson is a 2016 drama film written and directed by Jim Jarmusch. The film stars Adam Driver as a bus driver and poet named Paterson, and Golshifteh Farahani as his wife, who dreams of being a country music star and opening a cupcake business as the two live out their day to day life in Paterson, New Jersey.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2017 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top 5 Films of 2017 list.",
+      "kojima_word_count": 10,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4077,7 +4127,7 @@
       "kojima_primary_source": "Top 5 Films of 2017 (X)",
       "kojima_recommended_at": "2017-12-31",
       "kojima_sources_json": "[{\"label\": \"Top 5 Films of 2017 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2017-12-31\"}, {\"label\": \"Best Movies 2017 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2017-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "11b939aba249b655344ce575d8f4ceaae87a958d87cd4fb962592b73e96a07b5"
+      "content_hash": "a352ac9dd0b2de94a9fb97afe947c7992b74baf1d916ab7e82b3357a1df4df07"
     },
     {
       "title": "Perfect Days",
@@ -4090,8 +4140,8 @@
       "plot": "Perfect Days is a 2023 Japanese-language drama film directed by Wim Wenders from a script written by Wenders and Takuma Takasaki. A co-production between Japan and Germany, the film follows the routine life of Hirayama, a public toilet cleaner in Tokyo.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4099,7 +4149,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "cdc3aa5d5595955be944f6d465535b1ca1c1986b65749dc5b715bfb25f012c79"
+      "content_hash": "82adcfd1ebcadba191026cb6179e32f12b4b058e81f399d7ee3a9a1151e6a27d"
     },
     {
       "title": "Petite Maman",
@@ -4168,7 +4218,7 @@
       "content_hash": "2c4c5da1df214904e6d836c264d0996ff12bad1f701b787ab047321517eed82d"
     },
     {
-      "title": "R.M.N",
+      "title": "R.M.N.",
       "year": "2022",
       "tmdb_id": "",
       "director": "Cristian Mungiu",
@@ -4178,8 +4228,8 @@
       "plot": "R.M.N. is a 2022 drama film produced, written and directed by Cristian Mungiu. Set in a multi-ethnic village in Transylvania during the 2019–20 holiday season, it is based on the 2020 Ditrău xenophobic incident. It follows Matthias, a man who returns from Germany, and his ex-lover Csilla, who works in the village. Mungiu named the film after the Romanian acronym for nuclear magnetic resonance, as the film is \"an investigation of the brain, a brain scan trying to detect things below the surface\".",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4187,7 +4237,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "9fc480d73aa8e7bbcb6e1920565744da4d998021de5001c60d2bb6ef1d4f2657"
+      "content_hash": "eb5094156c22f7cf61cbc501d0cf818a0432ea3728d4467ee5b251e8a5a16742"
     },
     {
       "title": "RRR",
@@ -4200,8 +4250,8 @@
       "plot": "RRR is a 2022 Indian Telugu-language epic period action drama film directed by S. S. Rajamouli, who co-wrote the screenplay with V. Vijayendra Prasad. Produced by D. V. V. Danayya under DVV Entertainment, the film stars N. T. Rama Rao Jr. and Ram Charan in lead roles. It also features an ensemble cast of Ajay Devgn, Alia Bhatt, Shriya Saran, Samuthirakani, Ray Stevenson, Alison Doody and Olivia Morris in supporting roles. It marks the Telugu film debuts of Devgn, Bhatt, Stevenson, Doody and Morris. The film is a fictionalised tale of two historical freedom fighters, set in the Indian pre-independence era.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2022 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2022 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4209,7 +4259,7 @@
       "kojima_primary_source": "Favorite Films of 2022 (X)",
       "kojima_recommended_at": "2022-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2022 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2022-12-31\"}, {\"label\": \"Best Movies 2022 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2022-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "3f08ab95529a5418741c122bb80290e141390b6c43a54a42045178ed0d5b0c0e"
+      "content_hash": "5d92d9034e1a331b953b70a0ad294bd4686e40850c81ea05dec6a05f8eb36253"
     },
     {
       "title": "Raw",
@@ -4222,8 +4272,8 @@
       "plot": "Raw is a 2016 coming-of-age body horror drama film written and directed by Julia Ducournau, and starring Garance Marillier, Ella Rumpf, and Rabah Nait Oufella. The plot follows a young vegetarian's first year at veterinary school, where she tastes meat for the first time and develops a craving for human flesh.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4231,7 +4281,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "b3da6ea53ff20054b6ad65790e97a5cefc913af0a14011aae54a7b1ce2441ccd"
+      "content_hash": "a9c155c9e01ec03f1414163a39c5475efdf233839cb86daf2fc594b50b17c049"
     },
     {
       "title": "Return to Dust",
@@ -4332,8 +4382,8 @@
       "plot": "Roma is a 2018 historical drama film written, produced, and directed by Alfonso Cuarón, who also served as cinematographer and co-editor. Set in 1970 and 1971, Roma follows the life of a live-in indigenous mixteca housekeeper of an upper-middle-class Mexican family. It is a semi-autobiographical take on Cuarón's upbringing in Mexico City's Colonia Roma neighborhood. The film stars Yalitza Aparicio and Marina de Tavira. It is an international co-production between Mexico and the United States.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4341,7 +4391,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "5c8dc3d2fe94bfdb32bf030cfc984556d61807989211823d8012d522db75338f"
+      "content_hash": "207c019bc6a5f3652a887a5ae46341b95a1c1131e9fa21c59d97631965ba0507"
     },
     {
       "title": "Sayonara, Girls",
@@ -4376,8 +4426,8 @@
       "plot": "Searching is a 2018 American screenlife mystery thriller film directed by Aneesh Chaganty in his feature debut, written by Chaganty and Sev Ohanian and produced by Timur Bekmambetov. Set almost entirely on computer screens and smartphones, the film follows a father trying to find his missing 16-year-old daughter with the help of a police detective. This was the first mainstream Hollywood thriller headlined by an Asian-American actor.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4385,7 +4435,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "3a1b90da78dfa079ab718d8918cb217156791471970da7648d79c36137e5a482"
+      "content_hash": "4fa2d81fa3db1c255e7514472556e5ae669d346c4be21a552e6282619bf27bde"
     },
     {
       "title": "Sentimental Value",
@@ -4398,8 +4448,8 @@
       "plot": "Sentimental Value is a 2025 drama film directed by Joachim Trier, who co-wrote it with Eskil Vogt. It follows sisters Nora and Agnes in their reunion with their estranged father Gustav, who is preparing to make his next film with young American actress Rachel.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2025 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Foreign Theatrical Releases of 2025 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4407,7 +4457,7 @@
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
       "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446\", \"date\": \"2026-01-06\"}, {\"label\": \"Best Movies 2025 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/\", \"date\": \"2026-01-07\"}]",
-      "content_hash": "d0c700721fb270a17011c624250e3a5fa9aa3b81c74facd4adec08b0d01c953a"
+      "content_hash": "686bad42635a855a581c2e5a2a5a3a8abe319c36db4d9d3aa611bc8b01cf919a"
     },
     {
       "title": "Shaun the Sheep Movie",
@@ -4420,8 +4470,8 @@
       "plot": "Shaun the Sheep Movie is a 2015 British stop motion animated comedy film written and directed by Mark Burton and Richard Starzak. It is based on the British television series Shaun the Sheep by Nick Park and Bob Baker, in turn a spin-off of the short film A Close Shave (1995). Starring the voices of Justin Fletcher, John Sparkes, and Omid Djalili, the film follows Shaun and his flock navigating the big city to save their amnesiac farmer, while an overzealous animal control worker pursues the group.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4429,7 +4479,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "1e354440cc164400622a7c89b43126511d729e457ab3a4e2bab650df95c16a9c"
+      "content_hash": "fbab9199d49b9798a2941a087bec0e3e93fb2d3f37681c5123c9f5f0009a9e2f"
     },
     {
       "title": "Shoplifters",
@@ -4442,8 +4492,8 @@
       "plot": "Shoplifters is a 2018 Japanese drama film written, directed and edited by Hirokazu Kore-eda. Starring Lily Franky and Sakura Ando, it is about a family that relies on shoplifting to cope with a life of poverty.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4451,7 +4501,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "c05ff02d0fa7f4eca8ff4dc14f0400d4e7a4c17651103cf18755df05a6726387"
+      "content_hash": "aa94db7a6020dce3e6f99f7fe8e7b68619ae1522d58f23d5c49bfed2ef0791da"
     },
     {
       "title": "Sicario",
@@ -4464,8 +4514,8 @@
       "plot": "Sicario is a 2015 American action crime thriller film directed by Denis Villeneuve, written by Taylor Sheridan in his screenwriting debut and starring Emily Blunt, Benicio del Toro, and Josh Brolin. The film follows a principled FBI special agent who is enlisted by a government task force to bring down the leader of a powerful and brutal Mexican drug cartel. Sicario was selected to compete for the Palme d'Or at the 2015 Cannes Film Festival. It began a limited release in the United States on September 18, 2015, followed by a nationwide release on October 2, 2015.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4473,7 +4523,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "3996ff9c2e15f253edc478f033ded00fa1634b2903025be619cfa4bb44511f89"
+      "content_hash": "ee2edccde375ac58bdb37790102a422d229e4d5b0b24abcbc7bf1b1bcd9f5d25"
     },
     {
       "title": "Silent Running",
@@ -4508,8 +4558,8 @@
       "plot": "Sing Street is a 2016 coming-of-age musical comedy-drama film written and directed by John Carney from a story by Carney and Simon Carmody. Starring Lucy Boynton, Maria Doyle Kennedy, Aidan Gillen, Jack Reynor, Kelly Thornton and Ferdia Walsh-Peelo, the story revolves around a teenage boy who forms a band to impress a girl in 1980s Dublin. It is an international co-production of Ireland, the United Kingdom and the United States.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4517,7 +4567,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "39cd275eae42deab8285e3daefaafd7128034f6d25cbc990492bb48a1223e422"
+      "content_hash": "5514bb6d146c3f256ad8b0d8b522660889c6c194c2ae679514e757163de8c725"
     },
     {
       "title": "Sinners",
@@ -4556,8 +4606,8 @@
       "plot": "Sirāt is a 2025 drama road film directed by Óliver Laxe and co-written by Santiago Fillol and Laxe. It follows a father in search of his missing daughter along with his son and a group of ravers in the deserts of southern Morocco.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2025 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Foreign Theatrical Releases of 2025 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4565,7 +4615,7 @@
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
       "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446\", \"date\": \"2026-01-06\"}, {\"label\": \"Best Movies 2025 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/\", \"date\": \"2026-01-07\"}]",
-      "content_hash": "5930e309dedc485b25b3bb2d9726e52d8a6781138de4434315cc3ade53eee54a"
+      "content_hash": "76bf39bdbf989d248d7e4a99cabb2b38d3b701eddc77471bac4a111b005c757e"
     },
     {
       "title": "Society of the Snow",
@@ -4578,8 +4628,8 @@
       "plot": "Society of the Snow is a 2023 survival drama film directed by J. A. Bayona and based on Pablo Vierci's 2008 book of the same name. It is the third feature film about the 1972 Andes flight disaster. A co-production between Spain and the United States, the film has a cast composed of Uruguayan and Argentine actors, most of whom are newcomers, and was shot mainly in Sierra Nevada, Spain.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4587,7 +4637,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "8e578e37308d79ae17d18668fbfb89a273dd0d3c55d5739b7c5aff42221bfed5"
+      "content_hash": "000c23aa23792fdb61bb2c6d319bca8180f3f10fc7c4919042785fea7065d89d"
     },
     {
       "title": "Son of Saul",
@@ -4600,8 +4650,8 @@
       "plot": "Son of Saul is a 2015 Hungarian historical drama film directed by László Nemes, in his feature directorial debut, and co-written by Nemes and Clara Royer. It is set in the Auschwitz concentration camp during World War II, and follows a day-and-a-half in the life of Saul Ausländer, a Hungarian member of the Sonderkommando.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4609,7 +4659,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "6dac5a0ae8c1c896dc355c01de01308f29883082c92b0a2daeb106a2c7d9c4b1"
+      "content_hash": "74d22d44c0fb907ae4d3ebaf247daf1bedca54caad186a36d1dad142d8206314"
     },
     {
       "title": "Spider-Man: Into the Spider-Verse",
@@ -4622,8 +4672,8 @@
       "plot": "Spider-Man: Into the Spider-Verse is a 2018 American animated superhero film based on the Marvel Comics character Spider-Man. Directed by Bob Persichetti, Peter Ramsey and Rodney Rothman from a screenplay by Phil Lord and Rothman, it is the first animated film in the Spider-Man franchise. Shameik Moore stars as the voice of Miles Morales, with Jake Johnson, Hailee Steinfeld, Mahershala Ali, Brian Tyree Henry, Lily Tomlin, Luna Lauren Vélez, Zoë Kravitz, John Mulaney, Kimiko Glenn, Nicolas Cage, Kathryn Hahn, and Liev Schreiber in supporting voice roles. The film's story follows Miles as he becomes the new Spider-Man and teams up with other Spider-People from various parallel universes to save his universe from the Kingpin. It was produced by Columbia Pictures and Sony Pictures Animation in association with Marvel Entertainment.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4631,7 +4681,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "f934fbb8598892bafcd4b1a04c21f2add66cd7434f50d42fb96652d25090aaec"
+      "content_hash": "3a9cc150389ef66449f12ab4a31b152d72831aa2100a00531b32acd4a998c735"
     },
     {
       "title": "Star Wars: The Force Awakens",
@@ -4644,8 +4694,8 @@
       "plot": "Star Wars: The Force Awakens, also known as Star Wars: Episode VII – The Force Awakens, is a 2015 American epic space opera film produced, co-written, and directed by J. J. Abrams. The sequel to Return of the Jedi (1983), it is the first installment of the Star Wars sequel trilogy and chronologically the seventh film of the \"Skywalker Saga\". Set thirty years after Return of the Jedi, The Force Awakens follows Rey, Finn, Poe Dameron, and Han Solo's search for Luke Skywalker and their fight in the Resistance, led by General Leia Organa and veterans of the Rebel Alliance, against Kylo Ren and the First Order, a successor to the Galactic Empire. The film stars Harrison Ford, Mark Hamill, Carrie Fisher, Adam Driver, Daisy Ridley, John Boyega, Oscar Isaac, Lupita Nyong'o, Andy Serkis, Domhnall Gleeson, Anthony Daniels, Peter Mayhew, and Max von Sydow.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4653,7 +4703,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "66c8db0db35318ed097d82c81646717e6fdc337306a37ed3d02e0c54dde866f1"
+      "content_hash": "25e766c2ffafd3691c840e87e16a93e5ab82ede79099ab268f88f49c93877b08"
     },
     {
       "title": "Straight Outta Compton",
@@ -4666,8 +4716,8 @@
       "plot": "Straight Outta Compton is a 2015 American biographical drama film that tells the story of hip-hop group N.W.A's rise and fall under manager Jerry Heller. The film, directed by F. Gary Gray, stars O'Shea Jackson Jr., Corey Hawkins, and Jason Mitchell as Ice Cube, Dr. Dre, and Eazy-E, respectively. Released by Universal Pictures on August 14, 2015, the film received positive reviews and was a box office success, grossing $201.6 million worldwide. Straight Outta Compton earned several awards and nominations, including an Academy Award nomination for Best Original Screenplay and a win for Outstanding Motion Picture at the 47th NAACP Image Awards.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4675,7 +4725,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "8035408652a338f981920a175664b4e0463971e80e6d1375a04d46021cbd4d8f"
+      "content_hash": "2b05c8ccfc51d90f747dd299b04160feabe31458dc9945c49249552ae799e764"
     },
     {
       "title": "Suspiria",
@@ -4732,8 +4782,8 @@
       "plot": "",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2025 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Japanese Theatrical Releases of 2025 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4741,7 +4791,7 @@
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
       "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008430549199974752\", \"date\": \"2026-01-06\"}, {\"label\": \"Best Movies 2025 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/\", \"date\": \"2026-01-07\"}]",
-      "content_hash": "ce45a5e67172e85f12226b94c662b1f1a8b0746fa3e14c4dc5dcf3b968442f98"
+      "content_hash": "cfe5ac1088a1503772c39d881fb5d2d7360c7d57cdaffbf7a33127a562d5c0bd"
     },
     {
       "title": "The Banshees of Inisherin",
@@ -4754,8 +4804,8 @@
       "plot": "The Banshees of Inisherin is a 2022 black tragicomedy film directed, written, and co-produced by Martin McDonagh. Set on a fictional remote island off the west coast of Ireland in 1923, the film stars Colin Farrell and Brendan Gleeson as two lifelong friends who find themselves at an impasse when one abruptly ends their friendship, with severe consequences for both of them. Kerry Condon and Barry Keoghan co-star. It reunites Farrell and Gleeson after McDonagh's directorial debut In Bruges (2008).",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4763,7 +4813,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "cb1c24fd6d700bab97a5fda577aa1d75891588651750d4f49058bb68b6166e18"
+      "content_hash": "0242a24fde4f9f58290814308988d0da2f66a8ed52a8657fae5d49f8f6f19ed7"
     },
     {
       "title": "The Beasts",
@@ -4776,8 +4826,8 @@
       "plot": "The Sea Beast is a 2022 American animated fantasy adventure comedy film directed by Chris Williams, who co-wrote the screenplay with Nell Benjamin and produced with Jed Schlanger. The film stars the voices of Karl Urban, Zaris-Angel Hator, Jared Harris, and Marianne Jean-Baptiste with supporting roles by Kathy Burke, Jim Carter, Doon Mackichan, and Dan Stevens. It tells the story of a sea-monster hunter and a young orphan girl who joins his crew on their search for an elusive beast known as the Red Bluster.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4785,7 +4835,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "92c1aa093853c6ab8272779f3f0d258dcde712fdc74591a8af836540486182b0"
+      "content_hash": "c4913a311bda2e79ab4e651bb8c9024bdbe340c1bde028bde688d4bd3230b3a4"
     },
     {
       "title": "The Bullet Train",
@@ -4930,8 +4980,8 @@
       "plot": "The Holdovers is a 2023 American Christmas comedy drama film directed by Alexander Payne, written by David Hemingson, and starring Paul Giamatti, Da'Vine Joy Randolph, and Dominic Sessa in his film debut. Set in 1970, it tells the story of a strict classics teacher at a New England boarding school who is forced to chaperone a handful of students who have nowhere to go during the school's Christmas holiday break. Filming took place from January to March 2022 in Massachusetts. The Holdovers premiered at the 50th Telluride Film Festival on August 31, 2023, and was released in the United States by Focus Features on October 27, 2023.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4939,7 +4989,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "2f405ace65eb5108231fc131e8626c2beedc672df54ffd58d4fc868b23b44d68"
+      "content_hash": "66341c76d26067f06a7954e9f76a6d1f041c19b08f1f8a536187afd9ac2615c8"
     },
     {
       "title": "The House That Jack Built",
@@ -4952,8 +5002,8 @@
       "plot": "The House That Jack Built is a 2018 psychological horror film written and directed by Lars von Trier. It stars Matt Dillon, Bruno Ganz, Uma Thurman, Siobhan Fallon Hogan, Sofie Gråbøl, Riley Keough, and Jeremy Davies. Its plot follows Jack (Dillon), a serial killer who, over a 12-year period beginning in the late 1970s, commits numerous murders in the U.S. state of Washington. Utilizing Dante's Inferno as a metatext, the film is structured as a series of flashback vignettes relayed by Jack to the Roman poet Virgil, during which Jack attempts to make an argument for his crimes.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4961,7 +5011,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "a7e32ddb85bf3a45144066755b87256f20af702d44981bb7c2316210fa31a79d"
+      "content_hash": "ff4ddeff0ead87fb250dcaee631c76cd6f3966de232f01c01e43a44c63e842a2"
     },
     {
       "title": "The Insult",
@@ -4974,8 +5024,8 @@
       "plot": "The Insult is a 2017 Lebanese legal drama film directed by Ziad Doueiri and co-written by Doueiri and Joelle Touma. It was screened in the main competition section of the 74th Venice International Film Festival. At Venice, Kamel El Basha won the Volpi Cup for Best Actor. It was selected as the Lebanese entry for the Best Foreign Language Film and was nominated for the Oscar at the 90th Academy Awards.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -4983,7 +5033,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "bf9af0762a5c380ee3acf00a0f7e42ed590c914efa881ef4ff5a95ebedd4b221"
+      "content_hash": "e0d085ee03dc67985194f4e1e75a1468696f75f2129b1177284a8688651e13fd"
     },
     {
       "title": "The Intern",
@@ -4996,8 +5046,8 @@
       "plot": "The Intern is a 2015 American comedy drama film directed, written and co-produced by Nancy Meyers. The film stars Robert De Niro, Anne Hathaway and Rene Russo.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5005,7 +5055,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "274a0908717a7cd610d696839ed8462770ad7a945bf9ea6a8a2ae2574044b837"
+      "content_hash": "7cb40a2dd85d616478a0ccdb31a462365ca9eecea706cccfa935a4af2601bee5"
     },
     {
       "title": "The Irishman",
@@ -5018,8 +5068,8 @@
       "plot": "The Irishman is a 2019 American epic crime film directed and produced by Martin Scorsese from a screenplay by Steven Zaillian, based on the 2004 book I Heard You Paint Houses by Charles Brandt. It stars Robert De Niro, Al Pacino, and Joe Pesci, with Ray Romano, Bobby Cannavale, Anna Paquin, Stephen Graham, Stephanie Kurtzuba, Jesse Plemons, and Harvey Keitel in supporting roles. The biographical film follows Frank Sheeran, a truck driver who becomes a hitman involved with mobster Russell Bufalino (Pesci) and his crime family before later working for Jimmy Hoffa (Pacino), a powerful Teamster. The film marked the ninth collaboration between Scorsese and De Niro, in addition to Scorsese's sixth collaboration with Harvey Keitel; his fourth collaboration with Joe Pesci; his first with Al Pacino; the fourth collaboration between Pacino and De Niro; and the first collaboration between Pacino and Pesci altogether.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2019 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Films of 2019 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5027,7 +5077,7 @@
       "kojima_primary_source": "Top Films of 2019 (X)",
       "kojima_recommended_at": "2019-12-31",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2019 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2019-12-31\"}, {\"label\": \"Best Movies 2019 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2019-by-hideo-kojima/\", \"date\": \"2023-12-10\"}]",
-      "content_hash": "2163173a17bde0c78831bdcfd04d7c11efc027c7a06964f5cfee8577f4386956"
+      "content_hash": "184a053b67aa589705e7130921015d45e72545e99e0d4f8c897d39940ac055a9"
     },
     {
       "title": "The Killer",
@@ -5040,8 +5090,8 @@
       "plot": "The Killer is a 2023 American action thriller film directed by David Fincher from a screenplay by Andrew Kevin Walker. It is based on the French graphic novel series The Killer written by Alexis \"Matz\" Nolent and illustrated by Luc Jacamon. The film stars Michael Fassbender in the main role alongside Arliss Howard, Charles Parnell, Kerry O'Malley, Sala Baker, Sophie Charlotte, and Tilda Swinton in supporting roles. In the film, Fassbender plays an assassin who embarks on an international vendetta after a hit goes wrong.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5049,7 +5099,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "5bf1de64c19cce1341d73811e280b606628cb8dc7741aba3b3954c49325f6da1"
+      "content_hash": "0f346fbe5438a165ab556edb799f8eaf350e813cf6549486373e3dfe2ba74643"
     },
     {
       "title": "The Last Adventure",
@@ -5238,8 +5288,8 @@
       "plot": "The Seed of the Sacred Fig is a 2024 political drama film written, co-produced and directed by Mohammad Rasoulof. Its plot centers on Iman, an investigating judge in the Revolutionary Court in Tehran, who grapples with paranoia as nationwide political protests, caused by the death of a young woman, intensify and his gun mysteriously disappears, making him distrust his wife and daughters. It stars Soheila Golestani, Missagh Zareh, Mahsa Rostami and Setareh Maleki. The fictional narrative is combined with real images of the 2022–2023 protests in Iran that were violently suppressed by Iranian authorities.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5247,7 +5297,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "3bf707c7fed20fc7ac87b6c5cba62a5d3dc1d522ccb94129eaf62cff9b3311d5"
+      "content_hash": "e99d2fe7b7ffa067636c0aea0a48f3ce0173677e60824cb26700083977dc7e59"
     },
     {
       "title": "The Shadow's Edge",
@@ -5282,8 +5332,8 @@
       "plot": "The Shape of Water is a 2017 dark fantasy film directed and produced by Guillermo del Toro, who co-wrote the screenplay with Vanessa Taylor. It stars Sally Hawkins, Michael Shannon, Richard Jenkins, Doug Jones, Michael Stuhlbarg, and Octavia Spencer. Set in 1962 Baltimore, Maryland, and inspired by Creature from the Black Lagoon, the film follows a mute cleaner at a high-security government laboratory who falls in love with a captured humanoid amphibian creature and decides to help him escape from death at the hands of an evil colonel. Filming took place on location in Ontario, Canada, from August to November 2016.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2017 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top 5 Films of 2017 list.",
+      "kojima_word_count": 10,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5291,7 +5341,7 @@
       "kojima_primary_source": "Top 5 Films of 2017 (X)",
       "kojima_recommended_at": "2017-12-31",
       "kojima_sources_json": "[{\"label\": \"Top 5 Films of 2017 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2017-12-31\"}, {\"label\": \"Best Movies 2017 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2017-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "b58c4d53cecc416af7413a48e3b8b667ca7c19ef92f26506d993eecede804949"
+      "content_hash": "b12583bf932791bcf306b7238e78216774b59c9548f5c95626b3a8e4faf54cd1"
     },
     {
       "title": "The Spirit of the Beehive",
@@ -5326,8 +5376,8 @@
       "plot": "The Substance is a 2024 body horror film written and directed by Coralie Fargeat. It follows a fading celebrity who is fired by her producer due to her age and uses a black market drug that creates a younger woman with unexpected side effects.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5335,7 +5385,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "5b4b0c5bae6de18a8197710188f92a02dfc57ded0fb9200e50688a97d9ef9ba6"
+      "content_hash": "dab0a41e8e704ef891fb0d8326453150131ab6df00fed0c643a8fa7925a9a5bb"
     },
     {
       "title": "The Teachers' Lounge",
@@ -5348,8 +5398,8 @@
       "plot": "The Teachers' Lounge is a 2023 German drama film directed by İlker Çatak, who co-wrote the screenplay with Johannes Duncker. Leonie Benesch stars as a teacher tasked with finding out which of her students is responsible for a series of thefts.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2024 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2024 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5357,7 +5407,7 @@
       "kojima_primary_source": "Favorite Films of 2024 (X / Instagram)",
       "kojima_recommended_at": "2024-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2024 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-12-31\"}, {\"label\": \"Best Movies 2024 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2024-by-hideo-kojima/\", \"date\": \"2025-03-31\"}]",
-      "content_hash": "05c65fd1081de054b49815546697f77a18b0ae65739f842afbe9f0087258455c"
+      "content_hash": "d907a1c1343860e1f1c359a1b2702b50a7bc9fe4e6067a77076b987b3048fc0c"
     },
     {
       "title": "The Thing from Another World",
@@ -5436,8 +5486,8 @@
       "plot": "The Wolf House is a 2018 Chilean adult animated horror film directed by Cristobal León & Joaquín Cociña and written by León, Cociña and Alejandra Moffat. Inspired by the actual case of Colonia Dignidad, The Wolf House is presented as a fairy-tale themed animated propaganda film produced by the leader of the sect in order to indoctrinate its followers.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5445,7 +5495,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "40ecef6e49acbdabe9e436b5c4b948f42bf9e019867981738bee00b2b342f337"
+      "content_hash": "30c72359265f611e4cc99ddbb2a9e288429b2e9eefac9e95588778f2683c2e04"
     },
     {
       "title": "The Worst Person in the World",
@@ -5480,8 +5530,8 @@
       "plot": "Thelma is a 2017 supernatural thriller drama film directed by Joachim Trier, who co-wrote the screenplay with Eskil Vogt. The film stars Eili Harboe, Kaya Wilkins, Henrik Rafaelsen, and Ellen Dorrit Petersen. Thelma tells the story of a sheltered young woman who discovers she has an inexplicable power that materializes when she feels desire for a female student at her university.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5489,7 +5539,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "02808d2a791ee868a8eb8c6b209988d34231211de3aa0fc64fb2d9f8c3f37baf"
+      "content_hash": "6ffbc8d0ce0b4d1b7e290728fb6e9d1f7c3a81750835ba7374c47748c584b0ee"
     },
     {
       "title": "Three Billboards Outside Ebbing, Missouri",
@@ -5502,8 +5552,8 @@
       "plot": "Three Billboards Outside Ebbing, Missouri is a 2017 British dark comedy crime film written, directed, and produced by Martin McDonagh. It stars Frances McDormand as Mildred Hayes, a Missouri woman who rents three roadside billboards to draw attention to her daughter's unsolved rape and murder. Woody Harrelson, Sam Rockwell, Abbie Cornish, John Hawkes, and Peter Dinklage appear in supporting roles. The film was theatrically released in the United States in November 2017 and in the United Kingdom in January 2018 by Fox Searchlight Pictures, and it grossed $162 million at the worldwide box office.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5511,7 +5561,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "e0f4cee913e41b5b3e502273f614e2d1a244419e0edd1d3057e10c398571ceb9"
+      "content_hash": "fe9c2f6664cfe81c6201365a83f5c752902ed97bdabf6961bbbc1b506e78a5e8"
     },
     {
       "title": "Togo",
@@ -5590,8 +5640,8 @@
       "plot": "Twilight of the Warriors: Walled In is a 2024 Hong Kong action film directed by Soi Cheang, and starring Louis Koo, Sammo Hung, Richie Jen, Raymond Lam, Terrance Lau, Kenny Wong, Philip Ng, Tony Wu and German Cheung. The film was based on the novel City of Darkness by Yuyi and the manhua of the same name by Andy Seto.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2025 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Foreign Theatrical Releases of 2025 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5599,7 +5649,7 @@
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
       "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446\", \"date\": \"2026-01-06\"}, {\"label\": \"Best Movies 2025 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/\", \"date\": \"2026-01-07\"}]",
-      "content_hash": "bdd5901cdb19049f25727669033ddf1fc9a88deec6daa2afd191c932098254c7"
+      "content_hash": "92b3f10e5be312d942b11778315e4eb15bc8448a42100a976a4a933562204e4d"
     },
     {
       "title": "Vortex",
@@ -5612,8 +5662,8 @@
       "plot": "Vortex is a 2021 avant-garde psychological drama film written and directed by Gaspar Noé. It stars Dario Argento as a father and author, in his first leading role, alongside Françoise Lebrun as his wife, and Alex Lutz as their son, Stéphane. The film deals with the themes of the human condition and personal problems, uses a slow, minimal cinematic approach: a pockmarked, faded palette of the frame, deaf voices, and the use of low-frequency background sound.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2023 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2023 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5621,7 +5671,7 @@
       "kojima_primary_source": "Favorite Films of 2023 (X / Instagram)",
       "kojima_recommended_at": "2024-01-05",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2023 (X / Instagram)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2024-01-05\"}, {\"label\": \"Best Movies 2023 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2023-by-hideo-kojima/\", \"date\": \"2024-01-11\"}]",
-      "content_hash": "0773232a8b7c8f26f32cc9272e06db493d7016988b593978a59028f78b1bb163"
+      "content_hash": "5414b944f9a895eee1b54d709e3ff8393b92d5cd3323d676e4fcc74277a1f861"
     },
     {
       "title": "When Fall Is Coming",
@@ -5634,8 +5684,8 @@
       "plot": "When Fall Is Coming, released in the UK and Ireland as When Autumn Falls, is a 2024 French drama film written, produced and directed by François Ozon.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2025 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Top Foreign Theatrical Releases of 2025 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5643,7 +5693,7 @@
       "kojima_primary_source": "Top Films of 2025 (Instagram / X)",
       "kojima_recommended_at": "2026-01-06",
       "kojima_sources_json": "[{\"label\": \"Top Films of 2025 (Instagram / X)\", \"type\": \"annual_top_list\", \"url\": \"https://x.com/HIDEO_KOJIMA_EN/status/2008422178744922446\", \"date\": \"2026-01-06\"}, {\"label\": \"Best Movies 2025 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2025-by-hideo-kojima/\", \"date\": \"2026-01-07\"}]",
-      "content_hash": "194fb16bedab5902eabeda688493e4624f11c0d76b050a8f11bed3eb2878ffbb"
+      "content_hash": "68fa4d86fee7433075e88208d28d340e81cfae900ba9ffa47a28b9525ee26db9"
     },
     {
       "title": "Whiplash",
@@ -5656,8 +5706,8 @@
       "plot": "Whiplash is a 2014 American psychological drama film written and directed by Damien Chazelle, and starring Miles Teller, J. K. Simmons, and Paul Reiser. It focuses on an ambitious music student and aspiring jazz drummer (Teller), who is pushed to his limit by his abusive instructor (Simmons).",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2015 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Top 10 Films of 2015 list.",
+      "kojima_word_count": 11,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5665,7 +5715,7 @@
       "kojima_primary_source": "HideoTube Top 10 Films of 2015",
       "kojima_recommended_at": "2016-01-01",
       "kojima_sources_json": "[{\"label\": \"HideoTube Top 10 Films of 2015\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-01-01\"}, {\"label\": \"Best Movies 2015 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2015-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "124f6f9334924c2c0a8704f7932df9d18108dcae296deb06046400467a398767"
+      "content_hash": "c1c64f7e9541911eeb7b8cc6ea408a0d4e6c1165e8c51a5407f34e3d6ec44cb3"
     },
     {
       "title": "Wind River",
@@ -5678,8 +5728,8 @@
       "plot": "Wind River is a 2017 neo-Western crime film written and directed by Taylor Sheridan. It is the third film by Taylor Sheridan on the modern American West. The film stars Jeremy Renner and Elizabeth Olsen as a U.S. Fish and Wildlife Service tracker and an FBI agent, respectively, who try to solve a murder on the Wind River Indian Reservation in Wyoming. Gil Birmingham, Jon Bernthal, and Graham Greene also star.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5687,7 +5737,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "e1b4c62292df024cdd34cf3191ef54b217ac2b53ba72e54c59fe6a379b7ba0ae"
+      "content_hash": "be705aac8f6b28416205fcaada4d013f077be1dfc01aa91bcf2b87e16a5bdebe"
     },
     {
       "title": "Winny",
@@ -5722,8 +5772,8 @@
       "plot": "You Were Never Really Here is a 2017 neo-noir crime psychological thriller film written and directed by Lynne Ramsay. Based on the 2013 novella of the same name by Jonathan Ames, it stars Joaquin Phoenix, Ekaterina Samsonov, Alex Manette, John Doman, and Judith Roberts. In the film, a traumatized mercenary named Joe (Phoenix) is hired by a politician to find and rescue his daughter who has been kidnapped by a human trafficking network in New York City, which Joe is instructed to destroy by any violent means. The film was co-produced between the United Kingdom and France.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's Favorite Films of 2018 list.",
+      "kojima_word_count": 9,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5731,7 +5781,7 @@
       "kojima_primary_source": "Favorite Films of 2018 (X)",
       "kojima_recommended_at": "2018-12-31",
       "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "35e965d9a9d18010234fbbed70eca7cf4058fbd52389d1500f473e956c78ad40"
+      "content_hash": "629df8e5f04adedbc6f36692fff9a40261ee914cf4f909c0f4991955d2421044"
     },
     {
       "title": "Zootopia",
@@ -5744,8 +5794,8 @@
       "plot": "Zootopia is a 2016 American animated buddy cop comedy film produced by Walt Disney Animation Studios. Directed by Byron Howard and Rich Moore and written by Jared Bush and Phil Johnston, it is the first film in the Zootopia franchise. It features the voices of Ginnifer Goodwin, Jason Bateman, Idris Elba, Jenny Slate, Nate Torrence, Bonnie Hunt, Don Lake, Tommy Chong, J. K. Simmons, Octavia Spencer, Alan Tudyk, and Shakira. The film follows the rabbit Judy Hopps (Goodwin), a rookie cop, and the fox Nick Wilde (Bateman), a con artist, as they work together to uncover a conspiracy involving the disappearance of predators.",
       "kojima_score": 4,
       "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2016 by Hideo Kojima.",
-      "kojima_word_count": 8,
+      "kojima_review": "Named to Hideo Kojima's HideoTube Favorite Films of 2016 (So Far) list.",
+      "kojima_word_count": 12,
       "kojima_is_dismissal": "no",
       "kojima_sentiment_summary": "Year-end top list selection.",
       "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
@@ -5753,29 +5803,7 @@
       "kojima_primary_source": "HideoTube Favorite Films of 2016 (So Far)",
       "kojima_recommended_at": "2016-08-31",
       "kojima_sources_json": "[{\"label\": \"HideoTube Favorite Films of 2016 (So Far)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2016-08-31\"}, {\"label\": \"Best Movies 2016 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2016-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "d65dbad91b22905fa7041bade96b03c1c5286cdfb949955f5e241315870a2e5b"
-    },
-    {
-      "title": "mother",
-      "year": "2017",
-      "tmdb_id": "",
-      "director": "Darren Aronofsky",
-      "runtime": "",
-      "genres": [],
-      "poster": "https://upload.wikimedia.org/wikipedia/en/9/94/Mother%212017.jpg",
-      "plot": "Mother! is a 2017 American psychological horror film written and directed by Darren Aronofsky. It stars Jennifer Lawrence, Javier Bardem, Ed Harris, Michelle Pfeiffer, Domhnall Gleeson, Brian Gleeson, and Kristen Wiig. Its plot follows a young woman whose tranquil life with her husband at their country home is disrupted by the arrival of a mysterious couple, leading to a series of increasingly chaotic and destructive events.",
-      "kojima_score": 4,
-      "kojima_tier": "Loved",
-      "kojima_review": "Named to Best Movies 2018 by Hideo Kojima.",
-      "kojima_word_count": 8,
-      "kojima_is_dismissal": "no",
-      "kojima_sentiment_summary": "Year-end top list selection.",
-      "kojima_score_breakdown": "Loved (4/5) - Year-end top list selection.",
-      "kojima_primary_url": "",
-      "kojima_primary_source": "Favorite Films of 2018 (X)",
-      "kojima_recommended_at": "2018-12-31",
-      "kojima_sources_json": "[{\"label\": \"Favorite Films of 2018 (X)\", \"type\": \"annual_top_list\", \"url\": \"\", \"date\": \"2018-12-31\"}, {\"label\": \"Best Movies 2018 by Hideo Kojima\", \"type\": \"annual_top_list\", \"url\": \"https://letterboxd.com/kojima_hideo/list/best-movies-2018-by-hideo-kojima/\", \"date\": \"2023-12-11\"}]",
-      "content_hash": "7c57341aeeb9efe4ace0c88087f1ec7d233672b5e0bf8dd2b19e4f2858347200"
+      "content_hash": "14a8bc65347d0d7ba6c1df7906ca0870ed60f2bea568713ba8978996300d3d9c"
     },
     {
       "title": "A.I. Artificial Intelligence",
