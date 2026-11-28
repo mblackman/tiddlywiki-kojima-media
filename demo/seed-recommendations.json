@@ -396,7 +396,11 @@
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09a887dd4c4c9984cea31dcb21d70f&url=https%3a%2f%2fwww.msn.com%2fen-us%2fnews%2fother%2fhideo-kojima-officially-reviews-dcs-clayface-movie%2far-AA2gyU8Q&c=2662125977498062318&mkt=en-us",
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09a887dd4c4c9984cea31dcb21d70f&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-resident-evil-194251263.html&c=15488416906198986186&mkt=en-us",
     "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09a887dd4c4c9984cea31dcb21d70f&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fhideo-kojima-reviews-zach-cregger-s-resident-evil%2far-AA2e4vU1&c=8445704819004306233&mkt=en-us",
-    "news-article::https://news.google.com/rss/articles/CBMidEFVX3lxTE0tUlU2OE1lYzdORXd0WGQwX0VqNzR4N2o0WXh5amUyWmFZZFNqcGZwX1RaREdkY0FIRWFuN2wwVHgxNkF1NlNQN2J1SnF0MDJrbGFuTjNUVENzT29GT1pqWm5jdC05NzlfaThtdnBmZXVFUTdW?oc=5"
+    "news-article::https://news.google.com/rss/articles/CBMidEFVX3lxTE0tUlU2OE1lYzdORXd0WGQwX0VqNzR4N2o0WXh5amUyWmFZZFNqcGZwX1RaREdkY0FIRWFuN2wwVHgxNkF1NlNQN2J1SnF0MDJrbGFuTjNUVENzT29GT1pqWm5jdC05NzlfaThtdnBmZXVFUTdW?oc=5",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0aeb3ecfca4c51bd11d4093b54ec16&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-spider-man-163756796.html&c=6579262073433220937&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0aeb3ecfca4c51bd11d4093b54ec16&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmovies%2fnews%2fhideo-kojima-reviews-netflix-s-new-sci-fi-thriller-that-polarized-critics%2far-AA2afo1U&c=12098970171914600878&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0aeb3ecfca4c51bd11d4093b54ec16&url=https%3a%2f%2fwww.yahoo.com%2fentertainment%2fmovies%2farticles%2fhideo-kojima-reviews-resident-evil-194251263.html&c=15488416906198986186&mkt=en-us",
+    "news-article::http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0aeb3ecfca4c51bd11d4093b54ec16&url=https%3a%2f%2fwww.msn.com%2fen-us%2fentertainment%2fmovies%2fhideo-kojima-reviews-zach-cregger-s-resident-evil%2far-AA2e4vU1&c=8445704819004306233&mkt=en-us"
   ],
   "poster_checked_slugs": [
     "12-angry-men::1957",
